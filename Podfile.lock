@@ -1,0 +1,37 @@
+PODS:
+  - CCBluetooth (0.5.3)
+  - CCGlucose (0.3.0):
+    - CCBluetooth
+    - CCToolbox
+  - CCToolbox (0.7.1)
+  - SMART (2.8.1)
+  - SwiftSpinner (1.0.2)
+
+DEPENDENCIES:
+  - CCBluetooth
+  - CCGlucose
+  - CCToolbox
+  - SMART (from `https://github.com/uhnmdi/Swift-SMART.git`)
+  - SwiftSpinner
+
+EXTERNAL SOURCES:
+  SMART:
+    :git: https://github.com/uhnmdi/Swift-SMART.git
+    :submodules: true
+
+CHECKOUT OPTIONS:
+  SMART:
+    :commit: dbb902c0e0a91aa437adb5cb9968ee27d40e7a73
+    :git: https://github.com/uhnmdi/Swift-SMART.git
+    :submodules: true
+
+SPEC CHECKSUMS:
+  CCBluetooth: 781245931bc6e05fa8dd58983f7a18ea92f06831
+  CCGlucose: 776c89a04dd497ffa2cb8202ca4c801d51df161a
+  CCToolbox: cdd180132a6c2a346f4f12133ab7eb59c0c8e7c7
+  SMART: 058ada9f3c75bbc073f638c00ea66693f199dbb6
+  SwiftSpinner: 1c80ff6ea1c47e2faa1dfce0fcd5e6b39a47fd51
+
+PODFILE CHECKSUM: 40c866cd96c7ea57759a964122f3ea2da15d3bde
+
+COCOAPODS: 1.1.1

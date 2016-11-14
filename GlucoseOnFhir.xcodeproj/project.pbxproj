@@ -1,0 +1,644 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5037851B1DB51CAE007A5CDE /* observationValidation.json in Resources */ = {isa = PBXBuildFile; fileRef = 5037851A1DB51CAE007A5CDE /* observationValidation.json */; };
+		5037851D1DB51E03007A5CDE /* observationContextValidation.json in Resources */ = {isa = PBXBuildFile; fileRef = 5037851C1DB51E03007A5CDE /* observationContextValidation.json */; };
+		50DEF72D1D9D81D900F86B9A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DEF72C1D9D81D900F86B9A /* AppDelegate.swift */; };
+		50DEF72F1D9D81D900F86B9A /* GlucoseMetersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DEF72E1D9D81D900F86B9A /* GlucoseMetersViewController.swift */; };
+		50DEF7321D9D81D900F86B9A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50DEF7301D9D81D900F86B9A /* Main.storyboard */; };
+		50DEF7341D9D81D900F86B9A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50DEF7331D9D81D900F86B9A /* Assets.xcassets */; };
+		50DEF7371D9D81D900F86B9A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50DEF7351D9D81D900F86B9A /* LaunchScreen.storyboard */; };
+		50DEF7421D9D81DA00F86B9A /* GlucoseOnFhirTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DEF7411D9D81DA00F86B9A /* GlucoseOnFhirTests.swift */; };
+		50DF07981DCA1EF60094D968 /* device.json in Resources */ = {isa = PBXBuildFile; fileRef = 50DF07941DCA1EF60094D968 /* device.json */; };
+		50DF07991DCA1EF60094D968 /* observation.json in Resources */ = {isa = PBXBuildFile; fileRef = 50DF07951DCA1EF60094D968 /* observation.json */; };
+		50DF079A1DCA1EF60094D968 /* observationContext.json in Resources */ = {isa = PBXBuildFile; fileRef = 50DF07961DCA1EF60094D968 /* observationContext.json */; };
+		50DF079B1DCA1EF60094D968 /* patient.json in Resources */ = {isa = PBXBuildFile; fileRef = 50DF07971DCA1EF60094D968 /* patient.json */; };
+		50E217B71D9EA98F00B31926 /* GlucoseMeterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E217B61D9EA98F00B31926 /* GlucoseMeterViewController.swift */; };
+		50E217B91D9EB08800B31926 /* FHIR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E217B81D9EB08800B31926 /* FHIR.swift */; };
+		A44237A9F71AD41D79F57A64 /* Pods_GlucoseOnFhir.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A0C37FB3933B4BAD266AFB9 /* Pods_GlucoseOnFhir.framework */; };
+		CF58CF19F545DB9FF372FEDA /* Pods_GlucoseOnFhirTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DBC279103E4D9C0A4365606 /* Pods_GlucoseOnFhirTests.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		50DEF73E1D9D81DA00F86B9A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 50DEF7211D9D81D900F86B9A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 50DEF7281D9D81D900F86B9A;
+			remoteInfo = GlucoseOnFhir;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		50A8B07F1D9EBE5600722A0D /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		4C7DD78E3E0D2905F4614DAA /* Pods-GlucoseOnFhir.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GlucoseOnFhir.release.xcconfig"; path = "Pods/Target Support Files/Pods-GlucoseOnFhir/Pods-GlucoseOnFhir.release.xcconfig"; sourceTree = "<group>"; };
+		5037851A1DB51CAE007A5CDE /* observationValidation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = observationValidation.json; sourceTree = "<group>"; };
+		5037851C1DB51E03007A5CDE /* observationContextValidation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = observationContextValidation.json; sourceTree = "<group>"; };
+		50DEF7291D9D81D900F86B9A /* GlucoseOnFhir.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GlucoseOnFhir.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		50DEF72C1D9D81D900F86B9A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		50DEF72E1D9D81D900F86B9A /* GlucoseMetersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseMetersViewController.swift; sourceTree = "<group>"; };
+		50DEF7311D9D81D900F86B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		50DEF7331D9D81D900F86B9A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		50DEF7361D9D81D900F86B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		50DEF7381D9D81D900F86B9A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		50DEF73D1D9D81DA00F86B9A /* GlucoseOnFhirTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GlucoseOnFhirTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		50DEF7411D9D81DA00F86B9A /* GlucoseOnFhirTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseOnFhirTests.swift; sourceTree = "<group>"; };
+		50DEF7431D9D81DA00F86B9A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		50DF07941DCA1EF60094D968 /* device.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = device.json; sourceTree = "<group>"; };
+		50DF07951DCA1EF60094D968 /* observation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = observation.json; sourceTree = "<group>"; };
+		50DF07961DCA1EF60094D968 /* observationContext.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = observationContext.json; sourceTree = "<group>"; };
+		50DF07971DCA1EF60094D968 /* patient.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = patient.json; sourceTree = "<group>"; };
+		50E217B61D9EA98F00B31926 /* GlucoseMeterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlucoseMeterViewController.swift; sourceTree = "<group>"; };
+		50E217B81D9EB08800B31926 /* FHIR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FHIR.swift; sourceTree = "<group>"; };
+		5DBC279103E4D9C0A4365606 /* Pods_GlucoseOnFhirTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GlucoseOnFhirTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7A0C37FB3933B4BAD266AFB9 /* Pods_GlucoseOnFhir.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GlucoseOnFhir.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		881DBA53C742B76B8934C818 /* Pods-GlucoseOnFhir.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GlucoseOnFhir.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GlucoseOnFhir/Pods-GlucoseOnFhir.debug.xcconfig"; sourceTree = "<group>"; };
+		CCF6EC67F253AA6E67FE4B09 /* Pods-GlucoseOnFhirTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GlucoseOnFhirTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GlucoseOnFhirTests/Pods-GlucoseOnFhirTests.debug.xcconfig"; sourceTree = "<group>"; };
+		D21CED4D1AD723E6533FA1BA /* Pods-GlucoseOnFhirTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GlucoseOnFhirTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-GlucoseOnFhirTests/Pods-GlucoseOnFhirTests.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		50DEF7261D9D81D900F86B9A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A44237A9F71AD41D79F57A64 /* Pods_GlucoseOnFhir.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		50DEF73A1D9D81DA00F86B9A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CF58CF19F545DB9FF372FEDA /* Pods_GlucoseOnFhirTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		503785161DB51C8E007A5CDE /* Resource Validations */ = {
+			isa = PBXGroup;
+			children = (
+				5037851C1DB51E03007A5CDE /* observationContextValidation.json */,
+				5037851A1DB51CAE007A5CDE /* observationValidation.json */,
+			);
+			name = "Resource Validations";
+			sourceTree = "<group>";
+		};
+		50B00B6B1DA3FE4E00FC1D35 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		50DEF7201D9D81D900F86B9A = {
+			isa = PBXGroup;
+			children = (
+				50DEF72B1D9D81D900F86B9A /* GlucoseOnFhir */,
+				50DEF7401D9D81DA00F86B9A /* GlucoseOnFhirTests */,
+				50DEF72A1D9D81D900F86B9A /* Products */,
+				AD3F29BA99B9C29B60FE73FF /* Pods */,
+				54058C6CB367625C9F6F17FC /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		50DEF72A1D9D81D900F86B9A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				50DEF7291D9D81D900F86B9A /* GlucoseOnFhir.app */,
+				50DEF73D1D9D81DA00F86B9A /* GlucoseOnFhirTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		50DEF72B1D9D81D900F86B9A /* GlucoseOnFhir */ = {
+			isa = PBXGroup;
+			children = (
+				50DF07931DCA1EE90094D968 /* Resource Templates */,
+				50E288C51DC3AC8700E79E1B /* FHIR */,
+				503785161DB51C8E007A5CDE /* Resource Validations */,
+				50B00B6B1DA3FE4E00FC1D35 /* Extensions */,
+				50DEF72E1D9D81D900F86B9A /* GlucoseMetersViewController.swift */,
+				50DEF72C1D9D81D900F86B9A /* AppDelegate.swift */,
+				50E217B61D9EA98F00B31926 /* GlucoseMeterViewController.swift */,
+				50DEF7301D9D81D900F86B9A /* Main.storyboard */,
+				50DEF7331D9D81D900F86B9A /* Assets.xcassets */,
+				50DEF7351D9D81D900F86B9A /* LaunchScreen.storyboard */,
+				50DEF7381D9D81D900F86B9A /* Info.plist */,
+			);
+			path = GlucoseOnFhir;
+			sourceTree = "<group>";
+		};
+		50DEF7401D9D81DA00F86B9A /* GlucoseOnFhirTests */ = {
+			isa = PBXGroup;
+			children = (
+				50DEF7411D9D81DA00F86B9A /* GlucoseOnFhirTests.swift */,
+				50DEF7431D9D81DA00F86B9A /* Info.plist */,
+			);
+			path = GlucoseOnFhirTests;
+			sourceTree = "<group>";
+		};
+		50DF07931DCA1EE90094D968 /* Resource Templates */ = {
+			isa = PBXGroup;
+			children = (
+				50DF07941DCA1EF60094D968 /* device.json */,
+				50DF07951DCA1EF60094D968 /* observation.json */,
+				50DF07961DCA1EF60094D968 /* observationContext.json */,
+				50DF07971DCA1EF60094D968 /* patient.json */,
+			);
+			name = "Resource Templates";
+			sourceTree = "<group>";
+		};
+		50E288C51DC3AC8700E79E1B /* FHIR */ = {
+			isa = PBXGroup;
+			children = (
+				50E217B81D9EB08800B31926 /* FHIR.swift */,
+			);
+			name = FHIR;
+			sourceTree = "<group>";
+		};
+		54058C6CB367625C9F6F17FC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7A0C37FB3933B4BAD266AFB9 /* Pods_GlucoseOnFhir.framework */,
+				5DBC279103E4D9C0A4365606 /* Pods_GlucoseOnFhirTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AD3F29BA99B9C29B60FE73FF /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				881DBA53C742B76B8934C818 /* Pods-GlucoseOnFhir.debug.xcconfig */,
+				4C7DD78E3E0D2905F4614DAA /* Pods-GlucoseOnFhir.release.xcconfig */,
+				CCF6EC67F253AA6E67FE4B09 /* Pods-GlucoseOnFhirTests.debug.xcconfig */,
+				D21CED4D1AD723E6533FA1BA /* Pods-GlucoseOnFhirTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		50DEF7281D9D81D900F86B9A /* GlucoseOnFhir */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 50DEF7461D9D81DA00F86B9A /* Build configuration list for PBXNativeTarget "GlucoseOnFhir" */;
+			buildPhases = (
+				75F11E9CCBE10330D8A20413 /* [CP] Check Pods Manifest.lock */,
+				50DEF7251D9D81D900F86B9A /* Sources */,
+				50DEF7261D9D81D900F86B9A /* Frameworks */,
+				50DEF7271D9D81D900F86B9A /* Resources */,
+				6E6C5AB17F6ED2E951739C51 /* [CP] Embed Pods Frameworks */,
+				F3F1E333CE41AE6E7EA4DAA5 /* [CP] Copy Pods Resources */,
+				50A8B07F1D9EBE5600722A0D /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GlucoseOnFhir;
+			productName = GlucoseOnFhir;
+			productReference = 50DEF7291D9D81D900F86B9A /* GlucoseOnFhir.app */;
+			productType = "com.apple.product-type.application";
+		};
+		50DEF73C1D9D81DA00F86B9A /* GlucoseOnFhirTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 50DEF7491D9D81DA00F86B9A /* Build configuration list for PBXNativeTarget "GlucoseOnFhirTests" */;
+			buildPhases = (
+				206A2E95854D623D28D36F44 /* [CP] Check Pods Manifest.lock */,
+				50DEF7391D9D81DA00F86B9A /* Sources */,
+				50DEF73A1D9D81DA00F86B9A /* Frameworks */,
+				50DEF73B1D9D81DA00F86B9A /* Resources */,
+				2B420D17EEA533A710F90965 /* [CP] Embed Pods Frameworks */,
+				51D94CDE5825E462CA388178 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				50DEF73F1D9D81DA00F86B9A /* PBXTargetDependency */,
+			);
+			name = GlucoseOnFhirTests;
+			productName = GlucoseOnFhirTests;
+			productReference = 50DEF73D1D9D81DA00F86B9A /* GlucoseOnFhirTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		50DEF7211D9D81D900F86B9A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0800;
+				LastUpgradeCheck = 0810;
+				ORGANIZATIONNAME = "eHealth Innovation";
+				TargetAttributes = {
+					50DEF7281D9D81D900F86B9A = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = F663BTMH9Q;
+						ProvisioningStyle = Automatic;
+					};
+					50DEF73C1D9D81DA00F86B9A = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = F663BTMH9Q;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 50DEF7281D9D81D900F86B9A;
+					};
+				};
+			};
+			buildConfigurationList = 50DEF7241D9D81D900F86B9A /* Build configuration list for PBXProject "GlucoseOnFhir" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 50DEF7201D9D81D900F86B9A;
+			productRefGroup = 50DEF72A1D9D81D900F86B9A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				50DEF7281D9D81D900F86B9A /* GlucoseOnFhir */,
+				50DEF73C1D9D81DA00F86B9A /* GlucoseOnFhirTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		50DEF7271D9D81D900F86B9A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50DF079A1DCA1EF60094D968 /* observationContext.json in Resources */,
+				5037851B1DB51CAE007A5CDE /* observationValidation.json in Resources */,
+				50DEF7371D9D81D900F86B9A /* LaunchScreen.storyboard in Resources */,
+				50DF07991DCA1EF60094D968 /* observation.json in Resources */,
+				50DF079B1DCA1EF60094D968 /* patient.json in Resources */,
+				50DEF7341D9D81D900F86B9A /* Assets.xcassets in Resources */,
+				50DF07981DCA1EF60094D968 /* device.json in Resources */,
+				5037851D1DB51E03007A5CDE /* observationContextValidation.json in Resources */,
+				50DEF7321D9D81D900F86B9A /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		50DEF73B1D9D81DA00F86B9A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		206A2E95854D623D28D36F44 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		2B420D17EEA533A710F90965 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GlucoseOnFhirTests/Pods-GlucoseOnFhirTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		51D94CDE5825E462CA388178 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GlucoseOnFhirTests/Pods-GlucoseOnFhirTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6E6C5AB17F6ED2E951739C51 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GlucoseOnFhir/Pods-GlucoseOnFhir-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		75F11E9CCBE10330D8A20413 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		F3F1E333CE41AE6E7EA4DAA5 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GlucoseOnFhir/Pods-GlucoseOnFhir-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		50DEF7251D9D81D900F86B9A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50DEF72F1D9D81D900F86B9A /* GlucoseMetersViewController.swift in Sources */,
+				50E217B71D9EA98F00B31926 /* GlucoseMeterViewController.swift in Sources */,
+				50E217B91D9EB08800B31926 /* FHIR.swift in Sources */,
+				50DEF72D1D9D81D900F86B9A /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		50DEF7391D9D81DA00F86B9A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50DEF7421D9D81DA00F86B9A /* GlucoseOnFhirTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		50DEF73F1D9D81DA00F86B9A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 50DEF7281D9D81D900F86B9A /* GlucoseOnFhir */;
+			targetProxy = 50DEF73E1D9D81DA00F86B9A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		50DEF7301D9D81D900F86B9A /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				50DEF7311D9D81D900F86B9A /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		50DEF7351D9D81D900F86B9A /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				50DEF7361D9D81D900F86B9A /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		50DEF7441D9D81DA00F86B9A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		50DEF7451D9D81DA00F86B9A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		50DEF7471D9D81DA00F86B9A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 881DBA53C742B76B8934C818 /* Pods-GlucoseOnFhir.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = F663BTMH9Q;
+				INFOPLIST_FILE = GlucoseOnFhir/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.ehealthinnovation.GlucoseOnFhir;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		50DEF7481D9D81DA00F86B9A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4C7DD78E3E0D2905F4614DAA /* Pods-GlucoseOnFhir.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = F663BTMH9Q;
+				INFOPLIST_FILE = GlucoseOnFhir/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.ehealthinnovation.GlucoseOnFhir;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		50DEF74A1D9D81DA00F86B9A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CCF6EC67F253AA6E67FE4B09 /* Pods-GlucoseOnFhirTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = F663BTMH9Q;
+				INFOPLIST_FILE = GlucoseOnFhirTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.ehealthinnovation.GlucoseOnFhirTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GlucoseOnFhir.app/GlucoseOnFhir";
+			};
+			name = Debug;
+		};
+		50DEF74B1D9D81DA00F86B9A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D21CED4D1AD723E6533FA1BA /* Pods-GlucoseOnFhirTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = F663BTMH9Q;
+				INFOPLIST_FILE = GlucoseOnFhirTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.ehealthinnovation.GlucoseOnFhirTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GlucoseOnFhir.app/GlucoseOnFhir";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		50DEF7241D9D81D900F86B9A /* Build configuration list for PBXProject "GlucoseOnFhir" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				50DEF7441D9D81DA00F86B9A /* Debug */,
+				50DEF7451D9D81DA00F86B9A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		50DEF7461D9D81DA00F86B9A /* Build configuration list for PBXNativeTarget "GlucoseOnFhir" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				50DEF7471D9D81DA00F86B9A /* Debug */,
+				50DEF7481D9D81DA00F86B9A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		50DEF7491D9D81DA00F86B9A /* Build configuration list for PBXNativeTarget "GlucoseOnFhirTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				50DEF74A1D9D81DA00F86B9A /* Debug */,
+				50DEF74B1D9D81DA00F86B9A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 50DEF7211D9D81D900F86B9A /* Project object */;
+}

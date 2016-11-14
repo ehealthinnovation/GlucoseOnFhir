@@ -1,0 +1,123 @@
+{
+    "resourceType": "Observation",
+    "id": "5244",
+    "status": "final",
+    "code": {
+        "coding": [
+                   {
+                   "system": "http://loinc.org",
+                   "code": "15074-8",
+                   "display": "Glucose [Moles/volume] in Blood"
+                   }
+                   ]
+    },
+    "subject": {
+        "reference": "Patient/115987"
+    },
+    "performer": [
+                  {
+                  "reference": "Patient/115987"
+                  }
+                  ],
+    "device": {
+        "reference": "Device/121902"
+    },
+    "effectivePeriod": {
+        "start": "2016-10-17T14:52:17.334Z",
+        "end": "2016-10-17T14:52:17.334Z"
+    },
+    "valueQuantity": {
+        "value": 6.3,
+        "unit": "mmol/L",
+        "system": "http://unitsofmeasure.org",
+        "code": "mmol/L"
+    },
+    "comments": "",
+    "extension": [
+                  {
+                  "url": "http://www.bluetooth.org",
+                  "extension": [
+                                {
+                                "url": "http://www.bluetooth.org#CarbohydrateID",
+                                "valueCoding": {
+                                    "system": "http://www.bluetooth.org#CarbohydrateID",
+                                    "code": "1",
+                                    "display": "Breakfast"
+                                    }
+                                },
+                                {
+                                "url": "http://www.bluetooth.org#CarbohydrateKG",
+                                "valueCoding": {
+                                    "system": "http://www.bluetooth.org#CarbohydrateKG",
+                                    "code": "1",
+                                    "display": "KG"
+                                    }
+                                },
+                                {
+                                "url": "http://www.bluetooth.org#Meal",
+                                "valueCoding": {
+                                    "system": "http://www.bluetooth.org#Meal",
+                                    "code": "1",
+                                    "display": "Preprandial"
+                                    }
+                                },
+                                {
+                                "url": "http://www.bluetooth.org#Tester",
+                                "valueCoding": {
+                                    "system": "http://www.bluetooth.org#Tester",
+                                    "code": "1",
+                                    "display": "Self"
+                                    }
+                                },
+                                {
+                                "url": "http://www.bluetooth.org#Health",
+                                "valueCoding": {
+                                    "system": "http://www.bluetooth.org#Health",
+                                    "code": "5",
+                                    "display": "No health issues"
+                                    }
+                                },
+                                {
+                                "url": "http://www.bluetooth.org#ExerciseDuration",
+                                "valueCoding": {
+                                    "system": "http://www.bluetooth.org#ExerciseDuration",
+                                    "code": "0",
+                                    "display": "Seconds"
+                                    }
+                                },
+                                {
+                                "url": "http://www.bluetooth.org#ExerciseIntensity",
+                                "valueCoding": {
+                                    "system": "http://www.bluetooth.org#ExerciseIntensity",
+                                    "code": "0",
+                                    "display": ""
+                                    }
+                                },
+                                {
+                                "url": "http://www.bluetooth.org#MedicationID",
+                                "valueCoding": {
+                                    "system": "http://www.bluetooth.org#MedicationID",
+                                    "code": "2",
+                                    "display": "Short acting insulin"
+                                    }
+                                },
+                                {
+                                "url": "http://www.bluetooth.org#MedicationKG",
+                                "valueCoding": {
+                                    "system": "http://www.bluetooth.org#MedicationKG",
+                                    "code": "0",
+                                    "display": "KG"
+                                    }
+                                },
+                                {
+                                "url": "http://www.bluetooth.org#HbA1c",
+                                "valueCoding": {
+                                    "system": "http://www.bluetooth.org#HbA1c",
+                                    "code": "0",
+                                    "display": ""
+                                    }
+                                }
+                              ]
+                  }
+                ]
+}

@@ -1,0 +1,33 @@
+{
+    "resourceType": "Device",
+    "patient": {
+        "reference": ""
+    },
+    "identifier": [
+                   {
+                   "type": {
+                   "coding": [
+                              {
+                              "system": "",
+                              "code": ""
+                              }
+                              ],
+                    "text": ""
+                           },
+                   "value": ""
+                   }
+                   ],
+    "type": {
+        "coding": [
+                   {
+                   "system": "",
+                   "code": "",
+                   "display": ""
+                   }
+                   ],
+        "text": ""
+    },
+    "status": "",
+    "manufacturer": "",
+    "model": ""
+}

@@ -1,0 +1,35 @@
+{
+    "resourceType": "Observation",
+    "status": "",
+    "code": {
+        "coding": [
+                   {
+                   "system": "",
+                   "code": "",
+                   "display": ""
+                   }
+                   ]
+    },
+    "subject": {
+        "reference": ""
+    },
+    "performer": [
+                  {
+                  "reference": ""
+                  }
+                  ],
+    "device": {
+        "reference": ""
+    },
+    "effectivePeriod": {
+        "start": "",
+        "end": ""
+    },
+    "valueQuantity": {
+        "value": ,
+        "unit": "",
+        "system": "",
+        "code": ""
+    },
+    "comments": ""
+}
