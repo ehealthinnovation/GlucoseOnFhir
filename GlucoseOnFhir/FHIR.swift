@@ -9,37 +9,29 @@
 import Foundation
 import SMART
 
-public protocol FHIRProtocol {
-    func error(error:Error)
-    func patientNotFound()
-    func patientFound(patientID:String)
-    func patientCreated(patientID:String)
-    func deviceNotFound()
-    func deviceFound(deviceID:String)
-    func deviceCreated(deviceID:String)
-    func observationCreated(observationID:String)
-    func observationFound(observationID:String)
-    func observationNotFound()
-    func bundleCreated(bundleID:String)
-}
-
 class FHIR: NSObject {
-    public var FHIRDelegate: FHIRProtocol?
-    
-    public var patient: Patient?
-    public var device: Device?
-    public var observation: Observation?
-    
     var smart: Client?
     var server: FHIRServer?
+    public var fhirServerAddress: String = "fhirtest.uhn.ca"
+    static let sharedInstance: FHIR = FHIR()
     
     public override init() {
         super.init()
-        let url = URL(string: "https://fhirtest.uhn.ca/baseDstu2")
+        print("fhir: init - \(fhirServerAddress)")
+        
+        setFHIRServerAddress(address:self.fhirServerAddress)
+    }
+    
+    public func setFHIRServerAddress(address:String) {
+        print("setFHIRServerAddress: \(address)")
+        
+        self.fhirServerAddress = address
+        
+        let url = URL(string: "http://" + fhirServerAddress + "/baseDstu2")
         server = Server(baseURL: url!)
         
         smart = Client(
-            baseURL: "https://fhirtest.uhn.ca/baseDstu2",
+            baseURL: "http://" + fhirServerAddress + "/baseDstu2",
             settings: [
                 "client_id": "glucoseOnFhirApp",
                 "client_name": "Glucose on FHIR iOS",
@@ -49,139 +41,80 @@ class FHIR: NSObject {
         )
     }
     
-    public func createPatient(patient: Patient) {
+    public func createPatient(patient: Patient, callback: @escaping (_ patient: Patient, _ error: Error?) -> Void) {
         patient.createAndReturn(server!) { error in
             guard error == nil else {
                 print(error!)
-                self.FHIRDelegate?.error(error: error!)
+                callback(patient, error)
                 return
             }
             
-            print(patient.id!)
-            
-            self.patient = patient
-            self.FHIRDelegate?.patientCreated(patientID: patient.id!)
+            callback(patient, error)
         }
     }
     
-    public func searchForPatient(searchParameters:Dictionary<String, Any>) {
+    public func searchForPatient(searchParameters:Dictionary<String, Any>, callback: @escaping FHIRSearchBundleErrorCallback) {
+        print("fhir: searchForPatient")
         let searchPatient = Patient.search(searchParameters)
         
         searchPatient.perform((smart?.server)!) { bundle, error in
             if nil != error {
                 print(error!)
-                self.FHIRDelegate?.error(error: error!)
+                callback(bundle, error)
             }
             else {
-                if(bundle?.entry != nil) {
-                    let patients = bundle?.entry?
-                        .filter() { return $0.resource is Patient }
-                        .map() { return $0.resource as! Patient }
-                
-                    print(patients!)
-                    self.patient = patients?[0]
-                    self.FHIRDelegate?.patientFound(patientID: (self.patient?.id)!)
-                } else {
-                    self.FHIRDelegate?.patientNotFound()
-                }
+                callback(bundle, error)
             }
         }
     }
     
-    public func searchForPatientByID(idString:String) {
-        let searchPatient = Patient.search(["_id": idString])
-        
-        searchPatient.perform((smart?.server)!) { bundle, error in
-            if nil != error {
-                print(error!)
-                self.FHIRDelegate?.error(error: error!)
-            }
-            else {
-                if(bundle?.entry != nil) {
-                    let patients = bundle?.entry?
-                        .filter() { return $0.resource is Patient }
-                        .map() { return $0.resource as! Patient }
-                    
-                    print(patients!)
-                    self.patient = patients?[0]
-                    self.FHIRDelegate?.patientFound(patientID: (self.patient?.id)!)
-                } else {
-                    self.FHIRDelegate?.patientNotFound()
-                }
-            }
-        }
-    }
-    
-    public func createDevice(device: Device) {
+    public func createDevice(device: Device, callback: @escaping (_ device: Device, _ error: Error?) -> Void) {
         device.createAndReturn(server!) { error in
             guard error == nil else {
                 print(error!)
-                self.FHIRDelegate?.error(error: error!)
+                callback(device, error)
                 return
             }
             
-            print(device.id!)
-            
-            self.device = device
-            self.FHIRDelegate?.deviceCreated(deviceID: device.id!)
+            callback(device, error)
         }
     }
     
-    public func searchForDevice(searchParameters:Dictionary<String, Any>) {
+    public func searchForDevice(searchParameters:Dictionary<String, Any>, callback: @escaping FHIRSearchBundleErrorCallback) {
         let searchDevice = Device.search(searchParameters)
         
         searchDevice.perform((smart?.server)!) { bundle, error in
             if nil != error {
                 print(error!)
-                self.FHIRDelegate?.error(error: error!)
+                callback(bundle, error)
             }
             else {
-                if(bundle?.entry != nil) {
-                    let devices = bundle?.entry?
-                        .filter() { return $0.resource is Device }
-                        .map() { return $0.resource as! Device }
-                
-                    print(devices!)
-                    self.device = devices?[0]
-                    self.FHIRDelegate?.deviceFound(deviceID: (self.device?.id)!)
-                } else {
-                    self.FHIRDelegate?.deviceNotFound()
-                }
+                callback(bundle, error)
             }
         }
     }
     
-    public func searchForObservationByID(idString:String) {
+    public func searchForObservationByID(idString:String, callback: @escaping FHIRSearchBundleErrorCallback) {
         let searchObservation = Observation.search(["_id": idString])
         
         searchObservation.perform((smart?.server)!) { bundle, error in
             if nil != error {
                 print(error!)
-                self.FHIRDelegate?.error(error: error!)
+                callback(bundle,error)
             }
             else {
-                if(bundle?.entry != nil) {
-                    let observations = bundle?.entry?
-                        .filter() { return $0.resource is Observation }
-                        .map() { return $0.resource as! Observation }
-                    
-                    print(observations!)
-                    self.observation = observations?[0]
-                    self.FHIRDelegate?.observationFound(observationID: (self.observation?.id)!)
-                } else {
-                    self.FHIRDelegate?.observationNotFound()
-                }
+                callback(bundle,error)
             }
         }
     }
     
-    public func searchForObservation(searchParameters:Dictionary<String, Any>) {
+    public func searchForObservation(searchParameters:Dictionary<String, Any>, callback: @escaping FHIRSearchBundleErrorCallback) {
         let searchObservation = Observation.search(searchParameters)
         
         searchObservation.perform((smart?.server)!) { bundle, error in
             if nil != error {
                 print(error!)
-                self.FHIRDelegate?.error(error: error!)
+                callback(bundle,error)
             }
             else {
                 if(bundle?.entry != nil) {
@@ -190,32 +123,30 @@ class FHIR: NSObject {
                         .map() { return $0.resource as! Observation }
                     
                     print(observations!)
-                    self.observation = observations?[0]
-                    self.FHIRDelegate?.observationFound(observationID: (self.observation?.id)!)
+                    callback(bundle,error)
                 } else {
-                    self.FHIRDelegate?.observationNotFound()
+                    callback(bundle,error)
                 }
             }
         }
     }
 
-    public func createObservation(observation:Observation) {
+    public func createObservation(observation:Observation, callback: @escaping (_ observation: Observation, _ error: Error?) -> Void) {
         observation.createAndReturn(server!) { error in
             guard error == nil else {
                 print(error!)
-                self    .FHIRDelegate?.error(error: error!)
+                callback(observation, error)
                 return
             }
             
-            print(observation.id!)
-            self.FHIRDelegate?.observationCreated(observationID: observation.id!)
+            callback(observation, error)
         }
     }
     
-    public func createObservationBundle(observations: [Observation]) {
+    public func createObservationBundle(type: String, observations:[Observation], callback: @escaping FHIRSearchBundleErrorCallback) {
         let bundle = Bundle(json: nil)
-        bundle.type = "transaction"
-    
+        bundle.type = type
+        
         bundle.entry = observations.map() {
             let entry = BundleEntry(json: nil)
             entry.resource = $0
@@ -229,11 +160,11 @@ class FHIR: NSObject {
         bundle.createAndReturn(self.server!) { error in
             if let error = error {
                 print("FAILED: \(error)")
-                self.FHIRDelegate?.error(error: error)
+                callback(bundle, error)
             }
             else {
-                print("Bundle created, has id \(bundle.id)")
-                self.FHIRDelegate?.bundleCreated(bundleID: bundle.id!)
+                print("bundle: \(bundle.asJSON())")
+                callback(bundle, error)
             }
         }
     }
