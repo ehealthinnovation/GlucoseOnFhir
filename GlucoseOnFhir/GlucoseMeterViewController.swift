@@ -774,7 +774,7 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
     }
     
     @IBAction func UploadObservationsButtonAction(_ sender: Any) {
-        var observationArray: [Observation] = []
+        var observations: [Observation] = []
         
         if(self.patient == nil || self.device == nil) {
             self.showAlert(title: "Patient and/or Device not uploaded", message: "Upload patient and/or device first")
@@ -783,16 +783,16 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
         
         for measurement in glucoseMeasurements {
             if(measurement.existsOnFHIR == false) {
-                observationArray.append(self.measurementToObservation(measurement: measurement))
+                observations.append(self.measurementToObservation(measurement: measurement))
             }
         }
         
-        if(observationArray.count == 0) {
+        if(observations.count == 0) {
             self.showAlert(title: "Nothing to upload", message: "")
             return
         }
         
-        FHIR.fhirInstance.createObservationBundle(type: "batch", observations: observationArray) { (bundle,error) -> Void in
+        FHIR.fhirInstance.createObservationBundle(type: "batch", observations: observations) { (bundle,error) -> Void in
             guard error == nil else {
                 print("error creating observations: \(error)")
                 return
@@ -813,8 +813,8 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
                             }
                         }
                         
-                        observationArray[i-1].id = components![1]
-                        self.observations.append(observationArray[i-1])
+                        observations[i-1].id = components![1]
+                        self.observations.append(observations[i-1])
                         print("observation uploaded with ID \(components![1])")
                         self.logEvent(event: "observation uploaded with ID \(components![1])")
                     } else {
