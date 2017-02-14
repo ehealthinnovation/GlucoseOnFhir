@@ -10,6 +10,7 @@
 		501073A91E3A42D5008FC9A2 /* DispatchQueue+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501073A81E3A42D5008FC9A2 /* DispatchQueue+Extension.swift */; };
 		5037851B1DB51CAE007A5CDE /* observationValidation.json in Resources */ = {isa = PBXBuildFile; fileRef = 5037851A1DB51CAE007A5CDE /* observationValidation.json */; };
 		5037851D1DB51E03007A5CDE /* observationContextValidation.json in Resources */ = {isa = PBXBuildFile; fileRef = 5037851C1DB51E03007A5CDE /* observationContextValidation.json */; };
+		50A5E2161E5374C400B74FAD /* Refreshable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A5E2151E5374C400B74FAD /* Refreshable.swift */; };
 		50B40E9F1E2D30FA00E384CD /* PatientViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B40E9E1E2D30FA00E384CD /* PatientViewController.swift */; };
 		50B40EA11E2D310500E384CD /* DeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B40EA01E2D310500E384CD /* DeviceViewController.swift */; };
 		50B40EA31E2D311400E384CD /* ObservationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B40EA21E2D311400E384CD /* ObservationViewController.swift */; };
@@ -58,6 +59,7 @@
 		501073A81E3A42D5008FC9A2 /* DispatchQueue+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+Extension.swift"; sourceTree = "<group>"; };
 		5037851A1DB51CAE007A5CDE /* observationValidation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = observationValidation.json; sourceTree = "<group>"; };
 		5037851C1DB51E03007A5CDE /* observationContextValidation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = observationContextValidation.json; sourceTree = "<group>"; };
+		50A5E2151E5374C400B74FAD /* Refreshable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Refreshable.swift; sourceTree = "<group>"; };
 		50B40E9E1E2D30FA00E384CD /* PatientViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PatientViewController.swift; sourceTree = "<group>"; };
 		50B40EA01E2D310500E384CD /* DeviceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceViewController.swift; sourceTree = "<group>"; };
 		50B40EA21E2D311400E384CD /* ObservationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservationViewController.swift; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 				50DEF72E1D9D81D900F86B9A /* GlucoseMetersViewController.swift */,
 				50B40EA21E2D311400E384CD /* ObservationViewController.swift */,
 				50B40E9E1E2D30FA00E384CD /* PatientViewController.swift */,
+				50A5E2151E5374C400B74FAD /* Refreshable.swift */,
 				50DEF7301D9D81D900F86B9A /* Main.storyboard */,
 				50DEF7331D9D81D900F86B9A /* Assets.xcassets */,
 				50DEF7351D9D81D900F86B9A /* LaunchScreen.storyboard */,
@@ -420,6 +423,7 @@
 				50DEF72F1D9D81D900F86B9A /* GlucoseMetersViewController.swift in Sources */,
 				50B40E9F1E2D30FA00E384CD /* PatientViewController.swift in Sources */,
 				501073A91E3A42D5008FC9A2 /* DispatchQueue+Extension.swift in Sources */,
+				50A5E2161E5374C400B74FAD /* Refreshable.swift in Sources */,
 				50E217B71D9EA98F00B31926 /* GlucoseMeterViewController.swift in Sources */,
 				50B40EA31E2D311400E384CD /* ObservationViewController.swift in Sources */,
 				50E217B91D9EB08800B31926 /* FHIR.swift in Sources */,
@@ -512,7 +516,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -555,7 +559,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

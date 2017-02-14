@@ -121,10 +121,4 @@ class PatientViewController: UITableViewController {
         print("didSelectRowAtIndexPath")
         tableView.deselectRow(at: indexPath, animated: true)
     }
-    
-    func refreshTable() {
-        DispatchQueue.main.async(execute: {
-            self.tableView.reloadData()
-        })
-    }
 }

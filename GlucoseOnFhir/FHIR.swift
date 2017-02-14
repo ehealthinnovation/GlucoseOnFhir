@@ -13,7 +13,7 @@ class FHIR: NSObject {
     var smart: Client?
     var server: FHIRServer?
     public var fhirServerAddress: String = "fhirtest.uhn.ca"
-    static let sharedInstance: FHIR = FHIR()
+    static let fhirInstance: FHIR = FHIR()
     
     public override init() {
         super.init()
@@ -43,10 +43,8 @@ class FHIR: NSObject {
     
     public func createPatient(patient: Patient, callback: @escaping (_ patient: Patient, _ error: Error?) -> Void) {
         patient.createAndReturn(server!) { error in
-            guard error == nil else {
-                print(error!)
-                callback(patient, error)
-                return
+            if let error = error {
+                print(error)
             }
             
             callback(patient, error)
@@ -58,22 +56,18 @@ class FHIR: NSObject {
         let searchPatient = Patient.search(searchParameters)
         
         searchPatient.perform((smart?.server)!) { bundle, error in
-            if nil != error {
-                print(error!)
-                callback(bundle, error)
+            if let error = error {
+                print(error)
             }
-            else {
-                callback(bundle, error)
-            }
+            
+            callback(bundle, error)
         }
     }
     
     public func createDevice(device: Device, callback: @escaping (_ device: Device, _ error: Error?) -> Void) {
         device.createAndReturn(server!) { error in
-            guard error == nil else {
-                print(error!)
-                callback(device, error)
-                return
+            if let error = error {
+                print(error)
             }
             
             callback(device, error)
@@ -84,13 +78,11 @@ class FHIR: NSObject {
         let searchDevice = Device.search(searchParameters)
         
         searchDevice.perform((smart?.server)!) { bundle, error in
-            if nil != error {
-                print(error!)
-                callback(bundle, error)
+            if let error = error {
+                print(error)
             }
-            else {
-                callback(bundle, error)
-            }
+            
+            callback(bundle, error)
         }
     }
     
@@ -98,13 +90,11 @@ class FHIR: NSObject {
         let searchObservation = Observation.search(["_id": idString])
         
         searchObservation.perform((smart?.server)!) { bundle, error in
-            if nil != error {
-                print(error!)
-                callback(bundle,error)
+            if let error = error {
+                print(error)
             }
-            else {
-                callback(bundle,error)
-            }
+            
+            callback(bundle, error)
         }
     }
     
@@ -112,9 +102,8 @@ class FHIR: NSObject {
         let searchObservation = Observation.search(searchParameters)
         
         searchObservation.perform((smart?.server)!) { bundle, error in
-            if nil != error {
-                print(error!)
-                callback(bundle,error)
+            if let error = error {
+                print(error)
             }
             else {
                 if(bundle?.entry != nil) {
@@ -133,10 +122,8 @@ class FHIR: NSObject {
 
     public func createObservation(observation:Observation, callback: @escaping (_ observation: Observation, _ error: Error?) -> Void) {
         observation.createAndReturn(server!) { error in
-            guard error == nil else {
-                print(error!)
-                callback(observation, error)
-                return
+            if let error = error {
+                print(error)
             }
             
             callback(observation, error)
@@ -159,13 +146,10 @@ class FHIR: NSObject {
     
         bundle.createAndReturn(self.server!) { error in
             if let error = error {
-                print("FAILED: \(error)")
-                callback(bundle, error)
+                print(error)
             }
-            else {
-                print("bundle: \(bundle.asJSON())")
-                callback(bundle, error)
-            }
+            
+            callback(bundle, error)
         }
     }
 }

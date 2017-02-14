@@ -12,8 +12,8 @@ import CCBluetooth
 import CCGlucose
 import CoreBluetooth
 
-class GlucoseMetersViewController: UITableViewController, GlucoseMeterDiscoveryProtocol, NetServiceBrowserDelegate, NetServiceDelegate {
-    private var glucose: Glucose!
+class GlucoseMetersViewController: UITableViewController, GlucoseMeterDiscoveryProtocol, Refreshable {
+    private var glucose: Glucose?
     let cellIdentifier = "GlucoseMetersCellIdentifier"
     var discoveredGlucoseMeters: Array<CBPeripheral> = Array<CBPeripheral>()
     var previouslySelectedGlucoseMeters: Array<CBPeripheral> = Array<CBPeripheral>()
@@ -21,7 +21,7 @@ class GlucoseMetersViewController: UITableViewController, GlucoseMeterDiscoveryP
     let rc = UIRefreshControl()
     let browser = NetServiceBrowser()
     var fhirService = NetService()
-    var fhirServiceIP: String!
+    var fhirServiceIP: String?
     @IBOutlet weak var discoverFHIRServersButton: UIBarButtonItem!
     
     
@@ -34,22 +34,22 @@ class GlucoseMetersViewController: UITableViewController, GlucoseMeterDiscoveryP
         refreshControl?.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
         
         glucose = Glucose()
-        glucose.glucoseMeterDiscoveryDelegate = self
+        glucose?.glucoseMeterDiscoveryDelegate = self
     }
     
     func onRefresh() {
         refreshControl?.endRefreshing()
         discoveredGlucoseMeters.removeAll()
         
-        self.refreshTable()
+        self.refresh()
         
         glucose = Glucose()
-        glucose.glucoseMeterDiscoveryDelegate = self
-        glucose.scanForGlucoseMeters()
+        glucose?.glucoseMeterDiscoveryDelegate = self
+        glucose?.scanForGlucoseMeters()
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        self.refreshTable()
+        self.refresh()
     }
     
     override func didReceiveMemoryWarning() {
@@ -66,7 +66,7 @@ class GlucoseMetersViewController: UITableViewController, GlucoseMeterDiscoveryP
         discoveredGlucoseMeters.append(glucoseMeter)
         print("glucose meter: \(glucoseMeter.name)")
         
-        self.refreshTable()
+        self.refresh()
     }
     
     // MARK: Table data source methods
@@ -152,15 +152,53 @@ class GlucoseMetersViewController: UITableViewController, GlucoseMeterDiscoveryP
         }
     }
     
-    func refreshTable() {
-        DispatchQueue.main.async(execute: {
-            self.tableView.reloadData()
-        })
+    func getIPV4StringfromAddress(address: [Data]) -> String{
+        
+        let data = address.first! as NSData
+        
+        var ip1 = UInt8(0)
+        data.getBytes(&ip1, range: NSMakeRange(4, 1))
+        
+        var ip2 = UInt8(0)
+        data.getBytes(&ip2, range: NSMakeRange(5, 1))
+        
+        var ip3 = UInt8(0)
+        data.getBytes(&ip3, range: NSMakeRange(6, 1))
+        
+        var ip4 = UInt8(0)
+        data.getBytes(&ip4, range: NSMakeRange(7, 1))
+        
+        let ipStr = String(format: "%d.%d.%d.%d",ip1,ip2,ip3,ip4)
+        
+        return ipStr
     }
     
+    func showFHIRServerAlertController() {
+        let alert = UIAlertController(title: "Select FHIR server", message: "", preferredStyle: .actionSheet)
+        
+        alert.addAction(UIAlertAction(title: "fhirtest.uhn.ca", style: .default) { action in
+            print("selected: fhirtest.uhn.ca")
+            FHIR.fhirInstance.setFHIRServerAddress(address: "fhirtest.uhn.ca")
+        })
+        alert.addAction(UIAlertAction(title: self.fhirService.name, style: .default) { action in
+            print("selected: bonjour-discovered fhir server")
+            FHIR.fhirInstance.setFHIRServerAddress(address: self.fhirServiceIP!)
+        })
+        
+        self.present(alert, animated: true)
+    }
+    
+    @IBAction func discoverFHIRServersButtonAction(_ sender: Any) {
+        self.browser.delegate = self
+        print("searching for local FHIR servers")
+        self.browser.searchForServices(ofType: "_http._tcp.", inDomain: "local")
+    }
+}
+
+extension GlucoseMetersViewController: NetServiceBrowserDelegate {
     func netServiceBrowser(_ browser: NetServiceBrowser, didFind service: NetService, moreComing: Bool) {
         print("found service: \(service.name)")
-        if(service.name == "fhir") {
+        if(service.name.contains("fhir")) {
             self.browser.stop()
             print("resolving FHIR address")
             fhirService = service
@@ -168,7 +206,9 @@ class GlucoseMetersViewController: UITableViewController, GlucoseMeterDiscoveryP
             fhirService.resolve(withTimeout: 5.0)
         }
     }
-    
+}
+
+extension GlucoseMetersViewController: NetServiceDelegate {
     func netServiceDidResolveAddress(_ sender: NetService) {
         fhirServiceIP = self.getIPV4StringfromAddress(address:sender.addresses!) + ":" + String(sender.port)
         print("resolved address: \(fhirServiceIP)")
@@ -183,47 +223,4 @@ class GlucoseMetersViewController: UITableViewController, GlucoseMeterDiscoveryP
     func netServiceWillResolve(_ sender: NetService) {
         print("netServiceWillResolve")
     }
-    
-    func getIPV4StringfromAddress(address: [Data]) -> String{
-        
-        let data = address.first! as NSData;
-        
-        var ip1 = UInt8(0)
-        data.getBytes(&ip1, range: NSMakeRange(4, 1))
-        
-        var ip2 = UInt8(0)
-        data.getBytes(&ip2, range: NSMakeRange(5, 1))
-        
-        var ip3 = UInt8(0)
-        data.getBytes(&ip3, range: NSMakeRange(6, 1))
-        
-        var ip4 = UInt8(0)
-        data.getBytes(&ip4, range: NSMakeRange(7, 1))
-        
-        let ipStr = String(format: "%d.%d.%d.%d",ip1,ip2,ip3,ip4);
-        
-        return ipStr;
-    }
-    
-    func showFHIRServerAlertController() {
-        let alert = UIAlertController(title: "Select FHIR server", message: "", preferredStyle: .actionSheet)
-        
-        alert.addAction(UIAlertAction(title: "fhirtest.uhn.ca", style: .default) { action in
-            print("selected: fhirtest.uhn.ca")
-            FHIR.sharedInstance.setFHIRServerAddress(address: "fhirtest.uhn.ca")
-        })
-        alert.addAction(UIAlertAction(title: self.fhirService.name, style: .default) { action in
-            print("selected: bonjour-discovered fhir server")
-            FHIR.sharedInstance.setFHIRServerAddress(address: self.fhirServiceIP)
-        })
-        
-        self.present(alert, animated: true)
-    }
-    
-    @IBAction func discoverFHIRServersButtonAction(_ sender: Any) {
-        self.browser.delegate = self
-        print("searching for local FHIR servers")
-        self.browser.searchForServices(ofType: "_http._tcp.", inDomain: "local")
-    }
 }
-

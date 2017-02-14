@@ -13,7 +13,7 @@ import CCGlucose
 import CCToolbox
 import SMART
 
-class GlucoseMeterViewController: UITableViewController, GlucoseProtocol {
+class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refreshable {
     private var glucose : Glucose!
     let cellIdentifier = "GlucoseMeterCellIdentifier"
     var glucoseMeterConnected: Bool! = false
@@ -24,7 +24,6 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol {
     var glucoseMeasurementContexts: Array<GlucoseMeasurementContext> = Array<GlucoseMeasurementContext>()
     var selectedGlucoseMeasurement: GlucoseMeasurement!
     var selectedGlucoseMeasurementContext: GlucoseMeasurementContext!
-    var log: [[String]] = []
     @IBOutlet weak var UploadObservationsButton: UIBarButtonItem!
     let givenName = "Lisa"
     let familyName = "Simpson"
@@ -32,6 +31,12 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol {
     public var patient: Patient?
     public var device: Device?
     public var observations: Array<Observation> = Array<Observation>()
+    
+    struct LogMessage {
+        let date: Date
+        let text: String
+    }
+    var log:[LogMessage] = []
     
     
     override func viewDidLoad() {
@@ -85,7 +90,7 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol {
         }
         
         print("glucoseMeasurements count: \(glucoseMeasurements.count)")
-        self.refreshTable()
+        self.refresh()
     }
     
     func glucoseMeasurementContext(measurementContext:GlucoseMeasurementContext) {
@@ -116,7 +121,6 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol {
                     print("measurement \(measurement.sequenceNumber) not found")
                     self.logEvent(event: "measurement \(measurement.sequenceNumber) not found")
                     measurement.existsOnFHIR = false
-                    self.refreshTable()
                 } else {
                     print("measurement \(measurement.sequenceNumber) found")
                     self.logEvent(event: "measurement \(measurement.sequenceNumber) found")
@@ -131,8 +135,8 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol {
                         self.observations.append((observations?.first)!)
                         print("observations count: \(self.observations.count)")
                     }
-                    self.refreshTable()
                 }
+                self.refresh()
             }
         }
     }
@@ -142,13 +146,16 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol {
     }
     
     func createActivityView() -> UIActivityIndicatorView {
-        let actInd: UIActivityIndicatorView = UIActivityIndicatorView()
-        actInd.frame = CGRect(x: 0, y: 0, width: 40.0, height: 40.0)
-        actInd.activityIndicatorViewStyle =
-            UIActivityIndicatorViewStyle.gray
-        actInd.startAnimating()
+        //let actInd: UIActivityIndicatorView = UIActivityIndicatorView()
+        let activity = UIActivityIndicatorView(frame: .zero)
+        activity.sizeToFit()
         
-        return actInd
+        activity.frame = CGRect(x: 0, y: 0, width: 40.0, height: 40.0)
+        activity.activityIndicatorViewStyle =
+            UIActivityIndicatorViewStyle.gray
+        activity.startAnimating()
+        
+        return activity
     }
 
     // MARK: - Storyboard
@@ -189,7 +196,7 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath as IndexPath) as UITableViewCell
         
         cell.textLabel?.numberOfLines = 0
-        cell.textLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
+        //cell.textLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
         
         switch indexPath.section {
             case 0:
@@ -242,10 +249,8 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol {
                     cell.accessoryType = .none
                 }
             case 4:
-                let eventDescription:String = log[indexPath.row][0]
-                let eventDate:String = log[indexPath.row][1]
-                cell.textLabel!.text = eventDescription
-                cell.detailTextLabel!.text = eventDate
+                cell.textLabel!.text = log[indexPath.row].text
+                cell.detailTextLabel!.text = log[indexPath.row].date.description
                 cell.accessoryType = .none
             default:
                 cell.textLabel!.text = ""
@@ -326,17 +331,11 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol {
                 }
             }
         default:
-            ()
+            break;
         }
     }
     
     // MARK: -
-    func refreshTable() {
-        DispatchQueue.main.async(execute: {
-            self.tableView.reloadData()
-        })
-    }
-    
     func getContextFromArray(sequenceNumber:UInt16) -> GlucoseMeasurementContext? {
         for context: GlucoseMeasurementContext in glucoseMeasurementContexts {
             if(context.sequenceNumber == sequenceNumber) {
@@ -364,11 +363,9 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol {
         
         logEvent(event: "searching for patient \(given) \(family)")
         
-        FHIR.sharedInstance.searchForPatient(searchParameters: searchDict) { (bundle, error) -> Void in
-            guard error == nil else {
+        FHIR.fhirInstance.searchForPatient(searchParameters: searchDict) { (bundle, error) -> Void in
+            if let error = error {
                 print("error searching for patient: \(error)")
-                callback(bundle, error)
-                return
             }
             
             if (bundle?.entry == nil) {
@@ -414,13 +411,12 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol {
         patient.address = [patientAddress]
         patient.birthDate = patientBirthDate
         
-        FHIR.sharedInstance.createPatient(patient: patient) { (patient, error) -> Void in
-            guard error == nil else {
+        FHIR.fhirInstance.createPatient(patient: patient) { patient, error in
+            if let error = error {
                 print("error creating patient: \(error)")
-                callback(patient, error)
-                return
+            } else {
+                self.patient = patient
             }
-            self.patient = patient
             callback(patient, error)
         }
     }
@@ -458,13 +454,12 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol {
         device.type = deviceType
         device.identifier = [deviceIdentifier]
         
-        FHIR.sharedInstance.createDevice(device: device) { (device, error) -> Void in
-            guard error == nil else {
+        FHIR.fhirInstance.createDevice(device: device) { device, error in
+            if let error = error {
                 print("error creating device: \(error)")
-                callback(device, error)
-                return
+            } else {
+                self.device = device
             }
-            self.device = device
             callback(device, error)
         }
     }
@@ -481,11 +476,9 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol {
         
         logEvent(event: "searching for device \(manufacturer) \(modelNumber)")
         
-        FHIR.sharedInstance.searchForDevice(searchParameters: searchDict) { (bundle, error) -> Void in
-            guard error == nil else {
+        FHIR.fhirInstance.searchForDevice(searchParameters: searchDict) { (bundle, error) -> Void in
+            if let error = error {
                 print("error searching for device: \(error)")
-                callback(bundle, error)
-                return
             }
 
             if(bundle?.entry == nil) {
@@ -725,11 +718,10 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol {
         
         self.logEvent(event: "searching for measurement \(measurement.sequenceNumber)")
         
-        FHIR.sharedInstance.searchForObservation(searchParameters: searchDict) { (bundle, error) -> Void in
-            guard error == nil else {
+        //FHIR.sharedInstance.searchForObservation(searchParameters: searchDict) { (bundle, error) -> Void in
+        FHIR.fhirInstance.searchForObservation(searchParameters: searchDict) { bundle, error in
+            if let error = error {
                 print("error searching for observation: \(error)")
-                callback(bundle, error)
-                return
             }
             callback(bundle, error)
         }
@@ -737,7 +729,7 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol {
     
     func uploadSingleMeasurement(measurement: GlucoseMeasurement) {
         if(measurement.existsOnFHIR == false) {
-            FHIR.sharedInstance.createObservation(observation: self.measurementToObservation(measurement: measurement)) { (observation, error) -> Void in
+            FHIR.fhirInstance.createObservation(observation: self.measurementToObservation(measurement: measurement)) { (observation, error) -> Void in
                 guard error == nil else {
                     print("error creating observation: \(error)")
                     return
@@ -749,7 +741,7 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol {
                 measurement.fhirID = observation.id!
                 self.observations.append(observation)
                 
-                self.refreshTable()
+                self.refresh()
             }
         }
     }
@@ -770,8 +762,9 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol {
     }
     
     func logEvent(event: String) {
-        log.append([event,DateTime.now.description])
-        self.refreshTable()
+        let logMessage = LogMessage(date: Date(), text: event)
+        log.append(logMessage)
+        self.refresh()
     }
     
     func showAlert(title: String, message: String) {
@@ -799,7 +792,7 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol {
             return
         }
         
-        FHIR.sharedInstance.createObservationBundle(type: "batch", observations: observationArray) { (bundle,error) -> Void in
+        FHIR.fhirInstance.createObservationBundle(type: "batch", observations: observationArray) { (bundle,error) -> Void in
             guard error == nil else {
                 print("error creating observations: \(error)")
                 return

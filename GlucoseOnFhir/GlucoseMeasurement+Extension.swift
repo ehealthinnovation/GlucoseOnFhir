@@ -11,8 +11,8 @@ import CCGlucose
 
 extension GlucoseMeasurement {
     private struct AssociatedKeys {
-        static var existsOnFHIR: Bool! = false
-        static var fhirID: String! = ""
+        static var existsOnFHIR: Bool = false
+        static var fhirID: String = ""
     }
     
     var existsOnFHIR: Bool! {
