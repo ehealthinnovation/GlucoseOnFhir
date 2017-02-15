@@ -13,6 +13,51 @@ import SMART
 class PatientViewController: UITableViewController {
     public var patient: Patient!
     let cellIdentifier = "PatientCellIdentifier"
+    let sectionHeaderHeight: CGFloat = 75
+    
+    enum Section : Int {
+        case section0, section1, section2, section3, count
+        
+        public func description() -> String {
+            switch self {
+            case .section0:
+                return "Name"
+            case .section1:
+                return "Telecom"
+            case .section2:
+                return "Address"
+            case .section3:
+                return "Birthdate"
+            case .count:
+                fatalError("invalid")
+            }
+        }
+        
+        public func rowCount() -> Int {
+            switch self {
+            case .section0:
+                return 2
+            case .section1:
+                return 3
+            case .section2:
+                return 4
+            case .section3:
+                return 1
+            case .count:
+                fatalError("invalid")
+            }
+        }
+        
+        enum Section0 : Int {
+            case givenName, familyName, count
+        }
+        enum Section1 : Int {
+            case system, value, use, count
+        }
+        enum Section2 : Int {
+            case line, city, postalCode, country, count
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,14 +66,14 @@ class PatientViewController: UITableViewController {
     // MARK: Table data source methods
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-        case 0:
-            return 2
-        case 1:
-            return 3
-        case 2:
-            return 4
-        case 3:
-            return 1
+        case Section.section0.rawValue:
+            return Section.section0.rowCount()
+        case Section.section1.rawValue:
+            return Section.section1.rowCount()
+        case Section.section2.rawValue:
+            return Section.section2.rowCount()
+        case Section.section3.rawValue:
+            return Section.section3.rowCount()
         default:
             return 0
         }
@@ -38,79 +83,79 @@ class PatientViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath as IndexPath) as UITableViewCell
         
         switch indexPath.section {
-            case 0:
+            case Section.section0.rawValue:
                 switch(indexPath.row) {
-                    case 0:
+                    case Section.Section0.givenName.rawValue:
                         cell.textLabel!.text = self.patient.name?.first?.given?.first?.description
                         cell.detailTextLabel!.text = "given name"
-                    case 1:
+                    case Section.Section0.familyName.rawValue:
                         cell.textLabel!.text = self.patient.name?.first?.family?.first?.description
                         cell.detailTextLabel!.text = "family name"
                     default:
                         cell.textLabel!.text = ""
                         cell.detailTextLabel!.text = ""
                 }
-            case 1:
+            case Section.section1.rawValue:
                 switch(indexPath.row) {
-                case 0:
+                case Section.Section1.system.rawValue:
                     cell.textLabel!.text = self.patient.telecom?.first?.system?.description
                     cell.detailTextLabel!.text = "system"
-                case 1:
+                case Section.Section1.value.rawValue:
                     cell.textLabel!.text = self.patient.telecom?.first?.value?.description
                     cell.detailTextLabel!.text = "value"
-                case 2:
+                case Section.Section1.use.rawValue:
                     cell.textLabel!.text = self.patient.telecom?.first?.use?.description
                     cell.detailTextLabel!.text = "use"
                 default:
                     cell.textLabel!.text = ""
                     cell.detailTextLabel!.text = ""
                 }
-            case 2:
+            case Section.section2.rawValue:
                 switch(indexPath.row) {
-                case 0:
+                case Section.Section2.line.rawValue:
                     cell.textLabel!.text = self.patient.address?.first?.line?.first?.description
                     cell.detailTextLabel!.text = "line"
-                case 1:
+                case Section.Section2.city.rawValue:
                     cell.textLabel!.text = self.patient.address?.first?.city?.description
                     cell.detailTextLabel!.text = "city"
-                case 2:
+                case Section.Section2.postalCode.rawValue:
                     cell.textLabel!.text = self.patient.address?.first?.postalCode?.description
                     cell.detailTextLabel!.text = "postal code"
-                case 3:
+                case Section.Section2.country.rawValue:
                     cell.textLabel!.text = self.patient.address?.first?.country?.description
                     cell.detailTextLabel!.text = "country"
                 default:
                     cell.textLabel!.text = ""
                     cell.detailTextLabel!.text = ""
                 }
-            case 3:
+            case Section.section3.rawValue:
                 cell.textLabel!.text = self.patient.birthDate?.description
                 cell.detailTextLabel!.text = "birthDate"
             default:
-                print("")
+                break
         }
         
         return cell
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 4
+        return Section.count.rawValue
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 75
+        return self.sectionHeaderHeight
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
-        case 0:
-            return "Name"
-        case 1:
-            return "Telecom"
-        case 2:
-            return "Address"
-        case 3:
-            return "Birthdate"
+        case Section.section0.rawValue:
+            return Section.section0.description()
+        case Section.section1.rawValue:
+            return Section.section1.description()
+        case Section.section2.rawValue:
+            return Section.section2.description()
+        case Section.section3.rawValue:
+            return Section.section3.description()
         default:
             return ""
         }

@@ -38,6 +38,26 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
     }
     var log:[LogMessage] = []
     
+    enum Section : Int {
+        case section0, section1, section2, section3, section4, count
+        
+        public func description() -> String {
+            switch self {
+            case .section0:
+                return "Patient"
+            case .section1:
+                return "Glucose Meter Device"
+            case .section2:
+                return "Glucose Meter Record Count"
+            case .section3:
+                return "Glucose Meter Records"
+            case .section4:
+                return "Log"
+            case .count:
+                fatalError("invalid")
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,8 +98,8 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
         logEvent(event: "meter number of records: \(number)")
         glucoseMeasurementCount = number
         
-        //glucose.downloadRecordsWithRange(from: 213, to: 216)
-        glucose.downloadRecordsWithRange(from: 0, to: 3)
+        glucose.downloadRecordsWithRange(from: 213, to: 216)
+        //glucose.downloadRecordsWithRange(from: 0, to: 3)
     }
     
     func glucoseMeasurement(measurement:GlucoseMeasurement) {
@@ -177,15 +197,15 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
     // MARK: - UITableViewDataSource
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-            case 0:
+            case Section.section0.rawValue:
                 return 1
-            case 1:
+            case Section.section1.rawValue:
                 return 1
-            case 2:
+            case Section.section2.rawValue:
                 return 1
-            case 3:
+            case Section.section3.rawValue:
                 return glucoseMeasurements.count
-            case 4:
+            case Section.section4.rawValue:
                 return log.count
             default:
                 return 0
@@ -199,7 +219,7 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
         //cell.textLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
         
         switch indexPath.section {
-            case 0:
+            case Section.section0.rawValue:
                 cell.textLabel!.text = "Given Name: \(self.givenName)\nFamily Name: \(self.familyName)"
                 
                 if(self.patient != nil) {
@@ -209,7 +229,7 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
                 } else {
                     cell.detailTextLabel!.text = "Patient: Tap to upload"
             }
-            case 1:
+            case Section.section1.rawValue:
                 if let manufacturer = glucose.manufacturerName {
                     cell.textLabel!.text = "Manufacturer: \(manufacturer)"
                 }
@@ -227,11 +247,11 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
                 } else {
                     cell.detailTextLabel!.text = "Device: Tap to upload"
                 }
-            case 2:
+            case Section.section2.rawValue:
                     cell.textLabel!.text = "Number of records: " + " " + glucoseMeasurementCount.description
                     cell.detailTextLabel!.text = ""
                     cell.accessoryType = .none
-            case 3:
+            case Section.section3.rawValue:
                 let measurement = Array(glucoseMeasurements)[indexPath.row]
                 let mmolString = String(describing: self.truncateMeasurement(measurementValue: measurement.toMMOL()!))
                 let contextWillFollow : Bool = (measurement.contextInformationFollows)
@@ -248,7 +268,7 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
                     cell.detailTextLabel!.text = "Observation: Tap to upload"
                     cell.accessoryType = .none
                 }
-            case 4:
+            case Section.section4.rawValue:
                 cell.textLabel!.text = log[indexPath.row].text
                 cell.detailTextLabel!.text = log[indexPath.row].date.description
                 cell.accessoryType = .none
@@ -261,7 +281,7 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 5
+        return Section.count.rawValue
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -270,16 +290,16 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
-            case 0:
-                return "Patient"
-            case 1:
-                return "Glucose Meter Device"
-            case 2:
-                return "Glucose Meter Record Count"
-            case 3:
-                return "Glucose Meter Records"
-            case 4:
-                return "Log"
+            case Section.section0.rawValue:
+                return Section.section0.description()
+            case Section.section1.rawValue:
+                return Section.section1.description()
+            case Section.section2.rawValue:
+                return Section.section2.description()
+            case Section.section3.rawValue:
+                return Section.section3.description()
+            case Section.section4.rawValue:
+                return Section.section4.description()
             default:
                 return ""
         }
@@ -292,7 +312,7 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
         let cell = tableView.cellForRow(at: indexPath)! as UITableViewCell
         
         switch indexPath.section {
-        case 0:
+        case Section.section0.rawValue:
             if (self.patient?.id) != nil {
                 performSegue(withIdentifier: "segueToPatient", sender: self)
             } else {
@@ -304,7 +324,7 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
                     }
                 }
             }
-        case 1:
+        case Section.section1.rawValue:
             if (self.device?.id) != nil {
                 performSegue(withIdentifier: "segueToDevice", sender: self)
             } else {
@@ -316,9 +336,9 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
                     }
                 }
             }
-        //case 2:
-            //"Glucose Meter Record Count"
-        case 3:
+        case Section.section2.rawValue:
+            break
+        case Section.section3.rawValue:
             if (glucoseMeasurements[indexPath.row].existsOnFHIR == true) {
                 selectedGlucoseMeasurement = glucoseMeasurements[indexPath.row]
                 performSegue(withIdentifier: "segueToObservation", sender: self)
@@ -330,6 +350,8 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
                     self.uploadSingleMeasurement(measurement: glucoseMeasurements[indexPath.row])
                 }
             }
+        case Section.section4.rawValue:
+            break
         default:
             break;
         }
