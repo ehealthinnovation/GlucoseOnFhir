@@ -16,17 +16,17 @@ class PatientViewController: UITableViewController {
     let sectionHeaderHeight: CGFloat = 75
     
     enum Section : Int {
-        case section0, section1, section2, section3, count
+        case name, telecom, address, birthdate, count
         
         public func description() -> String {
             switch self {
-            case .section0:
+            case .name:
                 return "Name"
-            case .section1:
+            case .telecom:
                 return "Telecom"
-            case .section2:
+            case .address:
                 return "Address"
-            case .section3:
+            case .birthdate:
                 return "Birthdate"
             case .count:
                 fatalError("invalid")
@@ -35,27 +35,30 @@ class PatientViewController: UITableViewController {
         
         public func rowCount() -> Int {
             switch self {
-            case .section0:
-                return 2
-            case .section1:
-                return 3
-            case .section2:
-                return 4
-            case .section3:
-                return 1
+            case .name:
+                return Name.count.rawValue
+            case .telecom:
+                return Telecom.count.rawValue
+            case .address:
+                return Address.count.rawValue
+            case .birthdate:
+                return Birthdate.count.rawValue
             case .count:
                 fatalError("invalid")
             }
         }
         
-        enum Section0 : Int {
+        enum Name : Int {
             case givenName, familyName, count
         }
-        enum Section1 : Int {
+        enum Telecom : Int {
             case system, value, use, count
         }
-        enum Section2 : Int {
+        enum Address : Int {
             case line, city, postalCode, country, count
+        }
+        enum Birthdate : Int {
+            case birthdate, count
         }
     }
     
@@ -66,14 +69,14 @@ class PatientViewController: UITableViewController {
     // MARK: Table data source methods
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-        case Section.section0.rawValue:
-            return Section.section0.rowCount()
-        case Section.section1.rawValue:
-            return Section.section1.rowCount()
-        case Section.section2.rawValue:
-            return Section.section2.rowCount()
-        case Section.section3.rawValue:
-            return Section.section3.rowCount()
+        case Section.name.rawValue:
+            return Section.name.rowCount()
+        case Section.telecom.rawValue:
+            return Section.telecom.rowCount()
+        case Section.address.rawValue:
+            return Section.address.rowCount()
+        case Section.birthdate.rawValue:
+            return Section.birthdate.rowCount()
         default:
             return 0
         }
@@ -83,52 +86,52 @@ class PatientViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath as IndexPath) as UITableViewCell
         
         switch indexPath.section {
-            case Section.section0.rawValue:
+            case Section.name.rawValue:
                 switch(indexPath.row) {
-                    case Section.Section0.givenName.rawValue:
+                    case Section.Name.givenName.rawValue:
                         cell.textLabel!.text = self.patient.name?.first?.given?.first?.description
                         cell.detailTextLabel!.text = "given name"
-                    case Section.Section0.familyName.rawValue:
+                    case Section.Name.familyName.rawValue:
                         cell.textLabel!.text = self.patient.name?.first?.family?.first?.description
                         cell.detailTextLabel!.text = "family name"
                     default:
                         cell.textLabel!.text = ""
                         cell.detailTextLabel!.text = ""
                 }
-            case Section.section1.rawValue:
+            case Section.telecom.rawValue:
                 switch(indexPath.row) {
-                case Section.Section1.system.rawValue:
+                case Section.Telecom.system.rawValue:
                     cell.textLabel!.text = self.patient.telecom?.first?.system?.description
                     cell.detailTextLabel!.text = "system"
-                case Section.Section1.value.rawValue:
+                case Section.Telecom.value.rawValue:
                     cell.textLabel!.text = self.patient.telecom?.first?.value?.description
                     cell.detailTextLabel!.text = "value"
-                case Section.Section1.use.rawValue:
+                case Section.Telecom.use.rawValue:
                     cell.textLabel!.text = self.patient.telecom?.first?.use?.description
                     cell.detailTextLabel!.text = "use"
                 default:
                     cell.textLabel!.text = ""
                     cell.detailTextLabel!.text = ""
                 }
-            case Section.section2.rawValue:
+            case Section.address.rawValue:
                 switch(indexPath.row) {
-                case Section.Section2.line.rawValue:
+                case Section.Address.line.rawValue:
                     cell.textLabel!.text = self.patient.address?.first?.line?.first?.description
                     cell.detailTextLabel!.text = "line"
-                case Section.Section2.city.rawValue:
+                case Section.Address.city.rawValue:
                     cell.textLabel!.text = self.patient.address?.first?.city?.description
                     cell.detailTextLabel!.text = "city"
-                case Section.Section2.postalCode.rawValue:
+                case Section.Address.postalCode.rawValue:
                     cell.textLabel!.text = self.patient.address?.first?.postalCode?.description
                     cell.detailTextLabel!.text = "postal code"
-                case Section.Section2.country.rawValue:
+                case Section.Address.country.rawValue:
                     cell.textLabel!.text = self.patient.address?.first?.country?.description
                     cell.detailTextLabel!.text = "country"
                 default:
                     cell.textLabel!.text = ""
                     cell.detailTextLabel!.text = ""
                 }
-            case Section.section3.rawValue:
+            case Section.birthdate.rawValue:
                 cell.textLabel!.text = self.patient.birthDate?.description
                 cell.detailTextLabel!.text = "birthDate"
             default:
@@ -148,14 +151,14 @@ class PatientViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
-        case Section.section0.rawValue:
-            return Section.section0.description()
-        case Section.section1.rawValue:
-            return Section.section1.description()
-        case Section.section2.rawValue:
-            return Section.section2.description()
-        case Section.section3.rawValue:
-            return Section.section3.description()
+        case Section.name.rawValue:
+            return Section.name.description()
+        case Section.telecom.rawValue:
+            return Section.telecom.description()
+        case Section.address.rawValue:
+            return Section.address.description()
+        case Section.birthdate.rawValue:
+            return Section.birthdate.description()
         default:
             return ""
         }
@@ -163,7 +166,6 @@ class PatientViewController: UITableViewController {
     
     //MARK: table delegate methods
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("didSelectRowAtIndexPath")
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }

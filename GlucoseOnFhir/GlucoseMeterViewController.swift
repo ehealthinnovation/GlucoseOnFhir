@@ -166,11 +166,9 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
     }
     
     func createActivityView() -> UIActivityIndicatorView {
-        //let actInd: UIActivityIndicatorView = UIActivityIndicatorView()
         let activity = UIActivityIndicatorView(frame: .zero)
         activity.sizeToFit()
         
-        activity.frame = CGRect(x: 0, y: 0, width: 40.0, height: 40.0)
         activity.activityIndicatorViewStyle =
             UIActivityIndicatorViewStyle.gray
         activity.startAnimating()

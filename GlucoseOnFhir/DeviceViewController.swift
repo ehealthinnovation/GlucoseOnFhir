@@ -16,17 +16,17 @@ class DeviceViewController: UITableViewController {
     let sectionHeaderHeight: CGFloat = 75
     
     enum Section : Int {
-        case section0, section1, section2, section3, count
+        case identifier, type, manufacturer, model, count
         
         public func description() -> String {
             switch self {
-            case .section0:
+            case .identifier:
                 return "Identifier"
-            case .section1:
+            case .type:
                 return "Type"
-            case .section2:
+            case .manufacturer:
                 return "Manufacturer"
-            case .section3:
+            case .model:
                 return "Model"
             case .count:
                 fatalError("invalid")
@@ -35,24 +35,30 @@ class DeviceViewController: UITableViewController {
         
         public func rowCount() -> Int {
             switch self {
-            case .section0:
-                return 4
-            case .section1:
-                return 4
-            case .section2:
-                return 1
-            case .section3:
-                return 1
+            case .identifier:
+                return Identifier.count.rawValue
+            case .type:
+                return WithType.count.rawValue
+            case .manufacturer:
+                return Manufacturer.count.rawValue
+            case .model:
+                return Model.count.rawValue
             case .count:
                 fatalError("invalid")
             }
         }
         
-        enum Section0 : Int {
+        enum Identifier : Int {
             case typeCodingSystem, typeCodingCode, system, value, count
         }
-        enum Section1 : Int {
+        enum WithType : Int {
             case codingSystem, codingCode, codingDisplay, text, count
+        }
+        enum Manufacturer : Int {
+            case manufacturer, count
+        }
+        enum Model : Int {
+            case model, count
         }
     }
     
@@ -63,14 +69,14 @@ class DeviceViewController: UITableViewController {
     // MARK: Table data source methods
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-        case Section.section0.rawValue:
-            return Section.section0.rowCount()
-        case Section.section1.rawValue:
-            return Section.section1.rowCount()
-        case Section.section2.rawValue:
-            return Section.section2.rowCount()
-        case Section.section3.rawValue:
-            return Section.section3.rowCount()
+        case Section.identifier.rawValue:
+            return Section.identifier.rowCount()
+        case Section.type.rawValue:
+            return Section.type.rowCount()
+        case Section.manufacturer.rawValue:
+            return Section.manufacturer.rowCount()
+        case Section.model.rawValue:
+            return Section.model.rowCount()
         default:
             return 0
         }
@@ -80,46 +86,46 @@ class DeviceViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath as IndexPath) as UITableViewCell
         
         switch indexPath.section {
-        case Section.section0.rawValue:
+        case Section.identifier.rawValue:
             switch(indexPath.row) {
-            case Section.Section0.typeCodingSystem.rawValue:
+            case Section.Identifier.typeCodingSystem.rawValue:
                 cell.textLabel!.text = self.device.identifier?.first?.type?.coding?.first?.system?.description
                 cell.detailTextLabel!.text = "type->coding->system"
-            case Section.Section0.typeCodingCode.rawValue:
+            case Section.Identifier.typeCodingCode.rawValue:
                 cell.textLabel!.text = self.device.identifier?.first?.type?.coding?.first?.code?.description
                 cell.detailTextLabel!.text = "type->coding->code"
-            case Section.Section0.system.rawValue:
+            case Section.Identifier.system.rawValue:
                 cell.textLabel!.text = self.device.identifier?.first?.system?.description
                 cell.detailTextLabel!.text = "system"
-            case Section.Section0.value.rawValue:
+            case Section.Identifier.value.rawValue:
                 cell.textLabel!.text = self.device.identifier?.first?.value?.description
                 cell.detailTextLabel!.text = "value"
             default:
                 cell.textLabel!.text = ""
                 cell.detailTextLabel!.text = ""
             }
-        case Section.section1.rawValue:
+        case Section.type.rawValue:
             switch(indexPath.row) {
-            case Section.Section1.codingSystem.rawValue:
+            case Section.WithType.codingSystem.rawValue:
                 cell.textLabel!.text = self.device.type?.coding?.first?.system?.description
                 cell.detailTextLabel!.text = "coding->system"
-            case Section.Section1.codingCode.rawValue:
+            case Section.WithType.codingCode.rawValue:
                 cell.textLabel!.text = self.device.type?.coding?.first?.code?.description
                 cell.detailTextLabel!.text = "coding->code"
-            case Section.Section1.codingDisplay.rawValue:
+            case Section.WithType.codingDisplay.rawValue:
                 cell.textLabel!.text = self.device.type?.coding?.first?.display?.description
                 cell.detailTextLabel!.text = "coding->display"
-            case Section.Section1.text.rawValue:
+            case Section.WithType.text.rawValue:
                 cell.textLabel!.text = self.device.type?.text?.description
                 cell.detailTextLabel!.text = "text"
             default:
                 cell.textLabel!.text = ""
                 cell.detailTextLabel!.text = ""
             }
-        case Section.section2.rawValue:
+        case Section.manufacturer.rawValue:
             cell.textLabel!.text = self.device.manufacturer?.description
             cell.detailTextLabel!.text = "manufacturer"
-        case Section.section3.rawValue:
+        case Section.model.rawValue:
             cell.textLabel!.text = self.device.model?.description
             cell.detailTextLabel!.text = "model"
         default:
@@ -139,14 +145,14 @@ class DeviceViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
-        case Section.section0.rawValue:
-            return Section.section0.description()
-        case Section.section1.rawValue:
-            return Section.section1.description()
-        case Section.section2.rawValue:
-            return Section.section2.description()
-        case Section.section3.rawValue:
-            return Section.section3.description()
+        case Section.identifier.rawValue:
+            return Section.identifier.description()
+        case Section.type.rawValue:
+            return Section.type.description()
+        case Section.manufacturer.rawValue:
+            return Section.manufacturer.description()
+        case Section.model.rawValue:
+            return Section.model.description()
         default:
             return ""
         }
@@ -154,7 +160,6 @@ class DeviceViewController: UITableViewController {
 
     //MARK: table delegate methods
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("didSelectRowAtIndexPath")
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }

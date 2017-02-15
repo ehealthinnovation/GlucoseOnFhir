@@ -17,23 +17,23 @@ class ObservationViewController: UITableViewController {
     
     // TO-DO:
     enum Section : Int {
-        case section0, section1, section2, section3, section4, section5, section6, count
+        case code, subject, effectivePeriod, performer, valueQuantity, device, mealContext, count
         
         public func description() -> String {
             switch self {
-            case .section0:
+            case .code:
                 return "Code"
-            case .section1:
+            case .subject:
                 return "Subject"
-            case .section2:
+            case .effectivePeriod:
                 return "Effective Period"
-            case .section3:
+            case .performer:
                 return "Performer"
-            case .section4:
+            case .valueQuantity:
                 return "Value Quantity"
-            case .section5:
+            case .device:
                 return "Device"
-            case .section6:
+            case .mealContext:
                 return "Meal Context"
             case .count:
                 fatalError("invalid")
@@ -42,33 +42,42 @@ class ObservationViewController: UITableViewController {
         
         public func rowCount() -> Int {
             switch self {
-            case .section0:
-                return 3
-            case .section1:
-                return 1
-            case .section2:
-                return 2
-            case .section3:
-                return 1
-            case .section4:
-                return 4
-            case .section5:
-                return 1
-            case .section6:
-                return 4
+            case .code:
+                return Code.count.rawValue
+            case .subject:
+                return Subject.count.rawValue
+            case .effectivePeriod:
+                return EffectivePeriod.count.rawValue
+            case .performer:
+                return Performer.count.rawValue
+            case .valueQuantity:
+                return ValueQuantity.count.rawValue
+            case .device:
+                return Device.count.rawValue
+            case .mealContext:
+                return Section6.count.rawValue
             case .count:
                 fatalError("invalid")
             }
         }
         
-        enum Section0 : Int {
+        enum Code : Int {
             case codingSystem, codingCode, codingDisplay, count
         }
-        enum Section2 : Int {
+        enum Subject : Int {
+            case subject, count
+        }
+        enum EffectivePeriod : Int {
             case start, end, count
         }
-        enum Section4 : Int {
+        enum Performer : Int {
+            case performer, count
+        }
+        enum ValueQuantity : Int {
             case value, unit, system, code, count
+        }
+        enum Device : Int {
+            case device, count
         }
         enum Section6 : Int {
             case system, code, display, url, count
@@ -82,20 +91,20 @@ class ObservationViewController: UITableViewController {
     // MARK: Table data source methods
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-        case Section.section0.rawValue:
-            return Section.section0.rowCount()
-        case Section.section1.rawValue:
-            return Section.section1.rowCount()
-        case Section.section2.rawValue:
-            return Section.section2.rowCount()
-        case Section.section3.rawValue:
-            return Section.section3.rowCount()
-        case Section.section4.rawValue:
-            return Section.section4.rowCount()
-        case Section.section5.rawValue:
-            return Section.section5.rowCount()
-        case Section.section6.rawValue:
-            return Section.section6.rowCount()
+        case Section.code.rawValue:
+            return Section.code.rowCount()
+        case Section.subject.rawValue:
+            return Section.subject.rowCount()
+        case Section.effectivePeriod.rawValue:
+            return Section.effectivePeriod.rowCount()
+        case Section.performer.rawValue:
+            return Section.performer.rowCount()
+        case Section.valueQuantity.rawValue:
+            return Section.valueQuantity.rowCount()
+        case Section.device.rawValue:
+            return Section.device.rowCount()
+        case Section.mealContext.rawValue:
+            return Section.mealContext.rowCount()
         default:
             return 0
         }
@@ -105,61 +114,61 @@ class ObservationViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath as IndexPath) as UITableViewCell
         
         switch indexPath.section {
-        case Section.section0.rawValue:
+        case Section.code.rawValue:
             switch(indexPath.row) {
-            case Section.Section0.codingSystem.rawValue:
+            case Section.Code.codingSystem.rawValue:
                 cell.textLabel!.text = self.observation.code?.coding?.first?.system?.description
                 cell.detailTextLabel!.text = "coding->system"
-            case Section.Section0.codingCode.rawValue:
+            case Section.Code.codingCode.rawValue:
                 cell.textLabel!.text = self.observation.code?.coding?.first?.code?.description
                 cell.detailTextLabel!.text = "coding->code"
-            case Section.Section0.codingDisplay.rawValue:
+            case Section.Code.codingDisplay.rawValue:
                 cell.textLabel!.text = self.observation.code?.coding?.first?.display?.description
                 cell.detailTextLabel!.text = "coding->display"
             default:
                 cell.textLabel!.text = ""
                 cell.detailTextLabel!.text = ""
             }
-        case Section.section1.rawValue:
+        case Section.subject.rawValue:
             cell.textLabel!.text = self.observation.subject?.reference?.description
             cell.detailTextLabel!.text = "reference"
-        case Section.section2.rawValue:
+        case Section.effectivePeriod.rawValue:
             switch(indexPath.row) {
-            case Section.Section2.start.rawValue:
+            case Section.EffectivePeriod.start.rawValue:
                 cell.textLabel!.text = self.observation.effectivePeriod?.start?.description
                 cell.detailTextLabel!.text = "start"
-            case Section.Section2.end.rawValue:
+            case Section.EffectivePeriod.end.rawValue:
                 cell.textLabel!.text = self.observation.effectivePeriod?.end?.description
                 cell.detailTextLabel!.text = "end"
             default:
                 cell.textLabel!.text = ""
                 cell.detailTextLabel!.text = ""
             }
-        case Section.section3.rawValue:
+        case Section.performer.rawValue:
             cell.textLabel!.text = self.observation.performer?.first?.reference?.description
             cell.detailTextLabel!.text = "reference"
-        case Section.section4.rawValue:
+        case Section.valueQuantity.rawValue:
             switch(indexPath.row) {
-            case Section.Section4.value.rawValue:
+            case Section.ValueQuantity.value.rawValue:
                 cell.textLabel!.text = self.observation.valueQuantity?.value?.description
                 cell.detailTextLabel!.text = "value"
-            case Section.Section4.unit.rawValue:
+            case Section.ValueQuantity.unit.rawValue:
                 cell.textLabel!.text = self.observation.valueQuantity?.unit?.description
                 cell.detailTextLabel!.text = "unit"
-            case Section.Section4.system.rawValue:
+            case Section.ValueQuantity.system.rawValue:
                 cell.textLabel!.text = self.observation.valueQuantity?.system?.description
                 cell.detailTextLabel!.text = "system"
-            case Section.Section4.code.rawValue:
+            case Section.ValueQuantity.code.rawValue:
                 cell.textLabel!.text = self.observation.valueQuantity?.code?.description
                 cell.detailTextLabel!.text = "code"
             default:
                 cell.textLabel!.text = ""
                 cell.detailTextLabel!.text = ""
             }
-        case Section.section5.rawValue:
+        case Section.device.rawValue:
             cell.textLabel!.text = self.observation.device?.reference?.description
             cell.detailTextLabel!.text = "reference"
-        case Section.section6.rawValue:
+        case Section.mealContext.rawValue:
             switch(indexPath.row) {
             case Section.Section6.system.rawValue:
                 cell.textLabel!.text = observation.extension_fhir?.first?.valueCoding?.system?.description
@@ -197,20 +206,20 @@ class ObservationViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
-        case Section.section0.rawValue:
-            return Section.section0.description()
-        case Section.section1.rawValue:
-            return Section.section1.description()
-        case Section.section2.rawValue:
-            return Section.section2.description()
-        case Section.section3.rawValue:
-            return Section.section3.description()
-        case Section.section4.rawValue:
-            return Section.section4.description()
-        case Section.section5.rawValue:
-            return Section.section5.description()
-        case Section.section6.rawValue:
-            return Section.section6.description()
+        case Section.code.rawValue:
+            return Section.code.description()
+        case Section.subject.rawValue:
+            return Section.subject.description()
+        case Section.effectivePeriod.rawValue:
+            return Section.effectivePeriod.description()
+        case Section.performer.rawValue:
+            return Section.performer.description()
+        case Section.valueQuantity.rawValue:
+            return Section.valueQuantity.description()
+        case Section.device.rawValue:
+            return Section.device.description()
+        case Section.mealContext.rawValue:
+            return Section.mealContext.description()
         default:
             return ""
         }
@@ -218,7 +227,6 @@ class ObservationViewController: UITableViewController {
 
     //MARK: table delegate methods
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("didSelectRowAtIndexPath")
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
