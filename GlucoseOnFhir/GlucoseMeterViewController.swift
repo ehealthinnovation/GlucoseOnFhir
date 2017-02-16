@@ -39,23 +39,50 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
     var log:[LogMessage] = []
     
     enum Section : Int {
-        case section0, section1, section2, section3, section4, count
+        case patient, glucoseMeterDevice, glucoseMeterRecordCount, glucoseMeterRecords, log, count
         
         public func description() -> String {
             switch self {
-            case .section0:
+            case .patient:
                 return "Patient"
-            case .section1:
+            case .glucoseMeterDevice:
                 return "Glucose Meter Device"
-            case .section2:
+            case .glucoseMeterRecordCount:
                 return "Glucose Meter Record Count"
-            case .section3:
+            case .glucoseMeterRecords:
                 return "Glucose Meter Records"
-            case .section4:
+            case .log:
                 return "Log"
             case .count:
                 fatalError("invalid")
             }
+        }
+    
+        public func rowCount() -> Int {
+            switch self {
+            case .patient:
+                return Patient.count.rawValue
+            case .glucoseMeterDevice:
+                return GlucoseMeterDevice.count.rawValue
+            case .glucoseMeterRecordCount:
+                return GlucoseMeterRecordCount.count.rawValue
+            case .glucoseMeterRecords:
+                return 1
+            case .log:
+                return 1
+            case .count:
+                fatalError("invalid")
+            }
+        }
+        
+        enum Patient : Int {
+            case patient, count
+        }
+        enum GlucoseMeterDevice : Int {
+            case glucoseMeterDevice, count
+        }
+        enum GlucoseMeterRecordCount : Int {
+            case glucoseMeterRecordCount, count
         }
     }
     
@@ -80,7 +107,7 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
         }
     }
     
-    // MARK: - GlucoseProtocol
+    // mark GlucoseProtocol
     func glucoseMeterConnected(meter: CBPeripheral) {
         print("GlucoseMeterViewController#glucoseMeterConnected")
         logEvent(event: "meter connected")
@@ -97,9 +124,9 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
         print("GlucoseMeterViewController#numberOfStoredRecords - \(number)")
         logEvent(event: "meter number of records: \(number)")
         glucoseMeasurementCount = number
-        
+    
+        //download records from meter, eg. records 213 - 216
         glucose.downloadRecordsWithRange(from: 213, to: 216)
-        //glucose.downloadRecordsWithRange(from: 0, to: 3)
     }
     
     func glucoseMeasurement(measurement:GlucoseMeasurement) {
@@ -176,7 +203,7 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
         return activity
     }
 
-    // MARK: - Storyboard
+    // mark Storyboard
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "segueToPatient") {
             let PatientViewVC =  segue.destination as! PatientViewController
@@ -192,32 +219,32 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
         }
     }
     
-    // MARK: - UITableViewDataSource
+    // mark UITableViewDataSource
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        guard let section = Section(rawValue:section) else {
+            fatalError("invalid section")
+        }
+        
         switch section {
-            case Section.section0.rawValue:
-                return 1
-            case Section.section1.rawValue:
-                return 1
-            case Section.section2.rawValue:
-                return 1
-            case Section.section3.rawValue:
+            case .glucoseMeterRecords:
                 return glucoseMeasurements.count
-            case Section.section4.rawValue:
+            case .log:
                 return log.count
             default:
-                return 0
+                return (section.rowCount())
         }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath as IndexPath) as UITableViewCell
-        
         cell.textLabel?.numberOfLines = 0
-        //cell.textLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
         
-        switch indexPath.section {
-            case Section.section0.rawValue:
+        guard let section = Section(rawValue:indexPath.section) else {
+            fatalError("invalid section")
+        }
+        
+        switch section {
+            case .patient:
                 cell.textLabel!.text = "Given Name: \(self.givenName)\nFamily Name: \(self.familyName)"
                 
                 if(self.patient != nil) {
@@ -226,8 +253,8 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
                     cell.accessoryType = .disclosureIndicator
                 } else {
                     cell.detailTextLabel!.text = "Patient: Tap to upload"
-            }
-            case Section.section1.rawValue:
+                }
+            case .glucoseMeterDevice:
                 if let manufacturer = glucose.manufacturerName {
                     cell.textLabel!.text = "Manufacturer: \(manufacturer)"
                 }
@@ -237,7 +264,6 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
                 if let serialNumber = glucose.serialNumber {
                     cell.textLabel?.text?.append("\nSerial: \(serialNumber)")
                 }
-                
                 if(self.device != nil) {
                     cell.detailTextLabel!.text = "Device FHIR ID: " + (self.device?.id)!
                     cell.accessoryView = nil
@@ -245,17 +271,17 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
                 } else {
                     cell.detailTextLabel!.text = "Device: Tap to upload"
                 }
-            case Section.section2.rawValue:
-                    cell.textLabel!.text = "Number of records: " + " " + glucoseMeasurementCount.description
-                    cell.detailTextLabel!.text = ""
-                    cell.accessoryType = .none
-            case Section.section3.rawValue:
+            case .glucoseMeterRecordCount:
+                cell.textLabel!.text = "Number of records: " + " " + glucoseMeasurementCount.description
+                cell.detailTextLabel!.text = ""
+                cell.accessoryType = .none
+            case .glucoseMeterRecords:
                 let measurement = Array(glucoseMeasurements)[indexPath.row]
                 let mmolString = String(describing: self.truncateMeasurement(measurementValue: measurement.toMMOL()!))
                 let contextWillFollow : Bool = (measurement.contextInformationFollows)
-            
+                
                 cell.textLabel!.text = "Record: \(measurement.sequenceNumber)\nGlucose (kg/L): \(measurement.glucoseConcentration) \(measurement.unit.description)\nGlucose (mmol/L): \(mmolString) mmol/L\nContext: \(contextWillFollow.description)\n\nDate: \(measurement.dateTime!.description)"
-            
+                
                 print("measurement existsOnFhir?: \(measurement.existsOnFHIR)")
                 
                 if let fhirID = measurement.fhirID {
@@ -266,14 +292,12 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
                     cell.detailTextLabel!.text = "Observation: Tap to upload"
                     cell.accessoryType = .none
                 }
-            case Section.section4.rawValue:
+            case .log:
                 cell.textLabel!.text = log[indexPath.row].text
                 cell.detailTextLabel!.text = log[indexPath.row].date.description
                 cell.accessoryType = .none
             default:
-                cell.textLabel!.text = ""
-                cell.detailTextLabel!.text = ""
-                cell.accessoryType = .none
+                break
         }
         return cell
     }
@@ -287,75 +311,61 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch section {
-            case Section.section0.rawValue:
-                return Section.section0.description()
-            case Section.section1.rawValue:
-                return Section.section1.description()
-            case Section.section2.rawValue:
-                return Section.section2.description()
-            case Section.section3.rawValue:
-                return Section.section3.description()
-            case Section.section4.rawValue:
-                return Section.section4.description()
-            default:
-                return ""
-        }
+        let sectionType = Section(rawValue: section)
+        return sectionType?.description() ?? "none"
     }
 
-    //MARK: - table delegate methods
+    //mark table delegate methods
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
         let cell = tableView.cellForRow(at: indexPath)! as UITableViewCell
         
-        switch indexPath.section {
-        case Section.section0.rawValue:
-            if (self.patient?.id) != nil {
-                performSegue(withIdentifier: "segueToPatient", sender: self)
-            } else {
-                cell.accessoryView = self.createActivityView()
-                self.createPatient() { (patient, error) -> Void in
-                    if(error == nil) {
-                        print("patient created with id: \(patient.id!)")
-                        self.logEvent(event: "patient created with id: \(patient.id!)")
-                    }
-                }
-            }
-        case Section.section1.rawValue:
-            if (self.device?.id) != nil {
-                performSegue(withIdentifier: "segueToDevice", sender: self)
-            } else {
-                cell.accessoryView = self.createActivityView()
-                self.createDevice() { (device, error) -> Void in
-                    if(error == nil) {
-                        print("device created with id: \(device.id!)")
-                        self.logEvent(event: "device created with id: \(device.id!)")
-                    }
-                }
-            }
-        case Section.section2.rawValue:
-            break
-        case Section.section3.rawValue:
-            if (glucoseMeasurements[indexPath.row].existsOnFHIR == true) {
-                selectedGlucoseMeasurement = glucoseMeasurements[indexPath.row]
-                performSegue(withIdentifier: "segueToObservation", sender: self)
-            } else {
-                if(self.patient == nil || self.device == nil) {
-                    self.showAlert(title: "Patient and/or Device not uploaded", message: "Upload patient and/or device first")
+        guard let section = Section(rawValue:indexPath.section) else {
+            fatalError("invalid section")
+        }
+        
+        switch section {
+            case .patient:
+                if (self.patient?.id) != nil {
+                    performSegue(withIdentifier: "segueToPatient", sender: self)
                 } else {
                     cell.accessoryView = self.createActivityView()
-                    self.uploadSingleMeasurement(measurement: glucoseMeasurements[indexPath.row])
+                    self.createPatient() { (patient, error) -> Void in
+                        if(error == nil) {
+                            print("patient created with id: \(patient.id!)")
+                            self.logEvent(event: "patient created with id: \(patient.id!)")
+                        }
+                    }
                 }
-            }
-        case Section.section4.rawValue:
-            break
-        default:
-            break;
+            case .glucoseMeterDevice:
+                if (self.device?.id) != nil {
+                    performSegue(withIdentifier: "segueToDevice", sender: self)
+                } else {
+                    cell.accessoryView = self.createActivityView()
+                    self.createDevice() { (device, error) -> Void in
+                        if(error == nil) {
+                            print("device created with id: \(device.id!)")
+                            self.logEvent(event: "device created with id: \(device.id!)")
+                        }
+                    }
+                }
+            case .glucoseMeterRecords:
+                if (glucoseMeasurements[indexPath.row].existsOnFHIR == true) {
+                    selectedGlucoseMeasurement = glucoseMeasurements[indexPath.row]
+                    performSegue(withIdentifier: "segueToObservation", sender: self)
+                } else {
+                    if(self.patient == nil || self.device == nil) {
+                        self.showAlert(title: "Patient and/or Device not uploaded", message: "Upload patient and/or device first")
+                    } else {
+                        cell.accessoryView = self.createActivityView()
+                        self.uploadSingleMeasurement(measurement: glucoseMeasurements[indexPath.row])
+                    }
+                }
+            default:
+                break
         }
     }
     
-    // MARK: -
     func getContextFromArray(sequenceNumber:UInt16) -> GlucoseMeasurementContext? {
         for context: GlucoseMeasurementContext in glucoseMeasurementContexts {
             if(context.sequenceNumber == sequenceNumber) {

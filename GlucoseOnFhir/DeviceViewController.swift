@@ -144,7 +144,7 @@ class DeviceViewController: UITableViewController {
         return sectionType?.description() ?? "none"
     }
 
-    //MARK: table delegate methods
+    //mark table delegate methods
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }

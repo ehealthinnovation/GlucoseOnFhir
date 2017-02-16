@@ -221,6 +221,7 @@
 				6E6C5AB17F6ED2E951739C51 /* [CP] Embed Pods Frameworks */,
 				F3F1E333CE41AE6E7EA4DAA5 /* [CP] Copy Pods Resources */,
 				50A8B07F1D9EBE5600722A0D /* Embed Frameworks */,
+				5067DA5A1E5616490004E887 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -350,6 +351,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GlucoseOnFhirTests/Pods-GlucoseOnFhirTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		5067DA5A1E5616490004E887 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "";
 		};
 		51D94CDE5825E462CA388178 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;

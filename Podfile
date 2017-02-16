@@ -6,7 +6,7 @@ target 'GlucoseOnFhir' do
   pod 'CCBluetooth', :git => 'https://github.com/uhnmdi/CCBluetooth.git'
   pod 'CCToolbox', :git => 'https://github.com/uhnmdi/CCToolbox.git'
   pod 'SMART', :git => 'https://github.com/uhnmdi/Swift-SMART.git', :submodules => true
-  
+    
   target 'GlucoseOnFhirTests' do
     inherit! :search_paths
 
