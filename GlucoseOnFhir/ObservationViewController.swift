@@ -96,77 +96,86 @@ class ObservationViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath as IndexPath) as UITableViewCell
         
-        switch indexPath.section {
-        case Section.code.rawValue:
-            switch(indexPath.row) {
-            case Section.Code.codingSystem.rawValue:
+        guard let section = Section(rawValue:indexPath.section) else {
+            fatalError("invalid section")
+        }
+        
+        switch section {
+        case .code:
+            guard let row = Section.Code(rawValue:indexPath.row) else { fatalError("invalid row") }
+            switch row {
+            case .codingSystem:
                 cell.textLabel!.text = self.observation.code?.coding?.first?.system?.description
                 cell.detailTextLabel!.text = "coding->system"
-            case Section.Code.codingCode.rawValue:
+            case .codingCode:
                 cell.textLabel!.text = self.observation.code?.coding?.first?.code?.description
                 cell.detailTextLabel!.text = "coding->code"
-            case Section.Code.codingDisplay.rawValue:
+            case .codingDisplay:
                 cell.textLabel!.text = self.observation.code?.coding?.first?.display?.description
                 cell.detailTextLabel!.text = "coding->display"
             default:
                 cell.textLabel!.text = ""
                 cell.detailTextLabel!.text = ""
             }
-        case Section.subject.rawValue:
+        case .subject:
             cell.textLabel!.text = self.observation.subject?.reference?.description
             cell.detailTextLabel!.text = "reference"
-        case Section.effectivePeriod.rawValue:
-            switch(indexPath.row) {
-            case Section.EffectivePeriod.start.rawValue:
+        case .effectivePeriod:
+            guard let row = Section.EffectivePeriod(rawValue:indexPath.row) else { fatalError("invalid row") }
+            switch row {
+            case .start:
                 cell.textLabel!.text = self.observation.effectivePeriod?.start?.description
                 cell.detailTextLabel!.text = "start"
-            case Section.EffectivePeriod.end.rawValue:
+            case .end:
                 cell.textLabel!.text = self.observation.effectivePeriod?.end?.description
                 cell.detailTextLabel!.text = "end"
             default:
                 cell.textLabel!.text = ""
                 cell.detailTextLabel!.text = ""
             }
-        case Section.performer.rawValue:
+        case .performer:
             cell.textLabel!.text = self.observation.performer?.first?.reference?.description
             cell.detailTextLabel!.text = "reference"
-        case Section.valueQuantity.rawValue:
-            switch(indexPath.row) {
-            case Section.ValueQuantity.value.rawValue:
+        case .valueQuantity:
+            guard let row = Section.ValueQuantity(rawValue:indexPath.row) else { fatalError("invalid row") }
+            switch row {
+            case .value:
                 cell.textLabel!.text = self.observation.valueQuantity?.value?.description
                 cell.detailTextLabel!.text = "value"
-            case Section.ValueQuantity.unit.rawValue:
+            case .unit:
                 cell.textLabel!.text = self.observation.valueQuantity?.unit?.description
                 cell.detailTextLabel!.text = "unit"
-            case Section.ValueQuantity.system.rawValue:
+            case .system:
                 cell.textLabel!.text = self.observation.valueQuantity?.system?.description
                 cell.detailTextLabel!.text = "system"
-            case Section.ValueQuantity.code.rawValue:
+            case .code:
                 cell.textLabel!.text = self.observation.valueQuantity?.code?.description
                 cell.detailTextLabel!.text = "code"
             default:
                 cell.textLabel!.text = ""
                 cell.detailTextLabel!.text = ""
             }
-        case Section.device.rawValue:
+        case .device:
             cell.textLabel!.text = self.observation.device?.reference?.description
             cell.detailTextLabel!.text = "reference"
-        case Section.mealContext.rawValue:
-            switch(indexPath.row) {
-            case Section.MealContext.system.rawValue:
+        case .mealContext:
+            guard let row = Section.MealContext(rawValue:indexPath.row) else { fatalError("invalid row") }
+            switch row {
+            case .system:
                 cell.textLabel!.text = observation.extension_fhir?.first?.valueCoding?.system?.description
                 cell.detailTextLabel!.text = "system"
-            case Section.MealContext.code.rawValue:
+            case .code:
                 cell.textLabel!.text = observation.extension_fhir?.first?.valueCoding?.code?.description
                 cell.detailTextLabel!.text = "code"
-            case Section.MealContext.display.rawValue:
+            case .display:
                 cell.textLabel!.text = observation.extension_fhir?.first?.valueCoding?.display?.description
                 cell.detailTextLabel!.text = "display"
-            case Section.MealContext.url.rawValue:
+            case .url:
                 cell.textLabel!.text = observation.extension_fhir?.first?.url?.description
                 cell.detailTextLabel!.text = "url"
             default:
-                ()
+                cell.textLabel!.text = ""
+                cell.detailTextLabel!.text = ""
             }
         default:
             break

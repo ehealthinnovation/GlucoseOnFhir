@@ -74,52 +74,58 @@ class DeviceViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath as IndexPath) as UITableViewCell
+    
+        guard let section = Section(rawValue:indexPath.section) else {
+            fatalError("invalid section")
+        }
         
-        switch indexPath.section {
-        case Section.identifier.rawValue:
-            switch(indexPath.row) {
-            case Section.Identifier.typeCodingSystem.rawValue:
-                cell.textLabel!.text = self.device.identifier?.first?.type?.coding?.first?.system?.description
-                cell.detailTextLabel!.text = "type->coding->system"
-            case Section.Identifier.typeCodingCode.rawValue:
-                cell.textLabel!.text = self.device.identifier?.first?.type?.coding?.first?.code?.description
-                cell.detailTextLabel!.text = "type->coding->code"
-            case Section.Identifier.system.rawValue:
-                cell.textLabel!.text = self.device.identifier?.first?.system?.description
-                cell.detailTextLabel!.text = "system"
-            case Section.Identifier.value.rawValue:
-                cell.textLabel!.text = self.device.identifier?.first?.value?.description
-                cell.detailTextLabel!.text = "value"
+        switch section {
+            case .identifier:
+                guard let row = Section.Identifier(rawValue:indexPath.row) else { fatalError("invalid row") }
+                switch row {
+                    case .typeCodingSystem:
+                        cell.textLabel!.text = self.device.identifier?.first?.type?.coding?.first?.system?.description
+                        cell.detailTextLabel!.text = "type->coding->system"
+                    case .typeCodingCode:
+                        cell.textLabel!.text = self.device.identifier?.first?.type?.coding?.first?.code?.description
+                        cell.detailTextLabel!.text = "type->coding->code"
+                    case .system:
+                        cell.textLabel!.text = self.device.identifier?.first?.system?.description
+                        cell.detailTextLabel!.text = "system"
+                    case .value:
+                        cell.textLabel!.text = self.device.identifier?.first?.value?.description
+                        cell.detailTextLabel!.text = "value"
+                    default:
+                        cell.textLabel!.text = ""
+                        cell.detailTextLabel!.text = ""
+                }
+            case .type:
+                guard let row = Section.WithType(rawValue:indexPath.row) else { fatalError("invalid row") }
+                switch row {
+                    case .codingSystem:
+                        cell.textLabel!.text = self.device.type?.coding?.first?.system?.description
+                        cell.detailTextLabel!.text = "coding->system"
+                    case .codingCode:
+                        cell.textLabel!.text = self.device.type?.coding?.first?.code?.description
+                        cell.detailTextLabel!.text = "coding->code"
+                    case .codingDisplay:
+                        cell.textLabel!.text = self.device.type?.coding?.first?.display?.description
+                        cell.detailTextLabel!.text = "coding->display"
+                    case .text:
+                        cell.textLabel!.text = self.device.type?.text?.description
+                        cell.detailTextLabel!.text = "text"
+                    default:
+                        cell.textLabel!.text = ""
+                        cell.detailTextLabel!.text = ""
+                }
+            case .manufacturer:
+                cell.textLabel!.text = self.device.manufacturer?.description
+                cell.detailTextLabel!.text = "manufacturer"
+            case .model:
+                cell.textLabel!.text = self.device.model?.description
+                cell.detailTextLabel!.text = "model"
             default:
-                cell.textLabel!.text = ""
-                cell.detailTextLabel!.text = ""
-            }
-        case Section.type.rawValue:
-            switch(indexPath.row) {
-            case Section.WithType.codingSystem.rawValue:
-                cell.textLabel!.text = self.device.type?.coding?.first?.system?.description
-                cell.detailTextLabel!.text = "coding->system"
-            case Section.WithType.codingCode.rawValue:
-                cell.textLabel!.text = self.device.type?.coding?.first?.code?.description
-                cell.detailTextLabel!.text = "coding->code"
-            case Section.WithType.codingDisplay.rawValue:
-                cell.textLabel!.text = self.device.type?.coding?.first?.display?.description
-                cell.detailTextLabel!.text = "coding->display"
-            case Section.WithType.text.rawValue:
-                cell.textLabel!.text = self.device.type?.text?.description
-                cell.detailTextLabel!.text = "text"
-            default:
-                cell.textLabel!.text = ""
-                cell.detailTextLabel!.text = ""
-            }
-        case Section.manufacturer.rawValue:
-            cell.textLabel!.text = self.device.manufacturer?.description
-            cell.detailTextLabel!.text = "manufacturer"
-        case Section.model.rawValue:
-            cell.textLabel!.text = self.device.model?.description
-            cell.detailTextLabel!.text = "model"
-        default:
-            break
+                break
         }
         
         return cell

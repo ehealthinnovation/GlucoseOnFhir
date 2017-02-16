@@ -75,57 +75,64 @@ class PatientViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath as IndexPath) as UITableViewCell
         
-        switch indexPath.section {
-            case Section.name.rawValue:
-                switch(indexPath.row) {
-                    case Section.Name.givenName.rawValue:
-                        cell.textLabel!.text = self.patient.name?.first?.given?.first?.description
-                        cell.detailTextLabel!.text = "given name"
-                    case Section.Name.familyName.rawValue:
-                        cell.textLabel!.text = self.patient.name?.first?.family?.first?.description
-                        cell.detailTextLabel!.text = "family name"
-                    default:
-                        cell.textLabel!.text = ""
-                        cell.detailTextLabel!.text = ""
-                }
-            case Section.telecom.rawValue:
-                switch(indexPath.row) {
-                case Section.Telecom.system.rawValue:
-                    cell.textLabel!.text = self.patient.telecom?.first?.system?.description
-                    cell.detailTextLabel!.text = "system"
-                case Section.Telecom.value.rawValue:
-                    cell.textLabel!.text = self.patient.telecom?.first?.value?.description
-                    cell.detailTextLabel!.text = "value"
-                case Section.Telecom.use.rawValue:
-                    cell.textLabel!.text = self.patient.telecom?.first?.use?.description
-                    cell.detailTextLabel!.text = "use"
-                default:
-                    cell.textLabel!.text = ""
-                    cell.detailTextLabel!.text = ""
-                }
-            case Section.address.rawValue:
-                switch(indexPath.row) {
-                case Section.Address.line.rawValue:
-                    cell.textLabel!.text = self.patient.address?.first?.line?.first?.description
-                    cell.detailTextLabel!.text = "line"
-                case Section.Address.city.rawValue:
-                    cell.textLabel!.text = self.patient.address?.first?.city?.description
-                    cell.detailTextLabel!.text = "city"
-                case Section.Address.postalCode.rawValue:
-                    cell.textLabel!.text = self.patient.address?.first?.postalCode?.description
-                    cell.detailTextLabel!.text = "postal code"
-                case Section.Address.country.rawValue:
-                    cell.textLabel!.text = self.patient.address?.first?.country?.description
-                    cell.detailTextLabel!.text = "country"
-                default:
-                    cell.textLabel!.text = ""
-                    cell.detailTextLabel!.text = ""
-                }
-            case Section.birthdate.rawValue:
-                cell.textLabel!.text = self.patient.birthDate?.description
-                cell.detailTextLabel!.text = "birthDate"
+        guard let section = Section(rawValue:indexPath.section) else {
+            fatalError("invalid section")
+        }
+        
+        switch section {
+        case .name:
+            guard let row = Section.Name(rawValue:indexPath.row) else { fatalError("invalid row") }
+            switch row {
+            case .givenName:
+                cell.textLabel!.text = self.patient.name?.first?.given?.first?.description
+                cell.detailTextLabel!.text = "given name"
+            case .familyName:
+                cell.textLabel!.text = self.patient.name?.first?.family?.first?.description
+                cell.detailTextLabel!.text = "family name"
             default:
-                break
+                cell.textLabel!.text = ""
+                cell.detailTextLabel!.text = ""
+            }
+        case .telecom:
+            guard let row = Section.Telecom(rawValue:indexPath.row) else { fatalError("invalid row") }
+            switch row {
+            case .system:
+                cell.textLabel!.text = self.patient.telecom?.first?.system?.description
+                cell.detailTextLabel!.text = "system"
+            case .value:
+                cell.textLabel!.text = self.patient.telecom?.first?.value?.description
+                cell.detailTextLabel!.text = "value"
+            case .use:
+                cell.textLabel!.text = self.patient.telecom?.first?.use?.description
+                cell.detailTextLabel!.text = "use"
+            default:
+                cell.textLabel!.text = ""
+                cell.detailTextLabel!.text = ""
+            }
+        case .address:
+            guard let row = Section.Address(rawValue:indexPath.row) else { fatalError("invalid row") }
+            switch row {
+            case .line:
+                cell.textLabel!.text = self.patient.address?.first?.line?.first?.description
+                cell.detailTextLabel!.text = "line"
+            case .city:
+                cell.textLabel!.text = self.patient.address?.first?.city?.description
+                cell.detailTextLabel!.text = "city"
+            case .postalCode:
+                cell.textLabel!.text = self.patient.address?.first?.postalCode?.description
+                cell.detailTextLabel!.text = "postal code"
+            case .country:
+                cell.textLabel!.text = self.patient.address?.first?.country?.description
+                cell.detailTextLabel!.text = "country"
+            default:
+                cell.textLabel!.text = ""
+                cell.detailTextLabel!.text = ""
+            }
+        case .birthdate:
+            cell.textLabel!.text = self.patient.birthDate?.description
+            cell.detailTextLabel!.text = "birthDate"
+        default:
+            break
         }
         
         return cell
