@@ -68,18 +68,8 @@ class PatientViewController: UITableViewController {
     
     // MARK: Table data source methods
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case Section.name.rawValue:
-            return Section.name.rowCount()
-        case Section.telecom.rawValue:
-            return Section.telecom.rowCount()
-        case Section.address.rawValue:
-            return Section.address.rowCount()
-        case Section.birthdate.rawValue:
-            return Section.birthdate.rowCount()
-        default:
-            return 0
-        }
+        let sectionType = Section(rawValue: section)
+        return (sectionType?.rowCount())!
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -150,18 +140,8 @@ class PatientViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch section {
-        case Section.name.rawValue:
-            return Section.name.description()
-        case Section.telecom.rawValue:
-            return Section.telecom.description()
-        case Section.address.rawValue:
-            return Section.address.description()
-        case Section.birthdate.rawValue:
-            return Section.birthdate.description()
-        default:
-            return ""
-        }
+        let sectionType = Section(rawValue: section)
+        return sectionType?.description() ?? "none"
     }
     
     //MARK: table delegate methods

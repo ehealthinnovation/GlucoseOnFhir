@@ -15,7 +15,6 @@ class ObservationViewController: UITableViewController {
     let cellIdentifier = "ObservationCellIdentifier"
     let sectionHeaderHeight: CGFloat = 75
     
-    // TO-DO:
     enum Section : Int {
         case code, subject, effectivePeriod, performer, valueQuantity, device, mealContext, count
         
@@ -55,7 +54,7 @@ class ObservationViewController: UITableViewController {
             case .device:
                 return Device.count.rawValue
             case .mealContext:
-                return Section6.count.rawValue
+                return MealContext.count.rawValue
             case .count:
                 fatalError("invalid")
             }
@@ -79,7 +78,7 @@ class ObservationViewController: UITableViewController {
         enum Device : Int {
             case device, count
         }
-        enum Section6 : Int {
+        enum MealContext : Int {
             case system, code, display, url, count
         }
     }
@@ -90,24 +89,8 @@ class ObservationViewController: UITableViewController {
     
     // MARK: Table data source methods
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case Section.code.rawValue:
-            return Section.code.rowCount()
-        case Section.subject.rawValue:
-            return Section.subject.rowCount()
-        case Section.effectivePeriod.rawValue:
-            return Section.effectivePeriod.rowCount()
-        case Section.performer.rawValue:
-            return Section.performer.rowCount()
-        case Section.valueQuantity.rawValue:
-            return Section.valueQuantity.rowCount()
-        case Section.device.rawValue:
-            return Section.device.rowCount()
-        case Section.mealContext.rawValue:
-            return Section.mealContext.rowCount()
-        default:
-            return 0
-        }
+        let sectionType = Section(rawValue: section)
+        return (sectionType?.rowCount())!
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -170,16 +153,16 @@ class ObservationViewController: UITableViewController {
             cell.detailTextLabel!.text = "reference"
         case Section.mealContext.rawValue:
             switch(indexPath.row) {
-            case Section.Section6.system.rawValue:
+            case Section.MealContext.system.rawValue:
                 cell.textLabel!.text = observation.extension_fhir?.first?.valueCoding?.system?.description
                 cell.detailTextLabel!.text = "system"
-            case Section.Section6.code.rawValue:
+            case Section.MealContext.code.rawValue:
                 cell.textLabel!.text = observation.extension_fhir?.first?.valueCoding?.code?.description
                 cell.detailTextLabel!.text = "code"
-            case Section.Section6.display.rawValue:
+            case Section.MealContext.display.rawValue:
                 cell.textLabel!.text = observation.extension_fhir?.first?.valueCoding?.display?.description
                 cell.detailTextLabel!.text = "display"
-            case Section.Section6.url.rawValue:
+            case Section.MealContext.url.rawValue:
                 cell.textLabel!.text = observation.extension_fhir?.first?.url?.description
                 cell.detailTextLabel!.text = "url"
             default:
@@ -205,24 +188,8 @@ class ObservationViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch section {
-        case Section.code.rawValue:
-            return Section.code.description()
-        case Section.subject.rawValue:
-            return Section.subject.description()
-        case Section.effectivePeriod.rawValue:
-            return Section.effectivePeriod.description()
-        case Section.performer.rawValue:
-            return Section.performer.description()
-        case Section.valueQuantity.rawValue:
-            return Section.valueQuantity.description()
-        case Section.device.rawValue:
-            return Section.device.description()
-        case Section.mealContext.rawValue:
-            return Section.mealContext.description()
-        default:
-            return ""
-        }
+        let sectionType = Section(rawValue: section)
+        return sectionType?.description() ?? "none"
     }
 
     //MARK: table delegate methods

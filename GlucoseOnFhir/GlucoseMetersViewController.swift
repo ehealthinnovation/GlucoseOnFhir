@@ -183,6 +183,7 @@ class GlucoseMetersViewController: UITableViewController, GlucoseMeterDiscoveryP
     }
     
     @IBAction func discoverFHIRServersButtonAction(_ sender: Any) {
+        print("discoverFHIRServersButtonAction")
         self.browser.delegate = self
         self.browser.searchForServices(ofType: "_http._tcp.", inDomain: "local")
     }
@@ -191,6 +192,7 @@ class GlucoseMetersViewController: UITableViewController, GlucoseMeterDiscoveryP
 extension GlucoseMetersViewController: NetServiceBrowserDelegate {
     func netServiceBrowser(_ browser: NetServiceBrowser, didFind service: NetService, moreComing: Bool) {
         if(service.name.contains("fhir")) {
+            print("found fhir server")
             self.browser.stop()
             fhirService = service
             fhirService.delegate = self

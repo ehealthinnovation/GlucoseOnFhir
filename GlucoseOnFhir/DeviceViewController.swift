@@ -68,18 +68,8 @@ class DeviceViewController: UITableViewController {
     
     // MARK: Table data source methods
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case Section.identifier.rawValue:
-            return Section.identifier.rowCount()
-        case Section.type.rawValue:
-            return Section.type.rowCount()
-        case Section.manufacturer.rawValue:
-            return Section.manufacturer.rowCount()
-        case Section.model.rawValue:
-            return Section.model.rowCount()
-        default:
-            return 0
-        }
+        let sectionType = Section(rawValue: section)
+        return (sectionType?.rowCount())!
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -144,18 +134,8 @@ class DeviceViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch section {
-        case Section.identifier.rawValue:
-            return Section.identifier.description()
-        case Section.type.rawValue:
-            return Section.type.description()
-        case Section.manufacturer.rawValue:
-            return Section.manufacturer.description()
-        case Section.model.rawValue:
-            return Section.model.description()
-        default:
-            return ""
-        }
+        let sectionType = Section(rawValue: section)
+        return sectionType?.description() ?? "none"
     }
 
     //MARK: table delegate methods
