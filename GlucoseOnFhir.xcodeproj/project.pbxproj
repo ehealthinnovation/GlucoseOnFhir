@@ -7,8 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		501073A91E3A42D5008FC9A2 /* DispatchQueue+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501073A81E3A42D5008FC9A2 /* DispatchQueue+Extension.swift */; };
 		5037851B1DB51CAE007A5CDE /* observationValidation.json in Resources */ = {isa = PBXBuildFile; fileRef = 5037851A1DB51CAE007A5CDE /* observationValidation.json */; };
 		5037851D1DB51E03007A5CDE /* observationContextValidation.json in Resources */ = {isa = PBXBuildFile; fileRef = 5037851C1DB51E03007A5CDE /* observationContextValidation.json */; };
+		50A5E2161E5374C400B74FAD /* Refreshable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A5E2151E5374C400B74FAD /* Refreshable.swift */; };
+		50B40E9F1E2D30FA00E384CD /* PatientViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B40E9E1E2D30FA00E384CD /* PatientViewController.swift */; };
+		50B40EA11E2D310500E384CD /* DeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B40EA01E2D310500E384CD /* DeviceViewController.swift */; };
+		50B40EA31E2D311400E384CD /* ObservationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B40EA21E2D311400E384CD /* ObservationViewController.swift */; };
+		50BCF78D1E27FABD00638E03 /* GlucoseMeasurement+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BCF78C1E27FABD00638E03 /* GlucoseMeasurement+Extension.swift */; };
 		50DEF72D1D9D81D900F86B9A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DEF72C1D9D81D900F86B9A /* AppDelegate.swift */; };
 		50DEF72F1D9D81D900F86B9A /* GlucoseMetersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DEF72E1D9D81D900F86B9A /* GlucoseMetersViewController.swift */; };
 		50DEF7321D9D81D900F86B9A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50DEF7301D9D81D900F86B9A /* Main.storyboard */; };
@@ -50,8 +56,14 @@
 
 /* Begin PBXFileReference section */
 		4C7DD78E3E0D2905F4614DAA /* Pods-GlucoseOnFhir.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GlucoseOnFhir.release.xcconfig"; path = "Pods/Target Support Files/Pods-GlucoseOnFhir/Pods-GlucoseOnFhir.release.xcconfig"; sourceTree = "<group>"; };
+		501073A81E3A42D5008FC9A2 /* DispatchQueue+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+Extension.swift"; sourceTree = "<group>"; };
 		5037851A1DB51CAE007A5CDE /* observationValidation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = observationValidation.json; sourceTree = "<group>"; };
 		5037851C1DB51E03007A5CDE /* observationContextValidation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = observationContextValidation.json; sourceTree = "<group>"; };
+		50A5E2151E5374C400B74FAD /* Refreshable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Refreshable.swift; sourceTree = "<group>"; };
+		50B40E9E1E2D30FA00E384CD /* PatientViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PatientViewController.swift; sourceTree = "<group>"; };
+		50B40EA01E2D310500E384CD /* DeviceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceViewController.swift; sourceTree = "<group>"; };
+		50B40EA21E2D311400E384CD /* ObservationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservationViewController.swift; sourceTree = "<group>"; };
+		50BCF78C1E27FABD00638E03 /* GlucoseMeasurement+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GlucoseMeasurement+Extension.swift"; sourceTree = "<group>"; };
 		50DEF7291D9D81D900F86B9A /* GlucoseOnFhir.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GlucoseOnFhir.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50DEF72C1D9D81D900F86B9A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		50DEF72E1D9D81D900F86B9A /* GlucoseMetersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseMetersViewController.swift; sourceTree = "<group>"; };
@@ -104,13 +116,6 @@
 			name = "Resource Validations";
 			sourceTree = "<group>";
 		};
-		50B00B6B1DA3FE4E00FC1D35 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Extensions;
-			sourceTree = "<group>";
-		};
 		50DEF7201D9D81D900F86B9A = {
 			isa = PBXGroup;
 			children = (
@@ -137,10 +142,15 @@
 				50DF07931DCA1EE90094D968 /* Resource Templates */,
 				50E288C51DC3AC8700E79E1B /* FHIR */,
 				503785161DB51C8E007A5CDE /* Resource Validations */,
-				50B00B6B1DA3FE4E00FC1D35 /* Extensions */,
-				50DEF72E1D9D81D900F86B9A /* GlucoseMetersViewController.swift */,
 				50DEF72C1D9D81D900F86B9A /* AppDelegate.swift */,
+				50B40EA01E2D310500E384CD /* DeviceViewController.swift */,
+				501073A81E3A42D5008FC9A2 /* DispatchQueue+Extension.swift */,
+				50BCF78C1E27FABD00638E03 /* GlucoseMeasurement+Extension.swift */,
 				50E217B61D9EA98F00B31926 /* GlucoseMeterViewController.swift */,
+				50DEF72E1D9D81D900F86B9A /* GlucoseMetersViewController.swift */,
+				50B40EA21E2D311400E384CD /* ObservationViewController.swift */,
+				50B40E9E1E2D30FA00E384CD /* PatientViewController.swift */,
+				50A5E2151E5374C400B74FAD /* Refreshable.swift */,
 				50DEF7301D9D81D900F86B9A /* Main.storyboard */,
 				50DEF7331D9D81D900F86B9A /* Assets.xcassets */,
 				50DEF7351D9D81D900F86B9A /* LaunchScreen.storyboard */,
@@ -211,6 +221,7 @@
 				6E6C5AB17F6ED2E951739C51 /* [CP] Embed Pods Frameworks */,
 				F3F1E333CE41AE6E7EA4DAA5 /* [CP] Copy Pods Resources */,
 				50A8B07F1D9EBE5600722A0D /* Embed Frameworks */,
+				5067DA5A1E5616490004E887 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -249,7 +260,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0800;
-				LastUpgradeCheck = 0810;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "eHealth Innovation";
 				TargetAttributes = {
 					50DEF7281D9D81D900F86B9A = {
@@ -341,6 +352,19 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GlucoseOnFhirTests/Pods-GlucoseOnFhirTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		5067DA5A1E5616490004E887 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "swiftlint lint --path GlucoseOnFhir --config .swiftlint.yaml";
+		};
 		51D94CDE5825E462CA388178 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -408,8 +432,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50BCF78D1E27FABD00638E03 /* GlucoseMeasurement+Extension.swift in Sources */,
+				50B40EA11E2D310500E384CD /* DeviceViewController.swift in Sources */,
 				50DEF72F1D9D81D900F86B9A /* GlucoseMetersViewController.swift in Sources */,
+				50B40E9F1E2D30FA00E384CD /* PatientViewController.swift in Sources */,
+				501073A91E3A42D5008FC9A2 /* DispatchQueue+Extension.swift in Sources */,
+				50A5E2161E5374C400B74FAD /* Refreshable.swift in Sources */,
 				50E217B71D9EA98F00B31926 /* GlucoseMeterViewController.swift in Sources */,
+				50B40EA31E2D311400E384CD /* ObservationViewController.swift in Sources */,
 				50E217B91D9EB08800B31926 /* FHIR.swift in Sources */,
 				50DEF72D1D9D81D900F86B9A /* AppDelegate.swift in Sources */,
 			);
@@ -500,6 +530,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -542,6 +573,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -554,6 +586,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = F663BTMH9Q;
 				INFOPLIST_FILE = GlucoseOnFhir/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.ehealthinnovation.GlucoseOnFhir;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -569,6 +602,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = F663BTMH9Q;
 				INFOPLIST_FILE = GlucoseOnFhir/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.ehealthinnovation.GlucoseOnFhir;
 				PRODUCT_NAME = "$(TARGET_NAME)";
