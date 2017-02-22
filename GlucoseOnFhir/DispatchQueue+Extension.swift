@@ -11,7 +11,7 @@ import Foundation
 extension DispatchQueue {
     private static var _tokenTracker = [String]()
     
-    public class func once(executeToken: String, block:(Void)->Void) {
+    public class func once(executeToken: String, block: (Void) -> Void) {
         objc_sync_enter(self)
         defer { objc_sync_exit(self) }
         

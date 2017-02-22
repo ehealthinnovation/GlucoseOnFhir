@@ -6,6 +6,9 @@
 //  Copyright © 2017 eHealth Innovation. All rights reserved.
 //
 
+// swiftlint:disable function_body_length
+// swiftlint:disable nesting
+
 import Foundation
 import UIKit
 import SMART
@@ -15,7 +18,7 @@ class PatientViewController: UITableViewController {
     let cellIdentifier = "PatientCellIdentifier"
     let sectionHeaderHeight: CGFloat = 75
     
-    enum Section : Int {
+    enum Section: Int {
         case name, telecom, address, birthdate, count
         
         public func description() -> String {
@@ -48,16 +51,16 @@ class PatientViewController: UITableViewController {
             }
         }
         
-        enum Name : Int {
+        enum Name: Int {
             case givenName, familyName, count
         }
-        enum Telecom : Int {
+        enum Telecom: Int {
             case system, value, use, count
         }
-        enum Address : Int {
+        enum Address: Int {
             case line, city, postalCode, country, count
         }
-        enum Birthdate : Int {
+        enum Birthdate: Int {
             case birthdate, count
         }
     }
@@ -72,6 +75,7 @@ class PatientViewController: UITableViewController {
         return (sectionType?.rowCount())!
     }
     
+    // swiftlint:disable:next cyclomatic_complexity
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath as IndexPath) as UITableViewCell
         
@@ -151,7 +155,7 @@ class PatientViewController: UITableViewController {
         return sectionType?.description() ?? "none"
     }
     
-    //MARK: table delegate methods
+    // MARK: table delegate methods
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }

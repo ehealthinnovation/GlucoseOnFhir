@@ -6,6 +6,13 @@
 //  Copyright © 2016 CocoaPods. All rights reserved.
 //
 
+// swiftlint:disable nesting
+// swiftlint:disable cyclomatic_complexity
+// swiftlint:disable line_length
+// swiftlint:disable function_body_length
+// swiftlint:disable file_length
+// swiftlint:disable unused_closure_parameter
+
 import Foundation
 import UIKit
 import CoreBluetooth
@@ -14,31 +21,35 @@ import CCToolbox
 import SMART
 
 class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refreshable {
-    private var glucose : Glucose!
+    private var glucose: Glucose!
     let cellIdentifier = "GlucoseMeterCellIdentifier"
     var glucoseMeterConnected: Bool! = false
     var glucoseMeter: CBPeripheral!
     var glucoseFeatures: GlucoseFeatures!
     var glucoseMeasurementCount: UInt16 = 0
-    var glucoseMeasurements: Array<GlucoseMeasurement> = Array<GlucoseMeasurement>()
-    var glucoseMeasurementContexts: Array<GlucoseMeasurementContext> = Array<GlucoseMeasurementContext>()
+    //var glucoseMeasurements: Array<GlucoseMeasurement> = Array<GlucoseMeasurement>()
+    //var glucoseMeasurementContexts: Array<GlucoseMeasurementContext> = Array<GlucoseMeasurementContext>()
+    var glucoseMeasurements: [GlucoseMeasurement] = [GlucoseMeasurement]()
+    var glucoseMeasurementContexts: [GlucoseMeasurementContext] = [GlucoseMeasurementContext]()
+    
     var selectedGlucoseMeasurement: GlucoseMeasurement!
     var selectedGlucoseMeasurementContext: GlucoseMeasurementContext!
-    @IBOutlet weak var UploadObservationsButton: UIBarButtonItem!
+    
     let givenName = "Lisa"
     let familyName = "Simpson"
     
     public var patient: Patient?
     public var device: Device?
-    public var observations: Array<Observation> = Array<Observation>()
+    //public var observations: Array<Observation> = Array<Observation>()
+    public var observations: [Observation] = [Observation]()
     
     struct LogMessage {
         let date: Date
         let text: String
     }
-    var log:[LogMessage] = []
+    var log: [LogMessage] = []
     
-    enum Section : Int {
+    enum Section: Int {
         case patient, glucoseMeterDevice, glucoseMeterRecordCount, glucoseMeterRecords, log, count
         
         public func description() -> String {
@@ -75,13 +86,13 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
             }
         }
         
-        enum Patient : Int {
+        enum Patient: Int {
             case patient, count
         }
-        enum GlucoseMeterDevice : Int {
+        enum GlucoseMeterDevice: Int {
             case glucoseMeterDevice, count
         }
-        enum GlucoseMeterRecordCount : Int {
+        enum GlucoseMeterRecordCount: Int {
             case glucoseMeterRecordCount, count
         }
     }
@@ -102,12 +113,12 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
     override func didMove(toParentViewController parent: UIViewController?) {
         super.didMove(toParentViewController: parent)
         
-        if(glucoseMeterConnected == true) {
+        if glucoseMeterConnected == true {
             glucose.disconnectGlucoseMeter()
         }
     }
     
-    // mark GlucoseProtocol
+    // MARK: GlucoseProtocol
     func glucoseMeterConnected(meter: CBPeripheral) {
         print("GlucoseMeterViewController#glucoseMeterConnected")
         logEvent(event: "meter connected")
@@ -129,9 +140,9 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
         glucose.downloadRecordsWithRange(from: 213, to: 216)
     }
     
-    func glucoseMeasurement(measurement:GlucoseMeasurement) {
+    func glucoseMeasurement(measurement: GlucoseMeasurement) {
         //Note: This is a workaround for a bluetooth read bug that returns 0's before the record
-        if(measurement.glucoseConcentration > 0) {
+        if measurement.glucoseConcentration > 0 {
             measurement.existsOnFHIR = false
             glucoseMeasurements.append(measurement)
         }
@@ -140,11 +151,11 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
         self.refresh()
     }
     
-    func glucoseMeasurementContext(measurementContext:GlucoseMeasurementContext) {
+    func glucoseMeasurementContext(measurementContext: GlucoseMeasurementContext) {
         glucoseMeasurementContexts.append(measurementContext)
     }
     
-    func glucoseFeatures(features:GlucoseFeatures) {
+    func glucoseFeatures(features: GlucoseFeatures) {
         glucoseFeatures = features
     }
     
@@ -153,18 +164,26 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
         
         DispatchQueue.once(executeToken: "glucoseOnFhir.glucoseMeterDidTransferMeasurements.runOnce") {
             self.searchForPatient(given: self.givenName, family: self.familyName) { (bundle, error) -> Void in
-                if(bundle?.entry != nil) {
+                if let error = error {
+                    print("error searching for patient: \(error)")
+                }
+
+                if bundle?.entry != nil {
                     self.searchForObservations()
                 }
             }
-            self.searchForDevice() { (bundle, error) -> Void in }
+            self.searchForDevice { (bundle, error) -> Void in }
         }
     }
     
     func searchForObservations() {
         for measurement in self.glucoseMeasurements {
-            self.searchForObservation(measurement: measurement) { (bundle,error) -> Void in
-                if (bundle?.entry == nil) {
+            self.searchForObservation(measurement: measurement) { (bundle, error) -> Void in
+                if let error = error {
+                    print("error searching for observation: \(error)")
+                }
+                
+                if bundle?.entry == nil {
                     print("measurement \(measurement.sequenceNumber) not found")
                     self.logEvent(event: "measurement \(measurement.sequenceNumber) not found")
                     measurement.existsOnFHIR = false
@@ -174,10 +193,10 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
                     measurement.existsOnFHIR = true
                     measurement.fhirID = bundle?.entry?.first?.resource?.id
                     
-                    if(bundle?.entry != nil) {
+                    if bundle?.entry != nil {
                         let observations = bundle?.entry?
-                            .filter() { return $0.resource is Observation }
-                            .map() { return $0.resource as! Observation }
+                            .filter { return $0.resource is Observation }
+                            .map { return $0.resource as! Observation }
                         
                         self.observations.append((observations?.first)!)
                         print("observations count: \(self.observations.count)")
@@ -203,23 +222,23 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
         return activity
     }
 
-    // mark Storyboard
+    // MARK: Storyboard
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if (segue.identifier == "segueToPatient") {
+        if segue.identifier == "segueToPatient" {
             let PatientViewVC =  segue.destination as! PatientViewController
             PatientViewVC.patient = self.patient
         }
-        if (segue.identifier == "segueToDevice") {
+        if segue.identifier == "segueToDevice" {
             let DeviceViewVC =  segue.destination as! DeviceViewController
             DeviceViewVC.device = self.device
         }
-        if (segue.identifier == "segueToObservation") {
+        if segue.identifier == "segueToObservation" {
             let ObservationViewVC =  segue.destination as! ObservationViewController
             ObservationViewVC.observation = observationForMeasurement(measurement: selectedGlucoseMeasurement)
         }
     }
     
-    // mark UITableViewDataSource
+    // MARK: UITableViewDataSource
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let section = Section(rawValue:section) else {
             fatalError("invalid section")
@@ -247,7 +266,7 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
             case .patient:
                 cell.textLabel!.text = "Given Name: \(self.givenName)\nFamily Name: \(self.familyName)"
                 
-                if(self.patient != nil) {
+                if self.patient != nil {
                     cell.detailTextLabel!.text = "Patient FHIR ID: " + (self.patient?.id)!
                     cell.accessoryView = nil
                     cell.accessoryType = .disclosureIndicator
@@ -264,7 +283,7 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
                 if let serialNumber = glucose.serialNumber {
                     cell.textLabel?.text?.append("\nSerial: \(serialNumber)")
                 }
-                if(self.device != nil) {
+                if self.device != nil {
                     cell.detailTextLabel!.text = "Device FHIR ID: " + (self.device?.id)!
                     cell.accessoryView = nil
                     cell.accessoryType = .disclosureIndicator
@@ -278,7 +297,7 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
             case .glucoseMeterRecords:
                 let measurement = Array(glucoseMeasurements)[indexPath.row]
                 let mmolString = String(describing: self.truncateMeasurement(measurementValue: measurement.toMMOL()!))
-                let contextWillFollow : Bool = (measurement.contextInformationFollows)
+                let contextWillFollow: Bool = (measurement.contextInformationFollows)
                 
                 cell.textLabel!.text = "Record: \(measurement.sequenceNumber)\nGlucose (kg/L): \(measurement.glucoseConcentration) \(measurement.unit.description)\nGlucose (mmol/L): \(mmolString) mmol/L\nContext: \(contextWillFollow.description)\n\nDate: \(measurement.dateTime!.description)"
                 
@@ -315,7 +334,7 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
         return sectionType?.description() ?? "none"
     }
 
-    //mark table delegate methods
+    // MARK: table delegate methods
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let cell = tableView.cellForRow(at: indexPath)! as UITableViewCell
@@ -330,8 +349,8 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
                     performSegue(withIdentifier: "segueToPatient", sender: self)
                 } else {
                     cell.accessoryView = self.createActivityView()
-                    self.createPatient() { (patient, error) -> Void in
-                        if(error == nil) {
+                    self.createPatient { (patient, error) -> Void in
+                        if error == nil {
                             print("patient created with id: \(patient.id!)")
                             self.logEvent(event: "patient created with id: \(patient.id!)")
                         }
@@ -342,19 +361,19 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
                     performSegue(withIdentifier: "segueToDevice", sender: self)
                 } else {
                     cell.accessoryView = self.createActivityView()
-                    self.createDevice() { (device, error) -> Void in
-                        if(error == nil) {
+                    self.createDevice { (device, error) -> Void in
+                        if error == nil {
                             print("device created with id: \(device.id!)")
                             self.logEvent(event: "device created with id: \(device.id!)")
                         }
                     }
                 }
             case .glucoseMeterRecords:
-                if (glucoseMeasurements[indexPath.row].existsOnFHIR == true) {
+                if glucoseMeasurements[indexPath.row].existsOnFHIR == true {
                     selectedGlucoseMeasurement = glucoseMeasurements[indexPath.row]
                     performSegue(withIdentifier: "segueToObservation", sender: self)
                 } else {
-                    if(self.patient == nil || self.device == nil) {
+                    if self.patient == nil || self.device == nil {
                         self.showAlert(title: "Patient and/or Device not uploaded", message: "Upload patient and/or device first")
                     } else {
                         cell.accessoryView = self.createActivityView()
@@ -366,29 +385,29 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
         }
     }
     
-    func getContextFromArray(sequenceNumber:UInt16) -> GlucoseMeasurementContext? {
+    func getContextFromArray(sequenceNumber: UInt16) -> GlucoseMeasurementContext? {
         for context: GlucoseMeasurementContext in glucoseMeasurementContexts {
-            if(context.sequenceNumber == sequenceNumber) {
+            if context.sequenceNumber == sequenceNumber {
                 return context
             }
         }
         return nil
     }
     
-    func getMeasurementFromArray(sequenceNumber:UInt16) -> GlucoseMeasurement? {
+    func getMeasurementFromArray(sequenceNumber: UInt16) -> GlucoseMeasurement? {
         for measurement: GlucoseMeasurement in glucoseMeasurements {
-            if(measurement.sequenceNumber == sequenceNumber) {
+            if measurement.sequenceNumber == sequenceNumber {
                 return measurement
             }
         }
         return nil
     }
 
-    func searchForPatient(given:String, family:String, callback: @escaping FHIRSearchBundleErrorCallback) {
+    func searchForPatient(given: String, family: String, callback: @escaping FHIRSearchBundleErrorCallback) {
         print("GlucoseMeterViewController: searchForPatient")
-        let searchDict:[String:Any] = [
-            "given":given,
-            "family":family
+        let searchDict: [String:Any] = [
+            "given": given,
+            "family": family
         ]
         
         logEvent(event: "searching for patient \(given) \(family)")
@@ -398,15 +417,15 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
                 print("error searching for patient: \(error)")
             }
             
-            if (bundle?.entry == nil) {
+            if bundle?.entry == nil {
                 self.logEvent(event: "patient not found")
             } else {
                 self.logEvent(event: "patient found")
                 
-                if(bundle?.entry != nil) {
+                if bundle?.entry != nil {
                     let patients = bundle?.entry?
-                        .filter() { return $0.resource is Patient }
-                        .map() { return $0.resource as! Patient }
+                        .filter { return $0.resource is Patient }
+                        .map { return $0.resource as! Patient }
                     
                     self.patient = patients?[0]
                 }
@@ -498,9 +517,9 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
         let modelNumber = glucose.modelNumber!.replacingOccurrences(of: "\0", with: "")
         let manufacturer = glucose.manufacturerName!.replacingOccurrences(of: "\0", with: "")
         
-        let searchDict:[String:Any] = [
-            "model":modelNumber,
-            "manufacturer":manufacturer,
+        let searchDict: [String:Any] = [
+            "model": modelNumber,
+            "manufacturer": manufacturer,
             "identifier": glucose.serialNumber!
         ]
         
@@ -511,15 +530,15 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
                 print("error searching for device: \(error)")
             }
 
-            if(bundle?.entry == nil) {
+            if bundle?.entry == nil {
                 self.logEvent(event: "device not found")
             } else {
                 self.logEvent(event: "device found")
                 
-                if(bundle?.entry != nil) {
+                if bundle?.entry != nil {
                     let devices = bundle?.entry?
-                        .filter() { return $0.resource is Device }
-                        .map() { return $0.resource as! Device }
+                        .filter { return $0.resource is Device }
+                        .map { return $0.resource as! Device }
                     
                     self.device = devices?[0]
                 }
@@ -528,7 +547,7 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
         }
     }
     
-    func measurementToObservation(measurement:GlucoseMeasurement) -> Observation {
+    func measurementToObservation(measurement: GlucoseMeasurement) -> Observation {
         var codingArray = [Coding]()
         let coding = Coding(json: nil)
         coding.system = URL(string: "http://loinc.org")
@@ -575,15 +594,15 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
         observation.subject = subjectReference
         observation.performer = performerArray
         
-        if(measurement.contextInformationFollows) {
+        if measurement.contextInformationFollows {
             let mealContext: GlucoseMeasurementContext! = self.getContextFromArray(sequenceNumber: measurement.sequenceNumber)
             
             var observationExtensionArray = [Extension]()
-            let bluetoothGlucoseMeasurementContextURL:String = "https://www.bluetooth.com/specifications/gatt/viewer?attributeXmlFile=org.bluetooth.characteristic.glucose_measurement_context.xml"
+            let bluetoothGlucoseMeasurementContextURL: String = "https://www.bluetooth.com/specifications/gatt/viewer?attributeXmlFile=org.bluetooth.characteristic.glucose_measurement_context.xml"
             
-            if(mealContext != nil) {
+            if mealContext != nil {
                 // Carbohydrate ID
-                if(mealContext?.carbohydrateID?.description != nil) {
+                if mealContext?.carbohydrateID?.description != nil {
                     let extensionElementCoding = Coding(json: nil)
                     extensionElementCoding.system = URL(string: bluetoothGlucoseMeasurementContextURL)
                     extensionElementCoding.code = mealContext?.carbohydrateID?.rawValue.description
@@ -597,7 +616,7 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
                 }
                 
                 // Carbohydrate Weight
-                if(mealContext?.carbohydrateWeight?.description != nil) {
+                if mealContext?.carbohydrateWeight?.description != nil {
                     let extensionElementCoding = Coding(json: nil)
                     extensionElementCoding.system = URL(string: bluetoothGlucoseMeasurementContextURL)
                     extensionElementCoding.code = mealContext?.carbohydrateWeight!.description
@@ -611,7 +630,7 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
                 }
                 
                 // Meal
-                if(mealContext?.meal?.description != nil) {
+                if mealContext?.meal?.description != nil {
                     let extensionElementCoding = Coding(json: nil)
                     extensionElementCoding.system = URL(string: bluetoothGlucoseMeasurementContextURL)
                     extensionElementCoding.code = mealContext?.meal?.rawValue.description
@@ -625,7 +644,7 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
                 }
                 
                 // Tester
-                if(mealContext?.tester?.description != nil) {
+                if mealContext?.tester?.description != nil {
                     let extensionElementCoding = Coding(json: nil)
                     extensionElementCoding.system = URL(string: bluetoothGlucoseMeasurementContextURL)
                     extensionElementCoding.code = mealContext?.tester
@@ -639,7 +658,7 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
                 }
                 
                 // Health
-                if(mealContext?.health?.description != nil) {
+                if mealContext?.health?.description != nil {
                     let extensionElementCoding = Coding(json: nil)
                     extensionElementCoding.system = URL(string: bluetoothGlucoseMeasurementContextURL)
                     extensionElementCoding.code = mealContext?.health
@@ -653,7 +672,7 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
                 }
                 
                 // Exercise Duration
-                if(mealContext?.exerciseDuration?.description != nil) {
+                if mealContext?.exerciseDuration?.description != nil {
                     let extensionElementCoding = Coding(json: nil)
                     extensionElementCoding.system = URL(string: bluetoothGlucoseMeasurementContextURL)
                     extensionElementCoding.code = mealContext?.exerciseDuration?.description
@@ -667,7 +686,7 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
                 }
                 
                 // Exercise Intensity
-                if(mealContext?.exerciseIntensity?.description != nil) {
+                if mealContext?.exerciseIntensity?.description != nil {
                     let extensionElementCoding = Coding(json: nil)
                     extensionElementCoding.system = URL(string: bluetoothGlucoseMeasurementContextURL)
                     extensionElementCoding.code = mealContext?.exerciseIntensity?.description
@@ -681,7 +700,7 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
                 }
                 
                 // Medication ID
-                if(mealContext?.medicationID?.description != nil) {
+                if mealContext?.medicationID?.description != nil {
                     let extensionElementCoding = Coding(json: nil)
                     extensionElementCoding.system = URL(string: bluetoothGlucoseMeasurementContextURL)
                     extensionElementCoding.code = mealContext?.medicationID?.description
@@ -695,7 +714,7 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
                 }
                 
                 // Medication
-                if(mealContext?.medication?.description != nil) {
+                if mealContext?.medication?.description != nil {
                     let extensionElementCoding = Coding(json: nil)
                     extensionElementCoding.system = URL(string: bluetoothGlucoseMeasurementContextURL)
                     extensionElementCoding.code = mealContext?.medication!.description
@@ -709,7 +728,7 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
                 }
 
                 // hbA1c
-                if(mealContext?.hbA1c?.description != nil) {
+                if mealContext?.hbA1c?.description != nil {
                     let extensionElementCoding = Coding(json: nil)
                     extensionElementCoding.system = URL(string: bluetoothGlucoseMeasurementContextURL)
                     extensionElementCoding.code = mealContext?.hbA1c?.description
@@ -739,7 +758,7 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
     func searchForObservation(measurement: GlucoseMeasurement, callback: @escaping FHIRSearchBundleErrorCallback) {
         let truncatedMeasurement = String(describing: self.truncateMeasurement(measurementValue: measurement.toMMOL()!))
         
-        let searchDict:[String:Any] = [
+        let searchDict: [String: Any] = [
             "subject": (self.patient?.id)! as String,
             "date": measurement.dateTime?.iso8601 as Any,
             "code": "http://loinc.org%7C15074-8",
@@ -758,7 +777,7 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
     }
     
     func uploadSingleMeasurement(measurement: GlucoseMeasurement) {
-        if(measurement.existsOnFHIR == false) {
+        if measurement.existsOnFHIR == false {
             FHIR.fhirInstance.createObservation(observation: self.measurementToObservation(measurement: measurement)) { (observation, error) -> Void in
                 guard error == nil else {
                     print("error creating observation: \(error)")
@@ -776,7 +795,7 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
         }
     }
     
-    func observationForMeasurement(measurement:GlucoseMeasurement) -> Observation {
+    func observationForMeasurement(measurement: GlucoseMeasurement) -> Observation {
         for observation in observations {
             if observation.id == measurement.fhirID {
                 return observation
@@ -786,7 +805,7 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
     }
     
     //MARK
-    func error(error:Error) {
+    func error(error: Error) {
         print("error: ")
         print(error)
     }
@@ -799,44 +818,46 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
     
     func showAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: "OK", style: .default) { action in })
+        alert.addAction(UIAlertAction(title: "OK", style: .default) { action in
+            action.isEnabled = true
+        })
         self.present(alert, animated: true)
     }
     
-    @IBAction func UploadObservationsButtonAction(_ sender: Any) {
+    
+    @IBAction func uploadObservationsButtonAction(_ sender: Any) {
         var observations: [Observation] = []
         
-        if(self.patient == nil || self.device == nil) {
+        if self.patient == nil || self.device == nil {
             self.showAlert(title: "Patient and/or Device not uploaded", message: "Upload patient and/or device first")
             return
         }
         
         for measurement in glucoseMeasurements {
-            if(measurement.existsOnFHIR == false) {
+            if measurement.existsOnFHIR == false {
                 observations.append(self.measurementToObservation(measurement: measurement))
             }
         }
         
-        if(observations.count == 0) {
+        if observations.count == 0 {
             self.showAlert(title: "Nothing to upload", message: "")
             return
         }
         
-        FHIR.fhirInstance.createObservationBundle(type: "batch", observations: observations) { (bundle,error) -> Void in
+        FHIR.fhirInstance.createObservationBundle(type: "batch", observations: observations) { (bundle, error) -> Void in
             guard error == nil else {
                 print("error creating observations: \(error)")
                 return
             }
             
-            if let count = bundle?.entry?.count
-            {
+            if let count = bundle?.entry?.count {
                 //iterate through the batch response entries
                 for i in 1...count-1 {
-                    if(bundle?.entry?[i].response?.status == "201 Created") {
+                    if bundle?.entry?[i].response?.status == "201 Created" {
                         let components = bundle?.entry?[i].response?.location?.absoluteString.components(separatedBy: "/")
                         
                         for measurement in self.glucoseMeasurements {
-                            if(measurement.existsOnFHIR == false) {
+                            if measurement.existsOnFHIR == false {
                                 measurement.existsOnFHIR = true
                                 measurement.fhirID = components![1]
                                 break

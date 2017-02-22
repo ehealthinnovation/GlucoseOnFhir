@@ -6,6 +6,10 @@
 //  Copyright © 2016 eHealth Innovation. All rights reserved.
 //
 
+// Swift rules
+// swiftlint:disable colon
+// swiftlint:disable syntactic_sugar
+
 import Foundation
 import SMART
 
@@ -36,7 +40,7 @@ class FHIR: NSObject {
                 "client_id": "glucoseOnFhirApp",
                 "client_name": "Glucose on FHIR iOS",
                 "redirect": "smartapp://callback",
-                "verbose": true,
+                "verbose": true
                 ]
         )
     }
@@ -51,7 +55,7 @@ class FHIR: NSObject {
         }
     }
     
-    public func searchForPatient(searchParameters:Dictionary<String, Any>, callback: @escaping FHIRSearchBundleErrorCallback) {
+    public func searchForPatient(searchParameters: Dictionary<String, Any>, callback: @escaping FHIRSearchBundleErrorCallback) {
         print("fhir: searchForPatient")
         let searchPatient = Patient.search(searchParameters)
         
@@ -74,7 +78,7 @@ class FHIR: NSObject {
         }
     }
     
-    public func searchForDevice(searchParameters:Dictionary<String, Any>, callback: @escaping FHIRSearchBundleErrorCallback) {
+    public func searchForDevice(searchParameters: Dictionary<String, Any>, callback: @escaping FHIRSearchBundleErrorCallback) {
         let searchDevice = Device.search(searchParameters)
         
         searchDevice.perform((smart?.server)!) { bundle, error in
@@ -98,23 +102,21 @@ class FHIR: NSObject {
         }
     }
     
-    public func searchForObservation(searchParameters:Dictionary<String, Any>, callback: @escaping FHIRSearchBundleErrorCallback) {
+    public func searchForObservation(searchParameters: Dictionary<String, Any>, callback: @escaping FHIRSearchBundleErrorCallback) {
         let searchObservation = Observation.search(searchParameters)
         
         searchObservation.perform((smart?.server)!) { bundle, error in
             if let error = error {
                 print(error)
-            }
-            else {
-                if(bundle?.entry != nil) {
+            } else {
+                if bundle?.entry != nil {
                     let observations = bundle?.entry?
-                        .filter() { return $0.resource is Observation }
-                        .map() { return $0.resource as! Observation }
-                    
+                        .filter { return $0.resource is Observation }
+                        .map { return $0.resource as! Observation }
                     print(observations!)
-                    callback(bundle,error)
+                    callback(bundle, error)
                 } else {
-                    callback(bundle,error)
+                    callback(bundle, error)
                 }
             }
         }
@@ -134,7 +136,7 @@ class FHIR: NSObject {
         let bundle = Bundle(json: nil)
         bundle.type = type
         
-        bundle.entry = observations.map() {
+        bundle.entry = observations.map {
             let entry = BundleEntry(json: nil)
             entry.resource = $0
 

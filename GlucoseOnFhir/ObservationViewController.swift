@@ -6,6 +6,10 @@
 //  Copyright © 2017 eHealth Innovation. All rights reserved.
 //
 
+// swiftlint:disable nesting
+// swiftlint:disable cyclomatic_complexity
+// swiftlint:disable function_body_length
+
 import Foundation
 import UIKit
 import SMART
@@ -15,7 +19,7 @@ class ObservationViewController: UITableViewController {
     let cellIdentifier = "ObservationCellIdentifier"
     let sectionHeaderHeight: CGFloat = 75
     
-    enum Section : Int {
+    enum Section: Int {
         case code, subject, effectivePeriod, performer, valueQuantity, device, mealContext, count
         
         public func description() -> String {
@@ -60,25 +64,25 @@ class ObservationViewController: UITableViewController {
             }
         }
         
-        enum Code : Int {
+        enum Code: Int {
             case codingSystem, codingCode, codingDisplay, count
         }
-        enum Subject : Int {
+        enum Subject: Int {
             case subject, count
         }
-        enum EffectivePeriod : Int {
+        enum EffectivePeriod: Int {
             case start, end, count
         }
-        enum Performer : Int {
+        enum Performer: Int {
             case performer, count
         }
-        enum ValueQuantity : Int {
+        enum ValueQuantity: Int {
             case value, unit, system, code, count
         }
-        enum Device : Int {
+        enum Device: Int {
             case device, count
         }
-        enum MealContext : Int {
+        enum MealContext: Int {
             case system, code, display, url, count
         }
     }
@@ -201,7 +205,7 @@ class ObservationViewController: UITableViewController {
         return sectionType?.description() ?? "none"
     }
 
-    //MARK: table delegate methods
+    // MARK: table delegate methods
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }

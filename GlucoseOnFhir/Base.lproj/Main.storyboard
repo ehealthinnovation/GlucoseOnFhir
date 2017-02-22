@@ -51,12 +51,11 @@
                     <navigationItem key="navigationItem" id="wWN-aM-LoR">
                         <barButtonItem key="rightBarButtonItem" title="Upload Observations" id="8kN-fq-OLM">
                             <connections>
-                                <action selector="UploadObservationsButtonAction:" destination="XRM-Qa-hz1" id="UhA-vT-k46"/>
+                                <action selector="uploadObservationsButtonAction:" destination="XRM-Qa-hz1" id="4Hh-xG-QNS"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="UploadObservationsButton" destination="8kN-fq-OLM" id="b1F-Vr-dIQ"/>
                         <segue destination="d9a-E1-gVW" kind="show" identifier="segueToObservation" id="BYL-vr-0Kl"/>
                         <segue destination="baT-ZF-pb6" kind="show" identifier="segueToPatient" id="ps1-uD-Pai"/>
                         <segue destination="7mT-Jo-AKn" kind="show" identifier="segueToDevice" id="p3P-wu-pqB"/>

@@ -363,7 +363,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "";
+			shellScript = "swiftlint lint --path GlucoseOnFhir --config .swiftlint.yaml";
 		};
 		51D94CDE5825E462CA388178 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
