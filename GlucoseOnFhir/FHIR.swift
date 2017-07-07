@@ -80,6 +80,7 @@ class FHIR: NSObject {
     
     public func searchForDevice(searchParameters: Dictionary<String, Any>, callback: @escaping FHIRSearchBundleErrorCallback) {
         let searchDevice = Device.search(searchParameters)
+        print("fhir: searchForDevice")
         
         searchDevice.perform((smart?.server)!) { bundle, error in
             if let error = error {

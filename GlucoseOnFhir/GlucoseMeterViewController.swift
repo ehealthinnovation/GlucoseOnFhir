@@ -27,8 +27,6 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
     var glucoseMeter: CBPeripheral!
     var glucoseFeatures: GlucoseFeatures!
     var glucoseMeasurementCount: UInt16 = 0
-    //var glucoseMeasurements: Array<GlucoseMeasurement> = Array<GlucoseMeasurement>()
-    //var glucoseMeasurementContexts: Array<GlucoseMeasurementContext> = Array<GlucoseMeasurementContext>()
     var glucoseMeasurements: [GlucoseMeasurement] = [GlucoseMeasurement]()
     var glucoseMeasurementContexts: [GlucoseMeasurementContext] = [GlucoseMeasurementContext]()
     
@@ -40,7 +38,6 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
     
     public var patient: Patient?
     public var device: Device?
-    //public var observations: Array<Observation> = Array<Observation>()
     public var observations: [Observation] = [Observation]()
     
     struct LogMessage {
@@ -137,7 +134,9 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
         glucoseMeasurementCount = number
     
         //download records from meter, eg. records 213 - 216
-        glucose.downloadRecordsWithRange(from: 213, to: 216)
+        //glucose.downloadRecordsWithRange(from: 213, to: 216)
+        //glucose.downloadLastRecord()
+        glucose.downloadAllRecords()
     }
     
     func glucoseMeasurement(measurement: GlucoseMeasurement) {
@@ -299,7 +298,7 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
                 let mmolString = String(describing: self.truncateMeasurement(measurementValue: measurement.toMMOL()!))
                 let contextWillFollow: Bool = (measurement.contextInformationFollows)
                 
-                cell.textLabel!.text = "Record: \(measurement.sequenceNumber)\nGlucose (kg/L): \(measurement.glucoseConcentration) \(measurement.unit.description)\nGlucose (mmol/L): \(mmolString) mmol/L\nContext: \(contextWillFollow.description)\n\nDate: \(measurement.dateTime!.description)"
+                cell.textLabel!.text = "Record: \(measurement.sequenceNumber)\nGlucose (kg/L): \(measurement.glucoseConcentration) \(measurement.unit.description)\nGlucose (mmol/L): \(mmolString) mmol/L\nContext: \(contextWillFollow.description)\n\nDate: \(measurement.dateTime?.description)"
                 
                 print("measurement existsOnFhir?: \(measurement.existsOnFHIR)")
                 
@@ -517,9 +516,12 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
         let modelNumber = glucose.modelNumber!.replacingOccurrences(of: "\0", with: "")
         let manufacturer = glucose.manufacturerName!.replacingOccurrences(of: "\0", with: "")
         
+        let encodedModelNumber: String = modelNumber.replacingOccurrences(of: " ", with: "+")
+        let encodedMmanufacturer: String = manufacturer.replacingOccurrences(of: " ", with: "+")
+        
         let searchDict: [String:Any] = [
-            "model": modelNumber,
-            "manufacturer": manufacturer,
+            "model": encodedModelNumber,
+            "manufacturer": encodedMmanufacturer,
             "identifier": glucose.serialNumber!
         ]
         
@@ -767,7 +769,6 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
         
         self.logEvent(event: "searching for measurement \(measurement.sequenceNumber)")
         
-        //FHIR.sharedInstance.searchForObservation(searchParameters: searchDict) { (bundle, error) -> Void in
         FHIR.fhirInstance.searchForObservation(searchParameters: searchDict) { bundle, error in
             if let error = error {
                 print("error searching for observation: \(error)")
@@ -875,5 +876,14 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
                 }
             }
         }
+    }
+}
+
+extension String {
+  func stringByAddingPercentEncodingForRFC3986() -> String? {
+        let allowedCharacters = NSCharacterSet.urlFragmentAllowed
+        let encodedString = self.addingPercentEncoding(withAllowedCharacters: allowedCharacters)
+    
+        return encodedString
     }
 }

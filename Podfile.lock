@@ -1,6 +1,6 @@
 PODS:
   - CCBluetooth (0.5.3)
-  - CCGlucose (0.3.1):
+  - CCGlucose (0.3.2):
     - CCBluetooth
     - CCToolbox
   - CCToolbox (0.7.1)
@@ -28,7 +28,7 @@ CHECKOUT OPTIONS:
     :commit: c50109006e2284f999962e3c60d5e3bffa1c7fb5
     :git: https://github.com/uhnmdi/CCBluetooth.git
   CCGlucose:
-    :commit: 2d5efb77e4c8b6bbaff2ef9481fa134e8075b300
+    :commit: 7df909b527e230368b18255ac672ada3b3e43f17
     :git: https://github.com/uhnmdi/CCGlucose.git
   CCToolbox:
     :commit: b591a8727146580dd08f9363d6c7ebeafcd26146
@@ -40,7 +40,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   CCBluetooth: f2717fa159322ed84457604ca25dde855aa76f35
-  CCGlucose: 5a235edea78fa7329a458f97b12393fa5543af91
+  CCGlucose: 1ec6afa0777b6a440fbbbe1fa04d4aa6b3a627a7
   CCToolbox: ae7c09ede5c63c1901c06011ebdfe6073378810f
   SMART: 058ada9f3c75bbc073f638c00ea66693f199dbb6
 

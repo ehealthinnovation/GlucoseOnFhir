@@ -15,9 +15,7 @@ import CoreBluetooth
 class GlucoseMetersViewController: UITableViewController, GlucoseMeterDiscoveryProtocol, Refreshable {
     private var glucose: Glucose?
     let cellIdentifier = "GlucoseMetersCellIdentifier"
-    //var discoveredGlucoseMeters: Array<CBPeripheral> = Array<CBPeripheral>()
     var discoveredGlucoseMeters: [CBPeripheral] = [CBPeripheral]()
-    //var previouslySelectedGlucoseMeters: Array<CBPeripheral> = Array<CBPeripheral>()
     var previouslySelectedGlucoseMeters: [CBPeripheral] = [CBPeripheral]()
     var peripheral: CBPeripheral!
     let browser = NetServiceBrowser()
