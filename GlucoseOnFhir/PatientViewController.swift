@@ -91,7 +91,7 @@ class PatientViewController: UITableViewController {
                 cell.textLabel!.text = self.patient.name?.first?.given?.first?.description
                 cell.detailTextLabel!.text = "given name"
             case .familyName:
-                cell.textLabel!.text = self.patient.name?.first?.family?.first?.description
+                cell.textLabel!.text = String(describing: self.patient.name!.first!.family!.string)
                 cell.detailTextLabel!.text = "family name"
             default:
                 cell.textLabel!.text = ""
@@ -101,13 +101,13 @@ class PatientViewController: UITableViewController {
             guard let row = Section.Telecom(rawValue:indexPath.row) else { fatalError("invalid row") }
             switch row {
             case .system:
-                cell.textLabel!.text = self.patient.telecom?.first?.system?.description
+                cell.textLabel!.text = String(describing: self.patient.telecom!.first!.system!.rawValue)
                 cell.detailTextLabel!.text = "system"
             case .value:
                 cell.textLabel!.text = self.patient.telecom?.first?.value?.description
                 cell.detailTextLabel!.text = "value"
             case .use:
-                cell.textLabel!.text = self.patient.telecom?.first?.use?.description
+                cell.textLabel!.text = String(describing: self.patient.telecom!.first!.use!.rawValue)
                 cell.detailTextLabel!.text = "use"
             default:
                 cell.textLabel!.text = ""

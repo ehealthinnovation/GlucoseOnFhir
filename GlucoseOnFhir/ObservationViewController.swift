@@ -13,9 +13,12 @@
 import Foundation
 import UIKit
 import SMART
+import CCGlucose
 
 class ObservationViewController: UITableViewController {
-    public var observation: Observation!
+    private var observation: Observation!
+    public var measurement: GlucoseMeasurement!
+    
     let cellIdentifier = "ObservationCellIdentifier"
     let sectionHeaderHeight: CGFloat = 75
     
@@ -89,6 +92,7 @@ class ObservationViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.observation = BGMFhir.BGMFhirInstance.measurementToObservation(measurement: measurement)
     }
     
     // MARK: Table data source methods

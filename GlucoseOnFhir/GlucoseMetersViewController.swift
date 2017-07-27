@@ -13,7 +13,6 @@ import CCGlucose
 import CoreBluetooth
 
 class GlucoseMetersViewController: UITableViewController, GlucoseMeterDiscoveryProtocol, Refreshable {
-    private var glucose: Glucose?
     let cellIdentifier = "GlucoseMetersCellIdentifier"
     var discoveredGlucoseMeters: [CBPeripheral] = [CBPeripheral]()
     var previouslySelectedGlucoseMeters: [CBPeripheral] = [CBPeripheral]()
@@ -31,8 +30,7 @@ class GlucoseMetersViewController: UITableViewController, GlucoseMeterDiscoveryP
         refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControl?.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
         
-        glucose = Glucose()
-        glucose?.glucoseMeterDiscoveryDelegate = self
+        Glucose.sharedInstance().glucoseMeterDiscoveryDelegate = self
     }
     
     func onRefresh() {
@@ -41,9 +39,8 @@ class GlucoseMetersViewController: UITableViewController, GlucoseMeterDiscoveryP
         
         self.refresh()
         
-        glucose = Glucose()
-        glucose?.glucoseMeterDiscoveryDelegate = self
-        glucose?.scanForGlucoseMeters()
+        Glucose.sharedInstance().glucoseMeterDiscoveryDelegate = self
+        Glucose.sharedInstance().scanForGlucoseMeters()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -126,11 +123,11 @@ class GlucoseMetersViewController: UITableViewController, GlucoseMeterDiscoveryP
     }
     
     func didSelectDiscoveredGlucoseMeter(_ peripheral: CBPeripheral) {
-        print("ViewController#didSelectDiscoveredPeripheral \(peripheral.name)")
+        print("ViewController#didSelectDiscoveredPeripheral \(String(describing: peripheral.name))")
     }
     
     func didSelectPreviouslySelectedGlucoseMeter(_ peripheral: CBPeripheral) {
-        print("ViewController#didSelectPreviouslyConnectedPeripheral \(peripheral.name)")
+        print("ViewController#didSelectPreviouslyConnectedPeripheral \(String(describing: peripheral.name))")
     }
     
     func addPreviouslySelectedGlucoseMeter(_ cbPeripheral: CBPeripheral) {
