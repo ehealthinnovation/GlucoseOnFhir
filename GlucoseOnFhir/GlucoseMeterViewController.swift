@@ -131,7 +131,7 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
         print("GlucoseMeterViewController#numberOfStoredRecords - \(number)")
         glucoseMeasurementCount = number
     
-        Glucose.sharedInstance().downloadRecordsWithRange(from: 0, to: 5)
+        Glucose.sharedInstance().downloadRecordsWithRange(from: 215, to: 216)
     }
     
     func glucoseMeasurement(measurement: GlucoseMeasurement) {
@@ -158,7 +158,9 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
     
     public func glucoseMeterDidTransferMeasurements(error: NSError?) {
         print("glucoseMeterDidTransferMeasurements")
-        self.searchForFHIRResources()
+        if !FHIR.fhirInstance.fhirServerAddress.isEmpty {
+            self.searchForFHIRResources()
+        }
     }
     
     public func searchForFHIRResources() {

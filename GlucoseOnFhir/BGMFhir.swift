@@ -73,17 +73,14 @@ public class BGMFhir: NSObject {
                 print("error searching for patient: \(error)")
             }
             
-            if bundle?.entry == nil {
-                
-            } else {
-                if bundle?.entry != nil {
-                    let patients = bundle?.entry?
-                        .filter { return $0.resource is Patient }
-                        .map { return $0.resource as! Patient }
+            if bundle?.entry != nil {
+                let patients = bundle?.entry?
+                    .filter { return $0.resource is Patient }
+                    .map { return $0.resource as! Patient }
                     
-                    self.patient = patients?[0]
-                }
+                self.patient = patients?[0]
             }
+            
             callback(bundle, error)
         }
     }
@@ -414,8 +411,8 @@ public class BGMFhir: NSObject {
                 if measurement.context?.carbohydrateID?.description != nil {
                     let extensionElementCoding = Coding()
                     extensionElementCoding.system = FHIRURL.init(bluetoothGlucoseMeasurementContextURL)
-                    extensionElementCoding.code = FHIRString.init((String(describing:measurement.context?.carbohydrateID?.rawValue.description)))
-                    extensionElementCoding.display = FHIRString.init((String(describing:measurement.context?.carbohydrateID?.description)))
+                    extensionElementCoding.code = FHIRString.init((String(describing:measurement.context!.carbohydrateID!.rawValue.description)))
+                    extensionElementCoding.display = FHIRString.init((String(describing:measurement.context!.carbohydrateID!.description)))
                     
                     let extensionElement = Extension()
                     extensionElement.url = FHIRURL.init(bluetoothGlucoseMeasurementContextURL)
@@ -428,8 +425,8 @@ public class BGMFhir: NSObject {
                 if measurement.context?.carbohydrateWeight?.description != nil {
                     let extensionElementCoding = Coding()
                     extensionElementCoding.system = FHIRURL.init(bluetoothGlucoseMeasurementContextURL)
-                    extensionElementCoding.code = FHIRString.init((String(describing:measurement.context?.carbohydrateWeight!.description)))
-                    extensionElementCoding.display = FHIRString.init((String(describing:measurement.context?.carbohydrateWeight!.description)))
+                    extensionElementCoding.code = FHIRString.init((String(describing:measurement.context!.carbohydrateWeight!.description)))
+                    extensionElementCoding.display = FHIRString.init((String(describing:measurement.context!.carbohydrateWeight!.description)))
                     
                     let extensionElement = Extension()
                     extensionElement.url = FHIRURL.init(bluetoothGlucoseMeasurementContextURL)
@@ -442,8 +439,8 @@ public class BGMFhir: NSObject {
                 if measurement.context?.meal?.description != nil {
                     let extensionElementCoding = Coding()
                     extensionElementCoding.system = FHIRURL.init(bluetoothGlucoseMeasurementContextURL)
-                    extensionElementCoding.code = FHIRString.init((String(describing:measurement.context?.meal?.rawValue.description)))
-                    extensionElementCoding.display = FHIRString.init((String(describing:measurement.context?.meal?.description)))
+                    extensionElementCoding.code = FHIRString.init((String(describing:measurement.context!.meal!.rawValue.description)))
+                    extensionElementCoding.display = FHIRString.init((String(describing:measurement.context!.meal!.description)))
                     
                     let extensionElement = Extension()
                     extensionElement.url = FHIRURL.init(bluetoothGlucoseMeasurementContextURL)
@@ -456,8 +453,8 @@ public class BGMFhir: NSObject {
                 if measurement.context?.tester?.description != nil {
                     let extensionElementCoding = Coding()
                     extensionElementCoding.system = FHIRURL.init(bluetoothGlucoseMeasurementContextURL)
-                    extensionElementCoding.code = FHIRString.init((String(describing:measurement.context?.tester)))
-                    extensionElementCoding.display = FHIRString.init((String(describing:measurement.context?.tester?.description)))
+                    extensionElementCoding.code = FHIRString.init((String(describing:measurement.context!.tester)))
+                    extensionElementCoding.display = FHIRString.init((String(describing:measurement.context!.tester!.description)))
                     
                     let extensionElement = Extension()
                     extensionElement.url = FHIRURL.init(bluetoothGlucoseMeasurementContextURL)
@@ -470,8 +467,8 @@ public class BGMFhir: NSObject {
                 if measurement.context?.health?.description != nil {
                     let extensionElementCoding = Coding()
                     extensionElementCoding.system = FHIRURL.init(bluetoothGlucoseMeasurementContextURL)
-                    extensionElementCoding.code = FHIRString.init((String(describing:measurement.context?.health)))
-                    extensionElementCoding.display = FHIRString.init((String(describing:measurement.context?.health?.description)))
+                    extensionElementCoding.code = FHIRString.init((String(describing:measurement.context!.health)))
+                    extensionElementCoding.display = FHIRString.init((String(describing:measurement.context!.health!.description)))
                     
                     let extensionElement = Extension()
                     extensionElement.url = FHIRURL.init(bluetoothGlucoseMeasurementContextURL)
@@ -484,8 +481,8 @@ public class BGMFhir: NSObject {
                 if measurement.context?.exerciseDuration?.description != nil {
                     let extensionElementCoding = Coding()
                     extensionElementCoding.system = FHIRURL.init(bluetoothGlucoseMeasurementContextURL)
-                    extensionElementCoding.code = FHIRString.init((String(describing:measurement.context?.exerciseDuration?.description)))
-                    extensionElementCoding.display = FHIRString.init((String(describing:measurement.context?.exerciseDuration?.description)))
+                    extensionElementCoding.code = FHIRString.init((String(describing:measurement.context!.exerciseDuration!.description)))
+                    extensionElementCoding.display = FHIRString.init((String(describing:measurement.context!.exerciseDuration!.description)))
                     
                     let extensionElement = Extension()
                     extensionElement.url = FHIRURL.init(bluetoothGlucoseMeasurementContextURL)
@@ -498,8 +495,8 @@ public class BGMFhir: NSObject {
                 if measurement.context?.exerciseIntensity?.description != nil {
                     let extensionElementCoding = Coding()
                     extensionElementCoding.system = FHIRURL.init(bluetoothGlucoseMeasurementContextURL)
-                    extensionElementCoding.code = FHIRString.init((String(describing:measurement.context?.exerciseIntensity?.description)))
-                    extensionElementCoding.display = FHIRString.init((String(describing:measurement.context?.exerciseIntensity?.description)))
+                    extensionElementCoding.code = FHIRString.init((String(describing:measurement.context!.exerciseIntensity!.description)))
+                    extensionElementCoding.display = FHIRString.init((String(describing:measurement.context!.exerciseIntensity!.description)))
                     
                     let extensionElement = Extension()
                     extensionElement.url = FHIRURL.init(bluetoothGlucoseMeasurementContextURL)
@@ -512,8 +509,8 @@ public class BGMFhir: NSObject {
                 if measurement.context?.medicationID?.description != nil {
                     let extensionElementCoding = Coding()
                     extensionElementCoding.system = FHIRURL.init(bluetoothGlucoseMeasurementContextURL)
-                    extensionElementCoding.code = FHIRString.init((String(describing:measurement.context?.medicationID?.description)))
-                    extensionElementCoding.display = FHIRString.init((String(describing:measurement.context?.medicationID?.description)))
+                    extensionElementCoding.code = FHIRString.init((String(describing:measurement.context!.medicationID!.description)))
+                    extensionElementCoding.display = FHIRString.init((String(describing:measurement.context!.medicationID!.description)))
                     
                     let extensionElement = Extension()
                     extensionElement.url = FHIRURL.init(bluetoothGlucoseMeasurementContextURL)
@@ -526,8 +523,8 @@ public class BGMFhir: NSObject {
                 if measurement.context?.medication?.description != nil {
                     let extensionElementCoding = Coding()
                     extensionElementCoding.system = FHIRURL.init(bluetoothGlucoseMeasurementContextURL)
-                    extensionElementCoding.code = FHIRString.init((String(describing:measurement.context?.medication!.description)))
-                    extensionElementCoding.display = FHIRString.init((String(describing:measurement.context?.medication!.description)))
+                    extensionElementCoding.code = FHIRString.init((String(describing:measurement.context!.medication!.description)))
+                    extensionElementCoding.display = FHIRString.init((String(describing:measurement.context!.medication!.description)))
                     
                     let extensionElement = Extension()
                     extensionElement.url = FHIRURL.init(bluetoothGlucoseMeasurementContextURL)
@@ -540,8 +537,8 @@ public class BGMFhir: NSObject {
                 if measurement.context?.hbA1c?.description != nil {
                     let extensionElementCoding = Coding()
                     extensionElementCoding.system = FHIRURL.init(bluetoothGlucoseMeasurementContextURL)
-                    extensionElementCoding.code = FHIRString.init((String(describing:measurement.context?.hbA1c?.description)))
-                    extensionElementCoding.display = FHIRString.init((String(describing:measurement.context?.hbA1c?.description)))
+                    extensionElementCoding.code = FHIRString.init((String(describing:measurement.context!.hbA1c!.description)))
+                    extensionElementCoding.display = FHIRString.init((String(describing:measurement.context!.hbA1c!.description)))
                     
                     let extensionElement = Extension()
                     extensionElement.url = FHIRURL.init(bluetoothGlucoseMeasurementContextURL)
@@ -611,7 +608,7 @@ public class BGMFhir: NSObject {
             }
             
             if bundle?.entry == nil {
-                
+               print("specimen not found")
             } else {
                 if bundle?.entry != nil {
                     let specimens = bundle?.entry?

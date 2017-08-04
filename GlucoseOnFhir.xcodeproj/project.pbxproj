@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		501073A91E3A42D5008FC9A2 /* DispatchQueue+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501073A81E3A42D5008FC9A2 /* DispatchQueue+Extension.swift */; };
 		5037851B1DB51CAE007A5CDE /* observationValidation.json in Resources */ = {isa = PBXBuildFile; fileRef = 5037851A1DB51CAE007A5CDE /* observationValidation.json */; };
 		5037851D1DB51E03007A5CDE /* observationContextValidation.json in Resources */ = {isa = PBXBuildFile; fileRef = 5037851C1DB51E03007A5CDE /* observationContextValidation.json */; };
 		5048B2381F150673006F3A84 /* BGMFhir.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5048B2371F150673006F3A84 /* BGMFhir.swift */; };
@@ -58,7 +57,6 @@
 
 /* Begin PBXFileReference section */
 		4C7DD78E3E0D2905F4614DAA /* Pods-GlucoseOnFhir.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GlucoseOnFhir.release.xcconfig"; path = "Pods/Target Support Files/Pods-GlucoseOnFhir/Pods-GlucoseOnFhir.release.xcconfig"; sourceTree = "<group>"; };
-		501073A81E3A42D5008FC9A2 /* DispatchQueue+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+Extension.swift"; sourceTree = "<group>"; };
 		5037851A1DB51CAE007A5CDE /* observationValidation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = observationValidation.json; sourceTree = "<group>"; };
 		5037851C1DB51E03007A5CDE /* observationContextValidation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = observationContextValidation.json; sourceTree = "<group>"; };
 		5048B2371F150673006F3A84 /* BGMFhir.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BGMFhir.swift; sourceTree = "<group>"; };
@@ -148,7 +146,6 @@
 				503785161DB51C8E007A5CDE /* Resource Validations */,
 				50DEF72C1D9D81D900F86B9A /* AppDelegate.swift */,
 				50B40EA01E2D310500E384CD /* DeviceViewController.swift */,
-				501073A81E3A42D5008FC9A2 /* DispatchQueue+Extension.swift */,
 				5048B2391F190A0C006F3A84 /* Float+Extension.swift */,
 				50BCF78C1E27FABD00638E03 /* GlucoseMeasurement+Extension.swift */,
 				50E217B61D9EA98F00B31926 /* GlucoseMeterViewController.swift */,
@@ -443,7 +440,6 @@
 				50B40EA11E2D310500E384CD /* DeviceViewController.swift in Sources */,
 				50DEF72F1D9D81D900F86B9A /* GlucoseMetersViewController.swift in Sources */,
 				50B40E9F1E2D30FA00E384CD /* PatientViewController.swift in Sources */,
-				501073A91E3A42D5008FC9A2 /* DispatchQueue+Extension.swift in Sources */,
 				50A5E2161E5374C400B74FAD /* Refreshable.swift in Sources */,
 				50E217B71D9EA98F00B31926 /* GlucoseMeterViewController.swift in Sources */,
 				5048B2381F150673006F3A84 /* BGMFhir.swift in Sources */,
