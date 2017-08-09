@@ -1,6 +1,5 @@
-<center>
-# GlucoseOnFHIR
-</center>
+
+# GlucoseOnFhir
 
 GlucoseOnFHIR is an iOS application designed to collect data from a blood glucose meter that complies with the Bluetooth SIG Glucose Profile.
 
