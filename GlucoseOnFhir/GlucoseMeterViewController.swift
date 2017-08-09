@@ -131,7 +131,7 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
         print("GlucoseMeterViewController#numberOfStoredRecords - \(number)")
         glucoseMeasurementCount = number
     
-        Glucose.sharedInstance().downloadRecordsWithRange(from: 215, to: 216)
+        Glucose.sharedInstance().downloadRecordsWithRange(from: 215, to: 220)
     }
     
     func glucoseMeasurement(measurement: GlucoseMeasurement) {

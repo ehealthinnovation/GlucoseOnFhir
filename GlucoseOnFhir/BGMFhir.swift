@@ -177,6 +177,7 @@ public class BGMFhir: NSObject {
             let hardwareRevisionCoding = Coding()
             hardwareRevisionCoding.code = "hardware-revision"
             hardwareRevisionCoding.display = "Hardware Revision"
+            hardwareRevisionCoding.system = FHIRURL.init("http://hl7.org/fhir/codesystem-specification-type.html")!
             codingArray.append(hardwareRevisionCoding)
         
             let hardwareRevisionCodableConcept = CodeableConcept()
@@ -194,6 +195,7 @@ public class BGMFhir: NSObject {
             let softwareRevisionCoding = Coding()
             softwareRevisionCoding.code = "software-revision"
             softwareRevisionCoding.display = "Software Revision"
+            softwareRevisionCoding.system = FHIRURL.init("http://hl7.org/fhir/codesystem-specification-type.html")!
             codingArray.removeAll()
             codingArray.append(softwareRevisionCoding)
         
@@ -212,6 +214,7 @@ public class BGMFhir: NSObject {
             let firmwareRevisionCoding = Coding()
             firmwareRevisionCoding.code = "firmware-revision"
             firmwareRevisionCoding.display = "Firmware Revision"
+            firmwareRevisionCoding.system = FHIRURL.init("http://hl7.org/fhir/codesystem-specification-type.html")!
             codingArray.removeAll()
             codingArray.append(firmwareRevisionCoding)
         
@@ -228,10 +231,23 @@ public class BGMFhir: NSObject {
         deviceReference.reference = FHIRString.init("Device/\(String(describing: self.device!.id!))")
         deviceComponent.source = deviceReference
         
+        // device identifier (serial number)
         let deviceIdentifier = Identifier()
         deviceIdentifier.value = FHIRString.init(Glucose.sharedInstance().serialNumber!)
+        
+        var deviceIdentifierCodingArray = [Coding]()
+        let deviceIdentifierCoding = Coding()
+        deviceIdentifierCoding.code = FHIRString.init("serial-number")
+        deviceIdentifierCoding.display = FHIRString.init("Serial Number")
+        deviceIdentifierCoding.system = FHIRURL.init("http://hl7.org/fhir/codesystem-specification-type.html")!
+        deviceIdentifierCodingArray.append(deviceIdentifierCoding)
+        
+        let deviceIdentifierType = CodeableConcept()
+        deviceIdentifierType.coding = deviceIdentifierCodingArray
+        deviceIdentifier.type = deviceIdentifierType
         deviceComponent.identifier = deviceIdentifier
         
+        // type
         var deviceCodingArray = [Coding]()
         let deviceCoding = Coding()
         deviceCoding.code = FHIRString.init("160368")
