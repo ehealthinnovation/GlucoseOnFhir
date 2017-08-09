@@ -209,8 +209,8 @@ public class BGMFhir: NSObject {
         //firmware revision
         if Glucose.sharedInstance().firmwareVersion != nil {
             let firmwareRevision = DeviceComponentProductionSpecification()
-            firmwareRevision.productionSpec = FHIRString.init(Glucose.sharedInstance().firmwareVersion!)
-        
+            firmwareRevision.productionSpec = FHIRString.init(Glucose.sharedInstance().firmwareVersion!.replacingOccurrences(of: "\0", with: ""))
+            
             let firmwareRevisionCoding = Coding()
             firmwareRevisionCoding.code = "firmware-revision"
             firmwareRevisionCoding.display = "Firmware Revision"
