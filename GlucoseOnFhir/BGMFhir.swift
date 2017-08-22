@@ -15,7 +15,7 @@ import Foundation
 import CCGlucose
 import SMART
 
-public class BGMFhir: NSObject {
+public class BGMFhir {
     static let BGMFhirInstance: BGMFhir = BGMFhir()
     var patient: Patient?
     var device: Device?
@@ -289,7 +289,7 @@ public class BGMFhir: NSObject {
     }
     
     func searchForObservation(measurement: GlucoseMeasurement, callback: @escaping FHIRSearchBundleErrorCallback) {
-        let truncatedMeasurement = String(describing: measurement.toMMOL()!.truncateMeasurement())
+        let truncatedMeasurement = String(describing: measurement.toMMOL()!.truncate(numberOfDigits: 2))
         
         let searchDict: [String: Any] = [
             "subject": String(describing: BGMFhir.BGMFhirInstance.patient!.id!),
@@ -393,7 +393,8 @@ public class BGMFhir: NSObject {
         performerReference.reference = FHIRString.init("Patient/\(String(describing: BGMFhir.BGMFhirInstance.patient!.id!))")
         performerArray.append(performerReference)
         
-        let measurementNumber = NSDecimalNumber(value: (measurement.toMMOL()?.truncateMeasurement())!)
+        let measurementNumber = NSDecimalNumber(value: (measurement.toMMOL()?.truncate(numberOfDigits: 2))!)
+        
         let decimalRoundingBehaviour = NSDecimalNumberHandler(roundingMode:.plain,
                                                               scale: 2, raiseOnExactness: false,
                                                               raiseOnOverflow: false, raiseOnUnderflow:

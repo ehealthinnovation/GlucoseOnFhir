@@ -88,10 +88,10 @@ class PatientViewController: UITableViewController {
             guard let row = Section.Name(rawValue:indexPath.row) else { fatalError("invalid row") }
             switch row {
             case .givenName:
-                cell.textLabel!.text = self.patient.name?.first?.given?.first?.description
+                cell.textLabel?.text = self.patient.name?.first?.given?.first?.string
                 cell.detailTextLabel!.text = "given name"
             case .familyName:
-                cell.textLabel!.text = String(describing: self.patient.name!.first!.family!.string)
+                cell.textLabel?.text = self.patient.name?.first?.family?.string
                 cell.detailTextLabel!.text = "family name"
             default:
                 cell.textLabel!.text = ""

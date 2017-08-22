@@ -290,10 +290,12 @@ class GlucoseMeterViewController: UITableViewController, GlucoseProtocol, Refres
                 cell.accessoryType = .none
             case .glucoseMeterRecords:
                 let measurement = Array(glucoseMeasurements)[indexPath.row]
-                let mmolString = String(describing: measurement.toMMOL()!.truncateMeasurement())
+                let mmolString = String(describing: measurement.toMMOL()!.truncate(numberOfDigits: 2))
                 let contextWillFollow: Bool = (measurement.contextInformationFollows)
                 
-                cell.textLabel!.text = "Record: \(measurement.sequenceNumber)\nGlucose (kg/L): \(measurement.glucoseConcentration) \(measurement.unit.description)\nGlucose (mmol/L): \(mmolString) mmol/L\nContext: \(contextWillFollow.description)\n\nDate: \(String(describing: measurement.dateTime!.description))"
+                //cell.textLabel!.text = "Record: \(measurement.sequenceNumber)\nGlucose (kg/L): \(measurement.glucoseConcentration) \(measurement.unit.description)\nGlucose (mmol/L): \(mmolString) mmol/L\nContext: \(contextWillFollow.description)\n\nDate: \(String(describing: measurement.dateTime!.description))"
+                
+                cell.textLabel!.text = "Record: \(measurement.sequenceNumber!)\nGlucose (mmol/L): \(mmolString) mmol/L\nContext: \(contextWillFollow.description)\n\nDate: \(String(describing: measurement.dateTime!.description))"
                 
                 if let fhirID = measurement.fhirID {
                     cell.detailTextLabel!.text = "FHIR ID: \(fhirID)"

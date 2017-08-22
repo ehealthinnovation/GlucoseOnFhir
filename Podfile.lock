@@ -4,7 +4,7 @@ PODS:
   - CCGlucose (0.3.7):
     - CCBluetooth
     - CCToolbox
-  - CCToolbox (0.7.4)
+  - CCToolbox (0.7.5)
   - SMART (3.0.1)
 
 DEPENDENCIES:
@@ -29,10 +29,10 @@ CHECKOUT OPTIONS:
     :commit: f1b3e6929056e4e4cc89a302659069f211898614
     :git: https://github.com/uhnmdi/CCBluetooth.git
   CCGlucose:
-    :commit: 5f94646aa7146e0d4440a1131a9ceae7f52e8391
+    :commit: f6fe6de1b005aaf32b43116c2d99fbe118d0addb
     :git: https://github.com/uhnmdi/CCGlucose.git
   CCToolbox:
-    :commit: 2f3954bb7e0e714edc82e6578970b00910072114
+    :commit: 5b001e7d3e9fcdc65bd95fac45a10ee7dff040b6
     :git: https://github.com/uhnmdi/CCToolbox.git
   SMART:
     :commit: dc344e3fa9f92629c875424c7e75ee3863cac5f8
@@ -42,7 +42,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   CCBluetooth: cc605544b86213b99de03976dc57dae8a7660e4e
   CCGlucose: 74c9b41aa0d8dbea7e689caafa7f59aba9e181ad
-  CCToolbox: 34e07e0c86fa581a76b95e534c296878fa437079
+  CCToolbox: 18160066f8732de14e931394aa7181fe56a28075
   SMART: 8da085a963a230c9e1791745c0ac505db96518bc
 
 PODFILE CHECKSUM: a7219c2b2cbfd052751c04f1e73b0c0a4acbffc5

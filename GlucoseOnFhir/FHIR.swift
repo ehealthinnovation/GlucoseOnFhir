@@ -179,8 +179,8 @@ class FHIR: NSObject {
             let entry = BundleEntry()
             entry.resource = $0
             
-            let httpVerb = HTTPVerb(rawValue: "POST")
-            let entryRequest = BundleEntryRequest(method: httpVerb!, url: FHIRURL.init((self.server?.baseURL)!))
+            let httpVerb = HTTPVerb.POST
+            let entryRequest = BundleEntryRequest(method: httpVerb, url: FHIRURL.init((self.server?.baseURL)!))
             entry.request = entryRequest
             
             return entry
