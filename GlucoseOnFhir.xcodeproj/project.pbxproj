@@ -20,7 +20,6 @@
 		50DEF7321D9D81D900F86B9A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50DEF7301D9D81D900F86B9A /* Main.storyboard */; };
 		50DEF7341D9D81D900F86B9A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50DEF7331D9D81D900F86B9A /* Assets.xcassets */; };
 		50DEF7371D9D81D900F86B9A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50DEF7351D9D81D900F86B9A /* LaunchScreen.storyboard */; };
-		50DEF7421D9D81DA00F86B9A /* GlucoseOnFhirTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DEF7411D9D81DA00F86B9A /* GlucoseOnFhirTests.swift */; };
 		50DF07981DCA1EF60094D968 /* device.json in Resources */ = {isa = PBXBuildFile; fileRef = 50DF07941DCA1EF60094D968 /* device.json */; };
 		50DF07991DCA1EF60094D968 /* observation.json in Resources */ = {isa = PBXBuildFile; fileRef = 50DF07951DCA1EF60094D968 /* observation.json */; };
 		50DF079A1DCA1EF60094D968 /* observationContext.json in Resources */ = {isa = PBXBuildFile; fileRef = 50DF07961DCA1EF60094D968 /* observationContext.json */; };
@@ -28,18 +27,7 @@
 		50E217B71D9EA98F00B31926 /* GlucoseMeterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E217B61D9EA98F00B31926 /* GlucoseMeterViewController.swift */; };
 		50E217B91D9EB08800B31926 /* FHIR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E217B81D9EB08800B31926 /* FHIR.swift */; };
 		A44237A9F71AD41D79F57A64 /* Pods_GlucoseOnFhir.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A0C37FB3933B4BAD266AFB9 /* Pods_GlucoseOnFhir.framework */; };
-		CF58CF19F545DB9FF372FEDA /* Pods_GlucoseOnFhirTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DBC279103E4D9C0A4365606 /* Pods_GlucoseOnFhirTests.framework */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		50DEF73E1D9D81DA00F86B9A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 50DEF7211D9D81D900F86B9A /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 50DEF7281D9D81D900F86B9A;
-			remoteInfo = GlucoseOnFhir;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		50A8B07F1D9EBE5600722A0D /* Embed Frameworks */ = {
@@ -71,7 +59,6 @@
 		50DEF7331D9D81D900F86B9A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		50DEF7361D9D81D900F86B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		50DEF7381D9D81D900F86B9A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		50DEF73D1D9D81DA00F86B9A /* GlucoseOnFhirTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GlucoseOnFhirTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		50DEF7411D9D81DA00F86B9A /* GlucoseOnFhirTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseOnFhirTests.swift; sourceTree = "<group>"; };
 		50DEF7431D9D81DA00F86B9A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		50DF07941DCA1EF60094D968 /* device.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = device.json; sourceTree = "<group>"; };
@@ -93,14 +80,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A44237A9F71AD41D79F57A64 /* Pods_GlucoseOnFhir.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		50DEF73A1D9D81DA00F86B9A /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CF58CF19F545DB9FF372FEDA /* Pods_GlucoseOnFhirTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -131,7 +110,6 @@
 			isa = PBXGroup;
 			children = (
 				50DEF7291D9D81D900F86B9A /* GlucoseOnFhir.app */,
-				50DEF73D1D9D81DA00F86B9A /* GlucoseOnFhirTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -232,27 +210,6 @@
 			productReference = 50DEF7291D9D81D900F86B9A /* GlucoseOnFhir.app */;
 			productType = "com.apple.product-type.application";
 		};
-		50DEF73C1D9D81DA00F86B9A /* GlucoseOnFhirTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 50DEF7491D9D81DA00F86B9A /* Build configuration list for PBXNativeTarget "GlucoseOnFhirTests" */;
-			buildPhases = (
-				206A2E95854D623D28D36F44 /* [CP] Check Pods Manifest.lock */,
-				50DEF7391D9D81DA00F86B9A /* Sources */,
-				50DEF73A1D9D81DA00F86B9A /* Frameworks */,
-				50DEF73B1D9D81DA00F86B9A /* Resources */,
-				2B420D17EEA533A710F90965 /* [CP] Embed Pods Frameworks */,
-				51D94CDE5825E462CA388178 /* [CP] Copy Pods Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				50DEF73F1D9D81DA00F86B9A /* PBXTargetDependency */,
-			);
-			name = GlucoseOnFhirTests;
-			productName = GlucoseOnFhirTests;
-			productReference = 50DEF73D1D9D81DA00F86B9A /* GlucoseOnFhirTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -260,19 +217,13 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0800;
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "eHealth Innovation";
 				TargetAttributes = {
 					50DEF7281D9D81D900F86B9A = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = F663BTMH9Q;
 						ProvisioningStyle = Automatic;
-					};
-					50DEF73C1D9D81DA00F86B9A = {
-						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = F663BTMH9Q;
-						ProvisioningStyle = Automatic;
-						TestTargetID = 50DEF7281D9D81D900F86B9A;
 					};
 				};
 			};
@@ -290,7 +241,6 @@
 			projectRoot = "";
 			targets = (
 				50DEF7281D9D81D900F86B9A /* GlucoseOnFhir */,
-				50DEF73C1D9D81DA00F86B9A /* GlucoseOnFhirTests */,
 			);
 		};
 /* End PBXProject section */
@@ -312,46 +262,9 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		50DEF73B1D9D81DA00F86B9A /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		206A2E95854D623D28D36F44 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		2B420D17EEA533A710F90965 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GlucoseOnFhirTests/Pods-GlucoseOnFhirTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		5067DA5A1E5616490004E887 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -365,30 +278,24 @@
 			shellPath = /bin/sh;
 			shellScript = "swiftlint lint --path GlucoseOnFhir --config .swiftlint.yaml";
 		};
-		51D94CDE5825E462CA388178 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GlucoseOnFhirTests/Pods-GlucoseOnFhirTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		6E6C5AB17F6ED2E951739C51 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-GlucoseOnFhir/Pods-GlucoseOnFhir-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/CCBluetooth/CCBluetooth.framework",
+				"${BUILT_PRODUCTS_DIR}/CCGlucose/CCGlucose.framework",
+				"${BUILT_PRODUCTS_DIR}/CCToolbox/CCToolbox.framework",
+				"${BUILT_PRODUCTS_DIR}/SMART/SMART.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CCBluetooth.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CCGlucose.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CCToolbox.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SMART.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -401,13 +308,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-GlucoseOnFhir-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F3F1E333CE41AE6E7EA4DAA5 /* [CP] Copy Pods Resources */ = {
@@ -445,23 +355,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		50DEF7391D9D81DA00F86B9A /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				50DEF7421D9D81DA00F86B9A /* GlucoseOnFhirTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		50DEF73F1D9D81DA00F86B9A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 50DEF7281D9D81D900F86B9A /* GlucoseOnFhir */;
-			targetProxy = 50DEF73E1D9D81DA00F86B9A /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		50DEF7301D9D81D900F86B9A /* Main.storyboard */ = {
@@ -492,7 +386,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -500,7 +396,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
@@ -524,13 +424,13 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -543,7 +443,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -551,7 +453,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
@@ -569,11 +475,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -590,7 +496,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.ehealthinnovation.GlucoseOnFhir;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -606,39 +512,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.ehealthinnovation.GlucoseOnFhir;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-			};
-			name = Release;
-		};
-		50DEF74A1D9D81DA00F86B9A /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = CCF6EC67F253AA6E67FE4B09 /* Pods-GlucoseOnFhirTests.debug.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = F663BTMH9Q;
-				INFOPLIST_FILE = GlucoseOnFhirTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.ehealthinnovation.GlucoseOnFhirTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GlucoseOnFhir.app/GlucoseOnFhir";
-			};
-			name = Debug;
-		};
-		50DEF74B1D9D81DA00F86B9A /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = D21CED4D1AD723E6533FA1BA /* Pods-GlucoseOnFhirTests.release.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = F663BTMH9Q;
-				INFOPLIST_FILE = GlucoseOnFhirTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.ehealthinnovation.GlucoseOnFhirTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GlucoseOnFhir.app/GlucoseOnFhir";
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -659,15 +533,6 @@
 			buildConfigurations = (
 				50DEF7471D9D81DA00F86B9A /* Debug */,
 				50DEF7481D9D81DA00F86B9A /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		50DEF7491D9D81DA00F86B9A /* Build configuration list for PBXNativeTarget "GlucoseOnFhirTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				50DEF74A1D9D81DA00F86B9A /* Debug */,
-				50DEF74B1D9D81DA00F86B9A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
