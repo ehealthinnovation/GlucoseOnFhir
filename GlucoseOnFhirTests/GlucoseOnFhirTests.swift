@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import GlucoseOnFhir
+//@testable import GlucoseOnFhir
 
 class GlucoseOnFhirTests: XCTestCase {
     
