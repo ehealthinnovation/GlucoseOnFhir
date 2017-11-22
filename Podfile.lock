@@ -1,10 +1,11 @@
 PODS:
-  - CCBluetooth (0.5.3)
-  - CCGlucose (0.3.1):
+  - CCBluetooth (0.5.8):
+    - CCToolbox
+  - CCGlucose (0.3.9):
     - CCBluetooth
     - CCToolbox
-  - CCToolbox (0.7.1)
-  - SMART (2.8.1)
+  - CCToolbox (0.8.3)
+  - SMART (3.0.1.1)
 
 DEPENDENCIES:
   - CCBluetooth (from `https://github.com/uhnmdi/CCBluetooth.git`)
@@ -25,25 +26,25 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CCBluetooth:
-    :commit: c50109006e2284f999962e3c60d5e3bffa1c7fb5
+    :commit: 84786c1c0a986505a51cfbc7a01b07b5ccb6f750
     :git: https://github.com/uhnmdi/CCBluetooth.git
   CCGlucose:
-    :commit: 2d5efb77e4c8b6bbaff2ef9481fa134e8075b300
+    :commit: a4ffa2f45dc8ef3cc91e5149543d046c0fc8269a
     :git: https://github.com/uhnmdi/CCGlucose.git
   CCToolbox:
-    :commit: b591a8727146580dd08f9363d6c7ebeafcd26146
+    :commit: 3b794993353b7f34b859ea8b67a4f0e8c71d6284
     :git: https://github.com/uhnmdi/CCToolbox.git
   SMART:
-    :commit: f368cb60088314f0ec7f822537a773c105e13f75
+    :commit: 2b8049cb8301321074e0f0355b79247a85b6d9ea
     :git: https://github.com/uhnmdi/Swift-SMART.git
     :submodules: true
 
 SPEC CHECKSUMS:
-  CCBluetooth: f2717fa159322ed84457604ca25dde855aa76f35
-  CCGlucose: 5a235edea78fa7329a458f97b12393fa5543af91
-  CCToolbox: ae7c09ede5c63c1901c06011ebdfe6073378810f
-  SMART: 058ada9f3c75bbc073f638c00ea66693f199dbb6
+  CCBluetooth: cc605544b86213b99de03976dc57dae8a7660e4e
+  CCGlucose: e54e5e3ed50c7582a287e1094790ad8d24cd1aa8
+  CCToolbox: 1a8d1739ae7f1a9011d16c229f0643b10dcee05f
+  SMART: f8601c49395718fa6dc06ec9e411242817bf7aaa
 
-PODFILE CHECKSUM: dc1ed07a02893471cc19d280ec73c577fd00c325
+PODFILE CHECKSUM: 3b574d4d8a3933b567ab67a9bb5cedde66ddd073
 
-COCOAPODS: 1.1.1
+COCOAPODS: 1.3.1

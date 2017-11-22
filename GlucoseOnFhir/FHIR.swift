@@ -15,7 +15,7 @@ import SMART
 
 class FHIR: NSObject {
     var smart: Client?
-    var server: FHIRServer?
+    public var server: FHIRServer?
     public var fhirServerAddress: String = "fhirtest.uhn.ca"
     static let fhirInstance: FHIR = FHIR()
     
@@ -31,24 +31,24 @@ class FHIR: NSObject {
         
         self.fhirServerAddress = address
         
-        let url = URL(string: "http://" + fhirServerAddress + "/baseDstu2")
+        let url = URL(string: "http://" + fhirServerAddress + "/baseDstu3")
         server = Server(baseURL: url!)
         
         smart = Client(
-            baseURL: "http://" + fhirServerAddress + "/baseDstu2",
+            baseURL: url!,
             settings: [
                 "client_id": "glucoseOnFhirApp",
                 "client_name": "Glucose on FHIR iOS",
                 "redirect": "smartapp://callback",
                 "verbose": true
-                ]
+            ]
         )
     }
     
     public func createPatient(patient: Patient, callback: @escaping (_ patient: Patient, _ error: Error?) -> Void) {
         patient.createAndReturn(server!) { error in
             if let error = error {
-                print(error)
+                print("createPatient error: \(error)")
             }
             
             callback(patient, error)
@@ -60,6 +60,29 @@ class FHIR: NSObject {
         let searchPatient = Patient.search(searchParameters)
         
         searchPatient.perform((smart?.server)!) { bundle, error in
+            if let error = error {
+                print(error)
+            }
+            
+            callback(bundle, error)
+        }
+    }
+    
+    public func createDeviceComponent(deviceComponent: DeviceComponent, callback: @escaping (_ device: DeviceComponent, _ error: Error?) -> Void) {
+        deviceComponent.createAndReturn(server!) { error in
+            if let error = error {
+                print(error)
+            }
+            
+            callback(deviceComponent, error)
+        }
+    }
+    
+    public func searchForDeviceComponent(searchParameters: Dictionary<String, Any>, callback: @escaping FHIRSearchBundleErrorCallback) {
+        let searchDeviceComponent = DeviceComponent.search(searchParameters)
+        print("fhir: searchForDeviceComponent")
+        
+        searchDeviceComponent.perform((smart?.server)!) { bundle, error in
             if let error = error {
                 print(error)
             }
@@ -80,6 +103,7 @@ class FHIR: NSObject {
     
     public func searchForDevice(searchParameters: Dictionary<String, Any>, callback: @escaping FHIRSearchBundleErrorCallback) {
         let searchDevice = Device.search(searchParameters)
+        print("fhir: searchForDevice")
         
         searchDevice.perform((smart?.server)!) { bundle, error in
             if let error = error {
@@ -108,20 +132,12 @@ class FHIR: NSObject {
         searchObservation.perform((smart?.server)!) { bundle, error in
             if let error = error {
                 print(error)
-            } else {
-                if bundle?.entry != nil {
-                    let observations = bundle?.entry?
-                        .filter { return $0.resource is Observation }
-                        .map { return $0.resource as! Observation }
-                    print(observations!)
-                    callback(bundle, error)
-                } else {
-                    callback(bundle, error)
-                }
             }
+            
+            callback(bundle, error)
         }
     }
-
+    
     public func createObservation(observation:Observation, callback: @escaping (_ observation: Observation, _ error: Error?) -> Void) {
         observation.createAndReturn(server!) { error in
             if let error = error {
@@ -132,20 +148,44 @@ class FHIR: NSObject {
         }
     }
     
-    public func createObservationBundle(type: String, observations:[Observation], callback: @escaping FHIRSearchBundleErrorCallback) {
-        let bundle = Bundle(json: nil)
-        bundle.type = type
+    public func createSpecimen(specimen: Specimen, callback: @escaping (_ specimen: Specimen, _ error: Error?) -> Void) {
+        specimen.createAndReturn(server!) { error in
+            if let error = error {
+                print(error)
+            }
+            
+            callback(specimen, error)
+        }
+    }
+    
+    public func searchForSpecimen(searchParameters: Dictionary<String, Any>, callback: @escaping FHIRSearchBundleErrorCallback) {
+        print("fhir: searchForSpecimen")
+        let searchSpecimen = Specimen.search(searchParameters)
+        
+        searchSpecimen.perform((smart?.server)!) { bundle, error in
+            if let error = error {
+                print(error)
+            }
+            
+            callback(bundle, error)
+        }
+    }
+    
+    public func createObservationBundle(observations:[Observation], callback: @escaping FHIRSearchBundleErrorCallback) {
+        let bundle = SMART.Bundle()
+        bundle.type = BundleType.batch
         
         bundle.entry = observations.map {
-            let entry = BundleEntry(json: nil)
+            let entry = BundleEntry()
             entry.resource = $0
-
-            let entryRequest = BundleEntryRequest(method: "POST", url: (self.server?.baseURL)!)
+            
+            let httpVerb = HTTPVerb.POST
+            let entryRequest = BundleEntryRequest(method: httpVerb, url: FHIRURL.init((self.server?.baseURL)!))
             entry.request = entryRequest
-    
+            
             return entry
         }
-    
+        
         bundle.createAndReturn(self.server!) { error in
             if let error = error {
                 print(error)
